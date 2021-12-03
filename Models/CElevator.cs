@@ -3,13 +3,13 @@
 namespace Models
 {
     public enum Direction { UP = 0, DOWN = 1, STOP = 2 }
-    internal class CElevator : CPlaceInfo
+    public class CElevator : CPlaceInfo
     {
-        private int currentFlor;
-        private int destinationFloor;
-        private int countPeople;
-        private Direction direction;
-        public bool isOpenDoor;
+        private int _currentFlor;
+        private int _destinationFloor;
+        private int _countPeople;
+        public bool _isOpenDoor;
+        private Direction _direction;
         public void Move()
         {
 

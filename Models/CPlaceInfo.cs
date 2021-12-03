@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Models
 {
-    internal abstract class CPlaceInfo
+    public abstract class CPlaceInfo
     {
-        protected int number;
-        protected Queue<CPeople> people;
+        protected int _number;
+        protected Queue<CPeople> _people;
     }
 }

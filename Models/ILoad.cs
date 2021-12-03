@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Models
 {
-    internal interface ILoad
+    public interface ILoad
     {
         void Import();
         void Export();

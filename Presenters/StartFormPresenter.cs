@@ -10,12 +10,11 @@ namespace Presenters
 {
     class StartFormPresenter
     {
-        private StartForm view;
+        private StartForm _view;
 
         public StartFormPresenter(StartForm view)
         {
-            this.view = view;
-
+            _view = view;
         }
     }
 }

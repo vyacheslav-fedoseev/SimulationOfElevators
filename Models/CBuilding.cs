@@ -6,13 +6,13 @@ using System.Windows.Forms;
 
 namespace Models
 {
-    internal class CBuilding
+    public class CBuilding
     {
-        private int countElevators;
-        private int countFloors;
-        private CFloor[] floor;
-        private CElevator[] elevator;
-        private CPeople[] people;
+        private int _countElevators;
+        private int _countFloors;
+        private CFloor[] _floor;
+        private CElevator[] _elevator;
+        private CPeople[] _people;
         public CBuilding()
         {
 

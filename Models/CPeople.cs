@@ -1,9 +1,9 @@
 ﻿namespace Models
 {
-    internal class CPeople
+    public class CPeople
     {
-        private int name;
-        private int currentFloor;
-        private int destinationFloor;
+        private int _name;
+        private int _currentFloor;
+        private int _destinationFloor;
     }
 }
