@@ -8,16 +8,18 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+
+
 namespace WinFormsAppSimulation
 {
     public partial class StartForm : Form
     {
+
         public StartForm()
         {
             InitializeComponent();
-        }
 
-    
+        }
 
         private void StartConfigurationButton_Click(object sender, EventArgs e)
         {
