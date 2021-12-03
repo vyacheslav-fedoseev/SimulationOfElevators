@@ -6,17 +6,17 @@ using System.Windows.Forms;
 
 namespace Models
 {
-    static class Program
+    internal class CBuilding
     {
-        /// <summary>
-        /// Главная точка входа для приложения.
-        /// </summary>
-        [STAThread]
-        static void Main()
+        private int countElevators;
+        private int countFloors;
+        private CFloor[] floor;
+        private CElevator[] elevator;
+        private CPeople[] people;
+        public CBuilding()
         {
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+
         }
+
     }
 }

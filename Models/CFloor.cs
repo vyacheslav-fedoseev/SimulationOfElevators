@@ -1,6 +1,7 @@
 ﻿namespace Models
 {
-    internal class CFloor
+    internal class CFloor : CPlaceInfo
     {
+
     }
 }

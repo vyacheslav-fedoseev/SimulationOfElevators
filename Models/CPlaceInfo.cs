@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace Models
 {
-    class Class1
+    internal abstract class CPlaceInfo
     {
+        protected int number;
+        protected Queue<CPeople> people;
     }
 }
