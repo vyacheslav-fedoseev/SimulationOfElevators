@@ -157,7 +157,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Presenters\Presenters.csproj">
-      <Project>{7cc25cb9-2dbc-4765-afa5-9c2c3fb0f4cd}</Project>
+      <Project>{a56d4bae-1d9d-43e9-b40f-56c48121a784}</Project>
       <Name>Presenters</Name>
     </ProjectReference>
   </ItemGroup>
