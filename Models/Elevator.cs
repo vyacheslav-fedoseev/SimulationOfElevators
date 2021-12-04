@@ -3,7 +3,7 @@
 namespace Models
 {
     public enum Direction { UP = 0, DOWN = 1, STOP = 2 }
-    public class CElevator : CPlaceInfo
+    public class Elevator : PlaceInfo
     {
         private int _currentFlor;
         private int _destinationFloor;

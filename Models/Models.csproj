@@ -46,12 +46,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CElevator.cs" />
-    <Compile Include="CFloor.cs" />
-    <Compile Include="CPlaceInfo.cs" />
-    <Compile Include="CPeople.cs" />
-    <Compile Include="CBuilding.cs" />
+    <Compile Include="Elevator.cs" />
+    <Compile Include="Floor.cs" />
+    <Compile Include="PlaceInfo.cs" />
+    <Compile Include="People.cs" />
+    <Compile Include="Building.cs" />
     <Compile Include="ILoad.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -61,6 +62,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

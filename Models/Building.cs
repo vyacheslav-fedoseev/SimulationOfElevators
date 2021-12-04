@@ -6,14 +6,14 @@ using System.Windows.Forms;
 
 namespace Models
 {
-    public class CBuilding
+    public class Building
     {
         private int _countElevators;
         private int _countFloors;
-        private CFloor[] _floor;
-        private CElevator[] _elevator;
-        private CPeople[] _people;
-        public CBuilding()
+        private Floor[] _floor;
+        private Elevator[] _elevator;
+        private People[] _people;
+        public Building()
         {
 
         }

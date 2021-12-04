@@ -1,6 +1,6 @@
 ﻿namespace Models
 {
-    public class CPeople
+    public class People
     {
         private int _name;
         private int _currentFloor;

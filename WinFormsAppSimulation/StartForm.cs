@@ -7,17 +7,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Presenters;
 
 
 
 namespace WinFormsAppSimulation
 {
-    public partial class StartForm : Form
+    public partial class StartForm : Form, IStartView
     {
 
         public StartForm()
         {
             InitializeComponent();
+            var presenter = new StartFormPresenter(this);
 
         }
 
