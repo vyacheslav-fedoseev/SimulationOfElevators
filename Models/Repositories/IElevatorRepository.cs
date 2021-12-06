@@ -9,5 +9,7 @@ namespace Models.Repositories
 {
     public interface IElevatorRepository : IRepository<Elevator>
     {
+        int Add(float maxAcceleration, float maxSpeed, int maxCapacity);
+
     }
 }

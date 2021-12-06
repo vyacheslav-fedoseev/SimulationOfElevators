@@ -9,6 +9,6 @@ namespace Models.Repositories
 {
     public interface IFloorRepository : IRepository<Floor>
     {
-        Floor Find(int id);
+        
     }
 }

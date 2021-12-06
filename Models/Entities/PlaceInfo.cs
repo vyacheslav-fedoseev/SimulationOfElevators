@@ -8,7 +8,14 @@ namespace Models.Entities
 {
     public abstract class PlaceInfo
     {
-        protected int _id { get; set; }
+        protected int _id;
+        public int _ID
+        {
+            get
+            {
+                return _id;
+            }
+        }
         protected Queue<People> _people;
     }
 }
