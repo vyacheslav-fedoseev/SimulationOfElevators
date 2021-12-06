@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Models
+namespace Models.Entities
 {
     public enum Direction { UP = 0, DOWN = 1, STOP = 2 }
     public class Elevator : PlaceInfo
