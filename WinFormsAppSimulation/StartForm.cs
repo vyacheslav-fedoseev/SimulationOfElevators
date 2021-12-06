@@ -15,14 +15,29 @@ namespace WinFormsAppSimulation
 {
     public partial class StartForm : Form, IStartView
     {
+        public event Action StartConfiguration;
+        public event Action Exit;
+        public event Action StrategyChoosing;
+        public event Action StartSimulation;
+        public event Action CreateEventsList;
+
+        private void Invoke(Action action)
+        {
+            if (action != null) action();
+        }
 
         public StartForm()
         {
             InitializeComponent();
-            var presenter = new StartFormPresenter(this);
-
+            StartConfigurationButton.Click += (sender, args) => Invoke(StartConfiguration);
+            ExitButton.Click += (sender, args) => Invoke(Exit);
+            StrategyChoosingButton.Click += (sender, args) => Invoke(StrategyChoosing);
+            StartConfigurationButton.Click += (sender, args) => Invoke(StartConfiguration);
+            CreateEventsListButton.Click += (sender, args) => Invoke(CreateEventsList);
+            //var presenter = new StartFormPresenter(this);
         }
 
+        /*
         private void StartConfigurationButton_Click(object sender, EventArgs e)
         {
             StartConfigurationForm startConfigurationForm = new StartConfigurationForm();
@@ -52,5 +67,6 @@ namespace WinFormsAppSimulation
         {
 
         }
+        */
     }
 }
