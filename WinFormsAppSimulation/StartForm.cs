@@ -32,7 +32,7 @@ namespace WinFormsAppSimulation
             StartConfigurationButton.Click += (sender, args) => Invoke(StartConfiguration);
             ExitButton.Click += (sender, args) => Invoke(Exit);
             StrategyChoosingButton.Click += (sender, args) => Invoke(StrategyChoosing);
-            StartConfigurationButton.Click += (sender, args) => Invoke(StartConfiguration);
+            StartSimulationButton.Click += (sender, args) => Invoke(StartSimulation);
             CreateEventsListButton.Click += (sender, args) => Invoke(CreateEventsList);
             //var presenter = new StartFormPresenter(this);
         }

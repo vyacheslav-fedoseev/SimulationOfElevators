@@ -41,6 +41,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ICheckPeopleStatusView.cs" />
+    <Compile Include="ICreatePeopleView.cs" />
+    <Compile Include="ISetConfigurationView.cs" />
+    <Compile Include="ISetElevatorsConfiguration.cs" />
     <Compile Include="IStartView.cs" />
     <Compile Include="IView.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
