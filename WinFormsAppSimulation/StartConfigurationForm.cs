@@ -7,30 +7,35 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Presenters;
 
 namespace WinFormsAppSimulation
 {
-    public partial class StartConfigurationForm : Form
+    public partial class StartConfigurationForm : Form, IStartConfigurationView
     {
+        public event Action Ok;
+        public event Action StartConfiguration;
         public StartConfigurationForm()
         {
             InitializeComponent();
-        }
 
-        private void OkButton_Click(object sender, EventArgs e)
+            OkButton.Click += (sender, args) => Invoke(Ok);
+            SetConfigurationButton.Click += (sender, args) => Invoke(StartConfiguration);
+        }
+        private void Invoke(Action action)
         {
-            this.Close();
+            if (action != null) action();
         }
 
-        private void StartConfigurationForm_Load(object sender, EventArgs e)
-        {
+        /* private void OkButton_Click(object sender, EventArgs e)
+         {
+             this.Close();
+         }
 
-        }
-
-        private void SetConfigurationButton_Click(object sender, EventArgs e)
-        {
-            SetConfigurationForm setConfigurationForm = new SetConfigurationForm();
-            setConfigurationForm.ShowDialog();
-        }
+         private void SetConfigurationButton_Click(object sender, EventArgs e)
+         {
+             SetConfigurationForm setConfigurationForm = new SetConfigurationForm();
+             setConfigurationForm.ShowDialog();
+         }*/
     }
 }

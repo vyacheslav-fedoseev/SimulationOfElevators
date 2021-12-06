@@ -82,6 +82,7 @@ namespace WinFormsAppSimulation
             this.FireButton.TabIndex = 1;
             this.FireButton.Text = "🔥";
             this.FireButton.UseVisualStyleBackColor = true;
+            this.FireButton.Click += new System.EventHandler(this.FireButton_Click);
             // 
             // SpeedUpButton
             // 
@@ -91,6 +92,7 @@ namespace WinFormsAppSimulation
             this.SpeedUpButton.TabIndex = 2;
             this.SpeedUpButton.Text = ">>";
             this.SpeedUpButton.UseVisualStyleBackColor = true;
+            this.SpeedUpButton.Click += new System.EventHandler(this.SpeedUpButton_Click);
             // 
             // SlowDownButton
             // 
@@ -100,6 +102,7 @@ namespace WinFormsAppSimulation
             this.SlowDownButton.TabIndex = 3;
             this.SlowDownButton.Text = "<<";
             this.SlowDownButton.UseVisualStyleBackColor = true;
+            this.SlowDownButton.Click += new System.EventHandler(this.SlowDownButton_Click);
             // 
             // PlayPauseButton
             // 
@@ -109,6 +112,7 @@ namespace WinFormsAppSimulation
             this.PlayPauseButton.TabIndex = 4;
             this.PlayPauseButton.Text = "▶|";
             this.PlayPauseButton.UseVisualStyleBackColor = true;
+            this.PlayPauseButton.Click += new System.EventHandler(this.PlayPauseButton_Click);
             // 
             // StopButton
             // 
