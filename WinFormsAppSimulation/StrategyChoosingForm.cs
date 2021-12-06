@@ -12,6 +12,7 @@ namespace WinFormsAppSimulation
 {
     public partial class StrategyChoosingForm : Form
     {
+        public event Action Ок;
         public StrategyChoosingForm()
         {
             InitializeComponent();
