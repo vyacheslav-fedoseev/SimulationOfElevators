@@ -41,13 +41,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Building.cs" />
-    <Compile Include="Elevator.cs" />
-    <Compile Include="Floor.cs" />
-    <Compile Include="ILoad.cs" />
-    <Compile Include="People.cs" />
-    <Compile Include="PlaceInfo.cs" />
+    <Compile Include="Repositories\ElevatorRepository.cs" />
+    <Compile Include="Repositories\FloorRepository.cs" />
+    <Compile Include="Repositories\IElevatorRepository.cs" />
+    <Compile Include="Repositories\IFloorRepository.cs" />
+    <Compile Include="Repositories\IPeopleRepository.cs" />
+    <Compile Include="Repositories\IRepository.cs" />
+    <Compile Include="Repositories\PeopleRepository.cs" />
+    <Compile Include="Services\LiftManager.cs" />
+    <Compile Include="Entities\Elevator.cs" />
+    <Compile Include="Entities\Floor.cs" />
+    <Compile Include="Services\ILoad.cs" />
+    <Compile Include="Entities\People.cs" />
+    <Compile Include="Entities\PlaceInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

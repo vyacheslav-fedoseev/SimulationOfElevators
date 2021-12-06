@@ -3,12 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Models.Entities;
 
-namespace Models
+namespace Models.Repositories
 {
-    public abstract class PlaceInfo
+    public interface IElevatorRepository : IRepository<Elevator>
     {
-        protected int _number;
-        protected Queue<People> _people;
     }
 }
