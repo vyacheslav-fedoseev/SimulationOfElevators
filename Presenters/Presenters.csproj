@@ -45,7 +45,11 @@
     <Compile Include="ICreatePeopleView.cs" />
     <Compile Include="ISetConfigurationView.cs" />
     <Compile Include="ISetElevatorsConfiguration.cs" />
+    <Compile Include="ISimulationView.cs" />
+    <Compile Include="IStartConfigurationView.cs" />
     <Compile Include="IStartView.cs" />
+    <Compile Include="IStatisticsView.cs" />
+    <Compile Include="IStrategyChoosingView.cs" />
     <Compile Include="IView.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StartFormPresenter.cs" />
