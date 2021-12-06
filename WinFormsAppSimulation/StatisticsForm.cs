@@ -12,6 +12,7 @@ namespace WinFormsAppSimulation
 {
     public partial class StatisticsForm : Form
     {
+        public event Action Exit;
         private SimulationForm simulationForm;
         public StatisticsForm(SimulationForm simulationForm)
         {
