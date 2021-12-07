@@ -27,10 +27,11 @@ namespace WinFormsAppSimulation
             if (action != null) action();
         }
 
-        /*public new void Show()
+        public new void Show()
         {
-            base.Show();
-        }*/
+            base.ShowDialog();
+        }
+
         /* private void OkButton_Click(object sender, EventArgs e)
          {
              this.Close();

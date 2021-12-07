@@ -15,11 +15,16 @@ namespace Presenters.Presenters
         public StartPresenter(IApplicationController controller, IStartView view) : base(controller, view)
         {
             View.StartConfiguration += () => StartConfiguration();
-
+            View.StrategyChoosing += () => StrategyChoosing();
         }
         private void StartConfiguration()
         {
             Controller.Run<StartConfigurationPresenter>();
+        }
+
+        private void StrategyChoosing()
+        {
+            Controller.Run<StrategyChoosingPresenter>();
         }
     }
 }

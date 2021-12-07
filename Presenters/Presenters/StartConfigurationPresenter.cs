@@ -23,7 +23,7 @@ namespace Presenters.Presenters
 
         private void StartConfiguration()
         {
-
+            Controller.Run<SetConfigurationPresenter>();
         }
     }
 }

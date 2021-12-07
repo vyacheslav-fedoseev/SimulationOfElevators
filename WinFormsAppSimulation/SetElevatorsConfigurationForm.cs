@@ -16,16 +16,20 @@ namespace WinFormsAppSimulation
         public event Action EndLiftsConfiguration;
         public event Action SetElevatorsConfigurationClosing;
 
-
-        private SetConfigurationForm setConfigurationForm;
-        public SetElevatorsConfigurationForm(SetConfigurationForm setConfigurationForm)
+        public SetElevatorsConfigurationForm()
         {
             InitializeComponent();
-            this.setConfigurationForm = setConfigurationForm;
             EndLiftsConfigurationButton.Click += (sender, args) => Invoke(EndLiftsConfiguration);
             FormClosing += (sender, args) => Invoke(SetElevatorsConfigurationClosing);
         }
-        
+        public new void Show()
+        {
+            base.ShowDialog();
+        }
+        private void Invoke(Action action)
+        {
+            if (action != null) action();
+        }
         /*
         private void EndLiftsConfigurationButton_Click(object sender, EventArgs e)
         {
