@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Presenters.Common;
 
-namespace Entities
+namespace Presenters.IViews
 {
-    public interface ILoad
+    public interface ICreatePeopleView : IView
     {
-        void Import();
-        void Export();
+
     }
 }

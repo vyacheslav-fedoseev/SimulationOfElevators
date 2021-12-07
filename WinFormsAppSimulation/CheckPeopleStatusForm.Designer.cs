@@ -41,7 +41,7 @@ namespace WinFormsAppSimulation
             this.CloseButton.TabIndex = 0;
             this.CloseButton.Text = "Завершить";
             this.CloseButton.UseVisualStyleBackColor = true;
-            this.CloseButton.Click += new System.EventHandler(this.CloseButton_Click);
+            // this.CloseButton.Click += new System.EventHandler(this.CloseButton_Click);
             // 
             // label1
             // 

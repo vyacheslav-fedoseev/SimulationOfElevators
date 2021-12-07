@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Presenters;
+using Presenters.IViews;
 
 namespace WinFormsAppSimulation
 {
@@ -27,6 +27,10 @@ namespace WinFormsAppSimulation
             if (action != null) action();
         }
 
+        public new void Show()
+        {
+            base.Show();
+        }
         /* private void OkButton_Click(object sender, EventArgs e)
          {
              this.Close();

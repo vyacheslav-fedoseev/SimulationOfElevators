@@ -65,14 +65,14 @@ namespace WinFormsAppSimulation
             this.CreatePeopleToolStripMenuItem.Name = "CreatePeopleToolStripMenuItem";
             this.CreatePeopleToolStripMenuItem.Size = new System.Drawing.Size(217, 22);
             this.CreatePeopleToolStripMenuItem.Text = "Создать группу людей";
-            this.CreatePeopleToolStripMenuItem.Click += new System.EventHandler(this.CreatePeopleToolStripMenuItem_Click);
+            // this.CreatePeopleToolStripMenuItem.Click += new System.EventHandler(this.CreatePeopleToolStripMenuItem_Click);
             // 
             // CheckPeopleStatusToolStripMenuItem
             // 
             this.CheckPeopleStatusToolStripMenuItem.Name = "CheckPeopleStatusToolStripMenuItem";
             this.CheckPeopleStatusToolStripMenuItem.Size = new System.Drawing.Size(217, 22);
             this.CheckPeopleStatusToolStripMenuItem.Text = "Посмотреть статус людей";
-            this.CheckPeopleStatusToolStripMenuItem.Click += new System.EventHandler(this.CheckPeopleStatusToolStripMenuItem_Click);
+            // this.CheckPeopleStatusToolStripMenuItem.Click += new System.EventHandler(this.CheckPeopleStatusToolStripMenuItem_Click);
             // 
             // FireButton
             // 
@@ -82,7 +82,7 @@ namespace WinFormsAppSimulation
             this.FireButton.TabIndex = 1;
             this.FireButton.Text = "🔥";
             this.FireButton.UseVisualStyleBackColor = true;
-            this.FireButton.Click += new System.EventHandler(this.FireButton_Click);
+            // this.FireButton.Click += new System.EventHandler(this.FireButton_Click);
             // 
             // SpeedUpButton
             // 
@@ -92,7 +92,7 @@ namespace WinFormsAppSimulation
             this.SpeedUpButton.TabIndex = 2;
             this.SpeedUpButton.Text = ">>";
             this.SpeedUpButton.UseVisualStyleBackColor = true;
-            this.SpeedUpButton.Click += new System.EventHandler(this.SpeedUpButton_Click);
+            // this.SpeedUpButton.Click += new System.EventHandler(this.SpeedUpButton_Click);
             // 
             // SlowDownButton
             // 
@@ -102,7 +102,7 @@ namespace WinFormsAppSimulation
             this.SlowDownButton.TabIndex = 3;
             this.SlowDownButton.Text = "<<";
             this.SlowDownButton.UseVisualStyleBackColor = true;
-            this.SlowDownButton.Click += new System.EventHandler(this.SlowDownButton_Click);
+            // this.SlowDownButton.Click += new System.EventHandler(this.SlowDownButton_Click);
             // 
             // PlayPauseButton
             // 
@@ -112,7 +112,7 @@ namespace WinFormsAppSimulation
             this.PlayPauseButton.TabIndex = 4;
             this.PlayPauseButton.Text = "▶|";
             this.PlayPauseButton.UseVisualStyleBackColor = true;
-            this.PlayPauseButton.Click += new System.EventHandler(this.PlayPauseButton_Click);
+            // this.PlayPauseButton.Click += new System.EventHandler(this.PlayPauseButton_Click);
             // 
             // StopButton
             // 
@@ -122,7 +122,7 @@ namespace WinFormsAppSimulation
             this.StopButton.TabIndex = 5;
             this.StopButton.Text = "█";
             this.StopButton.UseVisualStyleBackColor = true;
-            this.StopButton.Click += new System.EventHandler(this.StopButton_Click);
+            // this.StopButton.Click += new System.EventHandler(this.StopButton_Click);
             // 
             // SimulationForm
             // 
@@ -138,7 +138,7 @@ namespace WinFormsAppSimulation
             this.MainMenuStrip = this.menuStrip;
             this.Name = "SimulationForm";
             this.Text = "Симуляция";
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.SimulationForm_FormClosed);
+            // this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.SimulationForm_FormClosed);
             this.menuStrip.ResumeLayout(false);
             this.menuStrip.PerformLayout();
             this.ResumeLayout(false);

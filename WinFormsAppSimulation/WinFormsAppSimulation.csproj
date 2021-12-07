@@ -37,8 +37,15 @@
     </StartupObject>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="LightInject, Version=6.4.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\LightInject.6.4.0\lib\net46\LightInject.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.IO" />
+    <Reference Include="System.Linq.Expressions" />
+    <Reference Include="System.Runtime" />
+    <Reference Include="System.Threading.Tasks" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -62,6 +69,7 @@
     <Compile Include="CreatePeopleForm.Designer.cs">
       <DependentUpon>CreatePeopleForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="LightInjectAdapter.cs" />
     <Compile Include="SimulationForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -142,6 +150,7 @@
     <EmbeddedResource Include="StrategyChoosingForm.resx">
       <DependentUpon>StrategyChoosingForm.cs</DependentUpon>
     </EmbeddedResource>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

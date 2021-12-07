@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Presenters;
+using Presenters.IViews;
 
 
 
@@ -35,6 +35,11 @@ namespace WinFormsAppSimulation
             StartSimulationButton.Click += (sender, args) => Invoke(StartSimulation);
             CreateEventsListButton.Click += (sender, args) => Invoke(CreateEventsList);
             //var presenter = new StartFormPresenter(this);
+        }
+
+        public new void Hide()
+        {
+            base.Hide();
         }
 
         /*

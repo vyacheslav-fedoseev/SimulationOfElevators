@@ -80,7 +80,7 @@ namespace WinFormsAppSimulation
             this.EndLiftsConfigurationButton.TabIndex = 4;
             this.EndLiftsConfigurationButton.Text = "Завершить конфигурацию";
             this.EndLiftsConfigurationButton.UseVisualStyleBackColor = true;
-            this.EndLiftsConfigurationButton.Click += new System.EventHandler(this.EndLiftsConfigurationButton_Click);
+            // this.EndLiftsConfigurationButton.Click += new System.EventHandler(this.EndLiftsConfigurationButton_Click);
             // 
             // MaxSpeedLable
             // 
@@ -134,7 +134,7 @@ namespace WinFormsAppSimulation
             this.Controls.Add(this.textBox1);
             this.Name = "SetElevatorsConfigurationForm";
             this.Text = "Ввод параметров лифтов";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.SetElevatorsConfigurationForm_FormClosing);
+            // this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.SetElevatorsConfigurationForm_FormClosing);
             this.ResumeLayout(false);
             this.PerformLayout();
 

@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Presenters.Common;
 
-namespace Presenters
+namespace Presenters.IViews
 {
     public interface ICheckPeopleStatusView : IView
     {

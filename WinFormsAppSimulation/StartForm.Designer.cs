@@ -44,7 +44,7 @@ namespace WinFormsAppSimulation
             this.StartConfigurationButton.TabIndex = 0;
             this.StartConfigurationButton.Text = "Задать конфигурацию";
             this.StartConfigurationButton.UseVisualStyleBackColor = true;
-            this.StartConfigurationButton.Click += new System.EventHandler(this.StartConfigurationButton_Click);
+            // this.StartConfigurationButton.Click += new System.EventHandler(this.StartConfigurationButton_Click);
             // 
             // StrategyChoosingButton
             // 
@@ -54,7 +54,7 @@ namespace WinFormsAppSimulation
             this.StrategyChoosingButton.TabIndex = 1;
             this.StrategyChoosingButton.Text = "Выбрать стратегию";
             this.StrategyChoosingButton.UseVisualStyleBackColor = true;
-            this.StrategyChoosingButton.Click += new System.EventHandler(this.StrategyChoosingButton_Click);
+            // this.StrategyChoosingButton.Click += new System.EventHandler(this.StrategyChoosingButton_Click);
             // 
             // StartSimulationButton
             // 
@@ -64,7 +64,7 @@ namespace WinFormsAppSimulation
             this.StartSimulationButton.TabIndex = 2;
             this.StartSimulationButton.Text = "Запустить симуляцию";
             this.StartSimulationButton.UseVisualStyleBackColor = true;
-            this.StartSimulationButton.Click += new System.EventHandler(this.StartSimulationButton_Click);
+            // this.StartSimulationButton.Click += new System.EventHandler(this.StartSimulationButton_Click);
             // 
             // ExitButton
             // 
@@ -74,7 +74,7 @@ namespace WinFormsAppSimulation
             this.ExitButton.TabIndex = 3;
             this.ExitButton.Text = "Выход";
             this.ExitButton.UseVisualStyleBackColor = true;
-            this.ExitButton.Click += new System.EventHandler(this.ExitButton_Click);
+            // this.ExitButton.Click += new System.EventHandler(this.ExitButton_Click);
             // 
             // CreateEventsListButton
             // 
@@ -85,7 +85,7 @@ namespace WinFormsAppSimulation
             this.CreateEventsListButton.TabIndex = 4;
             this.CreateEventsListButton.Text = "Список событий";
             this.CreateEventsListButton.UseVisualStyleBackColor = true;
-            this.CreateEventsListButton.Click += new System.EventHandler(this.CreateEventsListButton_Click);
+            // this.CreateEventsListButton.Click += new System.EventHandler(this.CreateEventsListButton_Click);
             // 
             // StartForm
             // 

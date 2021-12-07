@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Presenters.Common;
 
-namespace Entities
+namespace Presenters.IViews
 {
-    public abstract class PlaceInfo
+    public interface ISetConfigurationView : IView 
     {
-        protected int _number;
-        protected Queue<People> _people;
+        event Action Next;
     }
 }

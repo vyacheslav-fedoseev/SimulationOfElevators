@@ -76,7 +76,7 @@ namespace WinFormsAppSimulation
             this.NextButton.TabIndex = 4;
             this.NextButton.Text = "Далее";
             this.NextButton.UseVisualStyleBackColor = true;
-            this.NextButton.Click += new System.EventHandler(this.NextButton_Click);
+            // this.NextButton.Click += new System.EventHandler(this.NextButton_Click);
             // 
             // SetConfigurationForm
             // 

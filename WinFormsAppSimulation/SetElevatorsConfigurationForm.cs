@@ -7,11 +7,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Presenters;
+using Presenters.IViews;
 
 namespace WinFormsAppSimulation
 {
-    public partial class SetElevatorsConfigurationForm : Form, ISetElevatorsConfiguration
+    public partial class SetElevatorsConfigurationForm : Form, ISetElevatorsConfigurationView
     {
         public event Action EndLiftsConfiguration;
         public event Action SetElevatorsConfigurationClosing;

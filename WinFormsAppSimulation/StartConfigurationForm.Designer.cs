@@ -53,7 +53,7 @@ namespace WinFormsAppSimulation
             this.OkButton.TabIndex = 1;
             this.OkButton.Text = "ОК";
             this.OkButton.UseVisualStyleBackColor = true;
-            this.OkButton.Click += new System.EventHandler(this.OkButton_Click);
+            // this.OkButton.Click += new System.EventHandler(this.OkButton_Click);
             // 
             // ExportButton
             // 
@@ -73,7 +73,7 @@ namespace WinFormsAppSimulation
             this.SetConfigurationButton.TabIndex = 3;
             this.SetConfigurationButton.Text = "Задать Кофигурацию Вручную";
             this.SetConfigurationButton.UseVisualStyleBackColor = true;
-            this.SetConfigurationButton.Click += new System.EventHandler(this.SetConfigurationButton_Click);
+            // this.SetConfigurationButton.Click += new System.EventHandler(this.SetConfigurationButton_Click);
             // 
             // StartConfigurationForm
             // 
@@ -86,7 +86,7 @@ namespace WinFormsAppSimulation
             this.Controls.Add(this.ImportButton);
             this.Name = "StartConfigurationForm";
             this.Text = "Главное окно конфигурации";
-            this.Load += new System.EventHandler(this.StartConfigurationForm_Load);
+            // this.Load += new System.EventHandler(this.StartConfigurationForm_Load);
             this.ResumeLayout(false);
 
         }

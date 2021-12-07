@@ -62,7 +62,7 @@ namespace WinFormsAppSimulation
             this.ExitButton.TabIndex = 2;
             this.ExitButton.Text = "В главное меню";
             this.ExitButton.UseVisualStyleBackColor = true;
-            this.ExitButton.Click += new System.EventHandler(this.ExitButton_Click);
+            // this.ExitButton.Click += new System.EventHandler(this.ExitButton_Click);
             // 
             // StatisticsForm
             // 
@@ -74,7 +74,7 @@ namespace WinFormsAppSimulation
             this.Controls.Add(this.StatisticsLabel);
             this.Name = "StatisticsForm";
             this.Text = "StatisticsForm";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.StatisticsForm_FormClosing);
+            // this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.StatisticsForm_FormClosing);
             this.ResumeLayout(false);
 
         }

@@ -4,11 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Presenters
+namespace Presenters.Common
 {
     public interface IView
     {
         void Show();
         void Close();
+        void Hide();
     }
 }

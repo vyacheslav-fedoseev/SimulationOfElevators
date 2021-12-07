@@ -41,18 +41,24 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ICheckPeopleStatusView.cs" />
-    <Compile Include="ICreatePeopleView.cs" />
-    <Compile Include="ISetConfigurationView.cs" />
-    <Compile Include="ISetElevatorsConfiguration.cs" />
-    <Compile Include="ISimulationView.cs" />
-    <Compile Include="IStartConfigurationView.cs" />
-    <Compile Include="IStartView.cs" />
-    <Compile Include="IStatisticsView.cs" />
-    <Compile Include="IStrategyChoosingView.cs" />
-    <Compile Include="IView.cs" />
+    <Compile Include="Common\ApplicationController.cs" />
+    <Compile Include="Common\BasePresenter.cs" />
+    <Compile Include="Common\IApplicationController.cs" />
+    <Compile Include="Common\IContainer.cs" />
+    <Compile Include="Common\IPresenter.cs" />
+    <Compile Include="IViews\ICheckPeopleStatusView.cs" />
+    <Compile Include="IViews\ICreatePeopleView.cs" />
+    <Compile Include="IViews\ISetConfigurationView.cs" />
+    <Compile Include="IViews\ISetElevatorsConfigurationView.cs" />
+    <Compile Include="IViews\ISimulationView.cs" />
+    <Compile Include="IViews\IStartConfigurationView.cs" />
+    <Compile Include="IViews\IStartView.cs" />
+    <Compile Include="IViews\IStatisticsView.cs" />
+    <Compile Include="IViews\IStrategyChoosingView.cs" />
+    <Compile Include="Common\IView.cs" />
+    <Compile Include="Presenters\StartConfigurationPresenter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="StartFormPresenter.cs" />
+    <Compile Include="Presenters\StartPresenter.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Models\Models.csproj">
@@ -60,5 +66,6 @@
       <Name>Models</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -9,7 +9,6 @@ namespace Models.Repositories
     public interface IRepository<T> where T: class
     {
         T Find(int id);
-        
         IEnumerable<T> GetAll();
     }
 }
