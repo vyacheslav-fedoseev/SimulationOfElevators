@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Presenters.Common;
+using Presenters.Presenters;
+using Presenters.IViews;
 
 
 namespace WinFormsAppSimulation
@@ -17,7 +20,15 @@ namespace WinFormsAppSimulation
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new StartForm());
+
+            var controller = new ApplicationController(new LightInjectAdapder())
+                .RegisterView<IStartView, StartForm>()
+                .RegisterView<IStartConfigurationView, StartConfigurationForm>();
+
+            
+            controller.Run<StartPresenter>();
+            
+
         }
     }
 }

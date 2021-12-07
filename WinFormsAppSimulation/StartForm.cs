@@ -37,9 +37,10 @@ namespace WinFormsAppSimulation
             //var presenter = new StartFormPresenter(this);
         }
 
-        public new void Hide()
+        public new void Show()
         {
-            base.Hide();
+            base.Show();
+            Application.Run(this);
         }
 
         /*

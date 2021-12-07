@@ -20,7 +20,6 @@ namespace Presenters.Presenters
         private void StartConfiguration()
         {
             Controller.Run<StartConfigurationPresenter>();
-            View.Hide();
         }
     }
 }
