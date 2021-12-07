@@ -10,6 +10,5 @@ namespace Presenters.IViews
     public interface IStrategyChoosingView: IView
     {
         event Action Ok;
-
     }
 }

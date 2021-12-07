@@ -9,6 +9,6 @@ namespace Presenters.IViews
 {
     public interface ICreatePeopleView : IView
     {
-
+        event Action Create;
     }
 }

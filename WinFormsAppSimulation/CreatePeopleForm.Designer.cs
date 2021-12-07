@@ -46,6 +46,7 @@ namespace WinFormsAppSimulation
             this.CreateButton.TabIndex = 0;
             this.CreateButton.Text = "Создать";
             this.CreateButton.UseVisualStyleBackColor = true;
+            //this.CreateButton.Click += new System.EventHandler(this.CreateButton_Click);
             // 
             // label1
             // 

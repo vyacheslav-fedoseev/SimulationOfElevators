@@ -15,6 +15,7 @@ namespace WinFormsAppSimulation
 {
     public partial class StartForm : Form, IStartView
     {
+        private static int firstLaunch = 0;
         public event Action StartConfiguration;
         public event Action Exit;
         public event Action StrategyChoosing;
@@ -40,8 +41,11 @@ namespace WinFormsAppSimulation
         public new void Show()
         {
             base.Show();
-            Application.Run(this);
+            if (firstLaunch++ == 0)
+                Application.Run(this);
         }
+
+
 
         /*
         private void StartConfigurationButton_Click(object sender, EventArgs e)

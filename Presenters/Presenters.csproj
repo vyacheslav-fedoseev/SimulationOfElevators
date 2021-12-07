@@ -56,9 +56,13 @@
     <Compile Include="IViews\IStatisticsView.cs" />
     <Compile Include="IViews\IStrategyChoosingView.cs" />
     <Compile Include="Common\IView.cs" />
+    <Compile Include="Presenters\CheckPeopleStatusPresenter.cs" />
+    <Compile Include="Presenters\CreatePeoplePresenter.cs" />
     <Compile Include="Presenters\SetConfigurationPresenter.cs" />
     <Compile Include="Presenters\SetElevatorsConfigurationPresenter.cs" />
+    <Compile Include="Presenters\SimulationPresenter.cs" />
     <Compile Include="Presenters\StartConfigurationPresenter.cs" />
+    <Compile Include="Presenters\StatisticsPresenter.cs" />
     <Compile Include="Presenters\StrategyChoosingPresenter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Presenters\StartPresenter.cs" />

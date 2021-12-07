@@ -28,7 +28,7 @@ namespace WinFormsAppSimulation
                 .RegisterView<ICreatePeopleView, CreatePeopleForm>()
                 .RegisterView<ISetConfigurationView, SetConfigurationForm>()
                 .RegisterView<ISetElevatorsConfigurationView, SetElevatorsConfigurationForm>()
-                .RegisterView < ISimulationView, SimulationForm>()
+                .RegisterView<ISimulationView, SimulationForm>()
                 .RegisterView<IStatisticsView, StatisticsForm>()
                 .RegisterView<IStrategyChoosingView, StrategyChoosingForm>();
 

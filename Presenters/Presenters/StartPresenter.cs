@@ -16,6 +16,8 @@ namespace Presenters.Presenters
         {
             View.StartConfiguration += () => StartConfiguration();
             View.StrategyChoosing += () => StrategyChoosing();
+            View.StartSimulation += () => StartSimulation();
+            View.Exit += () => Exit();
         }
         private void StartConfiguration()
         {
@@ -25,6 +27,15 @@ namespace Presenters.Presenters
         private void StrategyChoosing()
         {
             Controller.Run<StrategyChoosingPresenter>();
+        }
+        private void StartSimulation()
+        {
+            View.Hide();
+            Controller.Run<SimulationPresenter, IStartView>(this.View);
+        }
+        private void Exit()
+        {
+            View.Close();
         }
     }
 }

@@ -13,15 +13,27 @@ namespace WinFormsAppSimulation
 {
     public partial class CreatePeopleForm : Form, ICreatePeopleView
     {
+        public event Action Create;
 
         public CreatePeopleForm()
         {
             InitializeComponent();
+            CreateButton.Click += (sender, args) => Invoke(Create);
         }
 
         private void Invoke(Action action)
         {
             if (action != null) action();
         }
+        public new void Show()
+        {
+            base.ShowDialog();
+        }
+        /*
+        private void CreateButton_Click(object sender, EventArgs e)
+        {
+
+        }
+        */
     }
 }

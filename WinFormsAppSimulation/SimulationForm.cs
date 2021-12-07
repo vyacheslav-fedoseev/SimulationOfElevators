@@ -22,7 +22,7 @@ namespace WinFormsAppSimulation
         public event Action SpeedUp;
         public event Action SlowDown;
         public event Action Fire;
-        public SimulationForm(StartForm startForm)
+        public SimulationForm()
         {
             InitializeComponent();
              //this.startForm = startForm;
@@ -40,6 +40,10 @@ namespace WinFormsAppSimulation
             if (action != null) action();
         }
 
+        public new void Show()
+        {
+            base.ShowDialog();
+        }
         /* private void SimulationForm_FormClosed(object sender, FormClosedEventArgs e)
          {
              startForm.Show();
