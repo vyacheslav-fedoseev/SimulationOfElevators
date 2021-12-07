@@ -23,7 +23,14 @@ namespace WinFormsAppSimulation
 
             var controller = new ApplicationController(new LightInjectAdapder())
                 .RegisterView<IStartView, StartForm>()
-                .RegisterView<IStartConfigurationView, StartConfigurationForm>();
+                .RegisterView<IStartConfigurationView, StartConfigurationForm>()
+                .RegisterView<ICheckPeopleStatusView, CheckPeopleStatusForm>()
+                .RegisterView<ICreatePeopleView, CreatePeopleForm>()
+                .RegisterView<ISetConfigurationView, SetConfigurationForm>()
+                .RegisterView<ISetElevatorsConfigurationView, SetElevatorsConfigurationForm>()
+                .RegisterView < ISimulationView, SimulationForm>()
+                .RegisterView<IStatisticsView, StatisticsForm>()
+                .RegisterView<IStrategyChoosingView, StrategyChoosingForm>();
 
             
             controller.Run<StartPresenter>();
