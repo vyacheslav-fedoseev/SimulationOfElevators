@@ -50,7 +50,11 @@
     <Compile Include="Repositories\IRepository.cs" />
     <Compile Include="Repositories\PeopleRepository.cs" />
     <Compile Include="Services\ConfigurationService.cs" />
+    <Compile Include="Services\ElevatorService.cs" />
+    <Compile Include="Services\FloorService.cs" />
     <Compile Include="Services\IConfigurationService.cs" />
+    <Compile Include="Services\IElevatorsService.cs" />
+    <Compile Include="Services\IFloorService.cs" />
     <Compile Include="Services\IPeopleService.cs" />
     <Compile Include="Services\LiftManager.cs" />
     <Compile Include="Entities\Elevator.cs" />

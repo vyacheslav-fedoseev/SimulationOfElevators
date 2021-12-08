@@ -35,6 +35,8 @@ namespace WinFormsAppSimulation
                 .RegisterView<IStrategyChoosingView, StrategyChoosingForm>()
                 .RegisterService<IConfigurationService, ConfigurationService>()
                 .RegisterService<IPeopleService, PeopleService>()
+                .RegisterService<IFloorService, FloorService>()
+                .RegisterService<IElevatorsService, ElevatorService>()
                 .RegisterService<IPeopleRepository, PeopleRepository>()
                 .RegisterService<IFloorRepository, FloorRepository>()
                 .RegisterService<IElevatorRepository, ElevatorRepository>();

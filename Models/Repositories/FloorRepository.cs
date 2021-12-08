@@ -11,14 +11,12 @@ namespace Models.Repositories
     {
         private static List<Floor> _floor = new List<Floor>();
         private static int _id = 0;
-
-        public FloorRepository(int count)
+        
+        public void AddNewFloor()
         {
-            for (int i = 0; i < count; i++)
-            {
-                _floor.Add(new Floor(_id++));
-            }
+            _floor.Add(new Floor(_id++));
         }
+
         public Floor Find(int id)
         {
             return _floor.Find(c => c._ID == id);

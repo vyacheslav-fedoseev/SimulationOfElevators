@@ -13,9 +13,14 @@ namespace Presenters.Presenters
     public class StartPresenter : BasePresenter<IStartView>
     {
         private IConfigurationService _configurationService;
-        public StartPresenter(IApplicationController controller, IStartView view, IConfigurationService configurationService) : base(controller, view)
+        private IFloorService _floorService;
+        private IElevatorsService _elevatorsService;
+        public StartPresenter(IApplicationController controller, IStartView view, IConfigurationService configurationService, 
+            IFloorService floorService, IElevatorsService elevatorsService) : base(controller, view)
         {
             _configurationService = configurationService;
+            _floorService = floorService;
+            _elevatorsService = elevatorsService;
 
             View.StartConfiguration += () => StartConfiguration();
             View.StrategyChoosing += () => StrategyChoosing();
@@ -35,6 +40,8 @@ namespace Presenters.Presenters
         {
             if (_configurationService.IsConfigurationSet())
             {
+                _floorService.InitializeFloorRepozitory();
+                _elevatorsService.InitializeElevatorRepository();
                 View.Hide();
                 Controller.Run<SimulationPresenter, IStartView>(this.View);
             }
