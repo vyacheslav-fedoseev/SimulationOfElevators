@@ -29,6 +29,7 @@ namespace WinFormsAppSimulation
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.menuStrip = new System.Windows.Forms.MenuStrip();
             this.действиеToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.CreatePeopleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -38,6 +39,7 @@ namespace WinFormsAppSimulation
             this.SlowDownButton = new System.Windows.Forms.Button();
             this.PlayPauseButton = new System.Windows.Forms.Button();
             this.StopButton = new System.Windows.Forms.Button();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.menuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -117,6 +119,10 @@ namespace WinFormsAppSimulation
             this.StopButton.Text = "█";
             this.StopButton.UseVisualStyleBackColor = true;
             // 
+            // timer1
+            // 
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
             // SimulationForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -149,5 +155,6 @@ namespace WinFormsAppSimulation
         private System.Windows.Forms.Button SlowDownButton;
         private System.Windows.Forms.Button PlayPauseButton;
         private System.Windows.Forms.Button StopButton;
+        private System.Windows.Forms.Timer timer1;
     }
 }

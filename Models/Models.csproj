@@ -51,6 +51,7 @@
     <Compile Include="Repositories\PeopleRepository.cs" />
     <Compile Include="Services\ConfigurationService.cs" />
     <Compile Include="Services\IConfigurationService.cs" />
+    <Compile Include="Services\IPeopleService.cs" />
     <Compile Include="Services\LiftManager.cs" />
     <Compile Include="Entities\Elevator.cs" />
     <Compile Include="Entities\Floor.cs" />
@@ -58,6 +59,7 @@
     <Compile Include="Entities\People.cs" />
     <Compile Include="Entities\PlaceInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\PeopleService.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

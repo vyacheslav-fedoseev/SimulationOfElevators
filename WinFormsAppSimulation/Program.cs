@@ -32,7 +32,8 @@ namespace WinFormsAppSimulation
                 .RegisterView<ISimulationView, SimulationForm>()
                 .RegisterView<IStatisticsView, StatisticsForm>()
                 .RegisterView<IStrategyChoosingView, StrategyChoosingForm>()
-                .RegisterService<IConfigurationService, ConfigurationService>();
+                .RegisterService<IConfigurationService, ConfigurationService>()
+                .RegisterService<IPeopleService, PeopleService>();
 
 
 

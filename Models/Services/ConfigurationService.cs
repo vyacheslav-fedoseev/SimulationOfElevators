@@ -9,14 +9,13 @@ namespace Models.Services
 {
     public class ConfigurationService : IConfigurationService
     {
-        private static ConfigurationData _configurationData;
+        private static ConfigurationData _configurationData = new ConfigurationData();
         private int _currentElevator = 0;
 
         public bool SetConfiguration(int countFloors, int countElevators)
         {
             if (ConfigurationData.MAX_COUNT_FLOORS > countFloors && ConfigurationData.MAX_COUNT_ELEVATORS > countElevators)
             {
-                _configurationData = new ConfigurationData();
                 _configurationData._countFloors = countFloors;
                 _configurationData._countElevators = countElevators;
                 _configurationData._capacity = new int[countElevators];

@@ -44,48 +44,58 @@ namespace WinFormsAppSimulation
         {
             base.ShowDialog();
         }
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+
+        }
         /* private void SimulationForm_FormClosed(object sender, FormClosedEventArgs e)
-         {
-             startForm.Show();
-         }
+{
+startForm.Show();
+}
 
-         private void CreatePeopleToolStripMenuItem_Click(object sender, EventArgs e)
-         {
-             CreatePeopleForm createPeopleForm = new CreatePeopleForm();
-             createPeopleForm.Show();
-         }
+private void CreatePeopleToolStripMenuItem_Click(object sender, EventArgs e)
+{
+CreatePeopleForm createPeopleForm = new CreatePeopleForm();
+createPeopleForm.Show();
+}
 
-         private void CheckPeopleStatusToolStripMenuItem_Click(object sender, EventArgs e)
-         {
-             CheckPeopleStatusForm checkPeopleStatusForm = new CheckPeopleStatusForm();
-             checkPeopleStatusForm.Show();
-         }
+private void CheckPeopleStatusToolStripMenuItem_Click(object sender, EventArgs e)
+{
+CheckPeopleStatusForm checkPeopleStatusForm = new CheckPeopleStatusForm();
+checkPeopleStatusForm.Show();
+}
 
-         private void StopButton_Click(object sender, EventArgs e)
-         {
-             this.Hide();
-             StatisticsForm statisticsForm = new StatisticsForm(this);
-             statisticsForm.ShowDialog();
-         }
+private void StopButton_Click(object sender, EventArgs e)
+{
+this.Hide();
+StatisticsForm statisticsForm = new StatisticsForm(this);
+statisticsForm.ShowDialog();
+}
 
-        private void PlayPauseButton_Click(object sender, EventArgs e)
-        {
+private void PlayPauseButton_Click(object sender, EventArgs e)
+{
 
-        }
+}
 
-        private void SpeedUpButton_Click(object sender, EventArgs e)
-        {
+private void SpeedUpButton_Click(object sender, EventArgs e)
+{
 
-        }
+}
 
-        private void SlowDownButton_Click(object sender, EventArgs e)
-        {
+private void SlowDownButton_Click(object sender, EventArgs e)
+{
 
-        }
+}
 
-        private void FireButton_Click(object sender, EventArgs e)
-        {
+private void FireButton_Click(object sender, EventArgs e)
+{
 
-        }*/
+}*/
     }
 }
