@@ -14,9 +14,9 @@ namespace Presenters.Presenters
     {
         private IConfigurationService _configurationService;
         private IFloorService _floorService;
-        private IElevatorsService _elevatorsService;
+        private IElevatorsManager _elevatorsService;
         public StartPresenter(IApplicationController controller, IStartView view, IConfigurationService configurationService, 
-            IFloorService floorService, IElevatorsService elevatorsService) : base(controller, view)
+            IFloorService floorService, IElevatorsManager elevatorsService) : base(controller, view)
         {
             _configurationService = configurationService;
             _floorService = floorService;

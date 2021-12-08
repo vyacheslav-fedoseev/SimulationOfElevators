@@ -8,11 +8,11 @@ using Models.Entities;
 
 namespace Models.Services
 {
-    public class ElevatorService : IElevatorsService
+    public class ElevatorsManager : IElevatorsManager
     {
         private IElevatorRepository _elevatorsRepository;
 
-        public ElevatorService(IElevatorRepository elevatorsRepository)
+        public ElevatorsManager(IElevatorRepository elevatorsRepository)
         {
             _elevatorsRepository = elevatorsRepository;
         }

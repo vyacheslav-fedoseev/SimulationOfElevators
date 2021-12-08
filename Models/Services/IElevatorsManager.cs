@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Models.Services
 {
-    public interface IElevatorsService
+    public interface IElevatorsManager
     {
         void InitializeElevatorRepository();
     }
