@@ -34,6 +34,7 @@ namespace WinFormsAppSimulation
             this.StartSimulationButton = new System.Windows.Forms.Button();
             this.ExitButton = new System.Windows.Forms.Button();
             this.CreateEventsListButton = new System.Windows.Forms.Button();
+            this.ErrorMessageLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // StartConfigurationButton
@@ -44,7 +45,6 @@ namespace WinFormsAppSimulation
             this.StartConfigurationButton.TabIndex = 0;
             this.StartConfigurationButton.Text = "Задать конфигурацию";
             this.StartConfigurationButton.UseVisualStyleBackColor = true;
-            // this.StartConfigurationButton.Click += new System.EventHandler(this.StartConfigurationButton_Click);
             // 
             // StrategyChoosingButton
             // 
@@ -54,7 +54,6 @@ namespace WinFormsAppSimulation
             this.StrategyChoosingButton.TabIndex = 1;
             this.StrategyChoosingButton.Text = "Выбрать стратегию";
             this.StrategyChoosingButton.UseVisualStyleBackColor = true;
-            // this.StrategyChoosingButton.Click += new System.EventHandler(this.StrategyChoosingButton_Click);
             // 
             // StartSimulationButton
             // 
@@ -64,7 +63,6 @@ namespace WinFormsAppSimulation
             this.StartSimulationButton.TabIndex = 2;
             this.StartSimulationButton.Text = "Запустить симуляцию";
             this.StartSimulationButton.UseVisualStyleBackColor = true;
-            // this.StartSimulationButton.Click += new System.EventHandler(this.StartSimulationButton_Click);
             // 
             // ExitButton
             // 
@@ -74,7 +72,6 @@ namespace WinFormsAppSimulation
             this.ExitButton.TabIndex = 3;
             this.ExitButton.Text = "Выход";
             this.ExitButton.UseVisualStyleBackColor = true;
-            // this.ExitButton.Click += new System.EventHandler(this.ExitButton_Click);
             // 
             // CreateEventsListButton
             // 
@@ -85,13 +82,22 @@ namespace WinFormsAppSimulation
             this.CreateEventsListButton.TabIndex = 4;
             this.CreateEventsListButton.Text = "Список событий";
             this.CreateEventsListButton.UseVisualStyleBackColor = true;
-            // this.CreateEventsListButton.Click += new System.EventHandler(this.CreateEventsListButton_Click);
+            // 
+            // ErrorMessageLabel
+            // 
+            this.ErrorMessageLabel.AutoSize = true;
+            this.ErrorMessageLabel.ForeColor = System.Drawing.Color.Red;
+            this.ErrorMessageLabel.Location = new System.Drawing.Point(118, 239);
+            this.ErrorMessageLabel.Name = "ErrorMessageLabel";
+            this.ErrorMessageLabel.Size = new System.Drawing.Size(0, 13);
+            this.ErrorMessageLabel.TabIndex = 5;
             // 
             // StartForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(484, 450);
+            this.Controls.Add(this.ErrorMessageLabel);
             this.Controls.Add(this.CreateEventsListButton);
             this.Controls.Add(this.ExitButton);
             this.Controls.Add(this.StartSimulationButton);
@@ -100,6 +106,7 @@ namespace WinFormsAppSimulation
             this.Name = "StartForm";
             this.Text = "StartForm";
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -110,5 +117,6 @@ namespace WinFormsAppSimulation
         private System.Windows.Forms.Button StartSimulationButton;
         private System.Windows.Forms.Button ExitButton;
         private System.Windows.Forms.Button CreateEventsListButton;
+        private System.Windows.Forms.Label ErrorMessageLabel;
     }
 }

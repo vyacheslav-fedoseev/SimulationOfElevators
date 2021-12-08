@@ -22,6 +22,14 @@ namespace WinFormsAppSimulation
         public event Action StartSimulation;
         public event Action CreateEventsList;
 
+        public void ShowError(string message)
+        {
+            ErrorMessageLabel.Text = message;
+        }
+        public void HideError()
+        {
+            ErrorMessageLabel.Text = "";
+        }
         private void Invoke(Action action)
         {
             if (action != null) action();

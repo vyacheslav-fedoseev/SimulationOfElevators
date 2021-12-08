@@ -6,14 +6,17 @@ using System.Threading.Tasks;
 using Models;
 using Presenters.IViews;
 using Presenters.Common;
+using Models.Services;
 
 namespace Presenters.Presenters
 {
     public class StartPresenter : BasePresenter<IStartView>
     {
-
-        public StartPresenter(IApplicationController controller, IStartView view) : base(controller, view)
+        private IConfigurationService _configurationService;
+        public StartPresenter(IApplicationController controller, IStartView view, IConfigurationService configurationService) : base(controller, view)
         {
+            _configurationService = configurationService;
+
             View.StartConfiguration += () => StartConfiguration();
             View.StrategyChoosing += () => StrategyChoosing();
             View.StartSimulation += () => StartSimulation();
@@ -30,8 +33,14 @@ namespace Presenters.Presenters
         }
         private void StartSimulation()
         {
-            View.Hide();
-            Controller.Run<SimulationPresenter, IStartView>(this.View);
+            if (_configurationService.IsConfigurationSet())
+            {
+                View.Hide();
+                Controller.Run<SimulationPresenter, IStartView>(this.View);
+            }
+            else
+                View.ShowError("Конфигурация не задана либо задана не корректно");
+            
         }
         private void Exit()
         {

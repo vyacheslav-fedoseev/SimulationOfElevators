@@ -26,11 +26,11 @@ namespace WinFormsAppSimulation
             if (action != null) action();
         }
 
-        void ShowError(string message)
+        public void ShowError(string message)
         {
             ErrorMessageLebel.Text = message;
         }
-        void HideError()
+        public void HideError()
         {
             ErrorMessageLebel.Text = "";
         }

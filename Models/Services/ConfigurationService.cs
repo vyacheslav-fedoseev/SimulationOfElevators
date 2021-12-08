@@ -12,6 +12,20 @@ namespace Models.Services
         private ConfigurationData _configurationData = new ConfigurationData();
         private int _currentElevator = 0;
 
+        public bool IsConfigurationSet()
+        {
+            if (ConfigurationData._capacity != null &&
+                ConfigurationData._maxAcceleration != null &&
+                ConfigurationData._maxSpeed != null &&
+                ConfigurationData._capacity[ConfigurationData._countElevators-1] != 0 &&
+                ConfigurationData._maxAcceleration[ConfigurationData._countElevators-1] != 0 &&
+                ConfigurationData._maxSpeed[ConfigurationData._countElevators-1] != 0 &&
+                ConfigurationData._countElevators != 0 &&
+                ConfigurationData._countFloors != 0 
+                
+                ) return true;
+            else return false;
+        }
         public bool SetConfiguration(int countFloors, int countElevators)
         {
             if (ConfigurationData.MAX_COUNT_FLOORS > countFloors && ConfigurationData.MAX_COUNT_ELEVATORS > countElevators)

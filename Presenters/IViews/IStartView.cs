@@ -14,5 +14,8 @@ namespace Presenters.IViews
         event Action StrategyChoosing;
         event Action Exit;
         event Action StartConfiguration;
+        void ShowError(string message);
+        void HideError();
+
     }
 }
