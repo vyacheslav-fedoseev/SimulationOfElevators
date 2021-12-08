@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Entities\ConfigurationData.cs" />
     <Compile Include="Repositories\ElevatorRepository.cs" />
     <Compile Include="Repositories\FloorRepository.cs" />
     <Compile Include="Repositories\IElevatorRepository.cs" />
@@ -48,6 +49,8 @@
     <Compile Include="Repositories\IPeopleRepository.cs" />
     <Compile Include="Repositories\IRepository.cs" />
     <Compile Include="Repositories\PeopleRepository.cs" />
+    <Compile Include="Services\ConfigurationService.cs" />
+    <Compile Include="Services\IConfigurationService.cs" />
     <Compile Include="Services\LiftManager.cs" />
     <Compile Include="Entities\Elevator.cs" />
     <Compile Include="Entities\Floor.cs" />

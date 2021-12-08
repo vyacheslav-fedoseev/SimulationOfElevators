@@ -25,10 +25,6 @@ namespace WinFormsAppSimulation
         {
             if (action != null) action();
         }
-        public new void Show()
-        {
-            base.ShowDialog();
-        }
         /*
         private void CreateButton_Click(object sender, EventArgs e)
         {

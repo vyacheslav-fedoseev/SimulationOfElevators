@@ -17,7 +17,7 @@ namespace Presenters.Presenters
         }
         public void Create()
         {
-            View.Close();
+            // View.Close();
         }
     }
 }

@@ -11,10 +11,10 @@ namespace Models.Repositories
     {
         private static List<Floor> _floor = new List<Floor>();
         private static int _id = 0;
-        private const int MAX_COUNT = 20;
+
         public FloorRepository(int count)
         {
-            for (int i = 0; i < count && i < MAX_COUNT; i++)
+            for (int i = 0; i < count; i++)
             {
                 _floor.Add(new Floor(_id++));
             }
