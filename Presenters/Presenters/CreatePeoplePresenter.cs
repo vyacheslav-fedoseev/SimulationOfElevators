@@ -20,17 +20,18 @@ namespace Presenters.Presenters
         }
         public void Create(string countPeople, string currentFloor, string destinationFloor)
         {
-            if(countPeople!= "" && currentFloor != "" && destinationFloor!="")
+            if (countPeople != "" && currentFloor != "" && destinationFloor != "" && currentFloor != destinationFloor)
             {
+                View.HideError();
                 int countPeopleInt = int.Parse(countPeople);
                 int currentFloorInt = int.Parse(currentFloor);
                 int destinationFloorInt = int.Parse(destinationFloor);
 
                 if (!_peopleService.CreatePeople(countPeopleInt, currentFloorInt, destinationFloorInt))
-                    View.ShowError("Этаж введен не верно");
+                    View.ShowError("Этаж введен неверно");
             }
             else
-                View.ShowError("Данные введены не корректно");
+                View.ShowError("Данные введены некорректно");
 
         }
     }

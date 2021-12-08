@@ -22,13 +22,12 @@ namespace Models.Services
                 ConfigurationData._maxSpeed[ConfigurationData._countElevators-1] != 0 &&
                 ConfigurationData._countElevators != 0 &&
                 ConfigurationData._countFloors != 0 
-                
                 ) return true;
             else return false;
         }
         public bool SetConfiguration(int countFloors, int countElevators)
         {
-            if (ConfigurationData.MAX_COUNT_FLOORS > countFloors && ConfigurationData.MAX_COUNT_ELEVATORS > countElevators)
+            if (ConfigurationData.MAX_COUNT_FLOORS >= countFloors && ConfigurationData.MAX_COUNT_ELEVATORS >= countElevators)
             {
                 ConfigurationData._countFloors = countFloors;
                 ConfigurationData._countElevators = countElevators;

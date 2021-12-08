@@ -40,6 +40,7 @@ namespace Presenters.Presenters
         {
             if (_configurationService.IsConfigurationSet())
             {
+                View.HideError();
                 _floorService.InitializeFloorRepozitory();
                 _elevatorsService.InitializeElevatorRepository();
                 View.Hide();
