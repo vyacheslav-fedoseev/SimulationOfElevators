@@ -5,20 +5,38 @@ using System.Text;
 using System.Threading.Tasks;
 using Presenters.Common;
 using Presenters.IViews;
+using Models.Services;
 
 namespace Presenters.Presenters
 {
     class SetConfigurationPresenter: BasePresenter<ISetConfigurationView>
     {
-        public SetConfigurationPresenter(IApplicationController controller, ISetConfigurationView view)
+        private IConfigurationService _configurationService;
+        public SetConfigurationPresenter(IApplicationController controller, ISetConfigurationView view, IConfigurationService service )
             : base(controller, view)
         {
-            View.Next += () => Next();
+            _configurationService = service;
+            View.Next += () => Next(View.elevatorsCount, View.floorsCount);
         }
-        private void Next()
+        private void Next(string floorsCount, string elevatorsCount)
         {
-            //Controller.Run<SetElevatorsConfigurationPresenter, ISetConfigurationView>(this.View);
-            Controller.Run<SetElevatorsConfigurationPresenter, ISetConfigurationView>(this.View);
+            if(floorsCount!="" && elevatorsCount!="" )
+            {
+                View.HideError();
+                int floorsCountInt = int.Parse(floorsCount);
+                int elevatorsCountInt = int.Parse(elevatorsCount);
+
+                if(!_configurationService.SetConfiguration(floorsCountInt, elevatorsCountInt))
+                    View.ShowError("Некорректные данные");
+                else
+                    Controller.Run<SetElevatorsConfigurationPresenter, ISetConfigurationView>(this.View);
+
+            }
+            else
+            {
+                View.ShowError("Некорректные данные");
+            }
+            
         }
     }
 }

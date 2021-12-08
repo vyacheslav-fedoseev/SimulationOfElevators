@@ -29,42 +29,42 @@ namespace WinFormsAppSimulation
         /// </summary>
         private void InitializeComponent()
         {
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.textBox3 = new System.Windows.Forms.TextBox();
+            this.MaxSpeedTextBox = new System.Windows.Forms.TextBox();
+            this.CapacityTextBox = new System.Windows.Forms.TextBox();
+            this.MaxAccelerationTextBox = new System.Windows.Forms.TextBox();
             this.TamplateCheckBox = new System.Windows.Forms.CheckBox();
             this.EndLiftsConfigurationButton = new System.Windows.Forms.Button();
             this.MaxSpeedLable = new System.Windows.Forms.Label();
             this.MaxAccelerationLabel = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.AddLiftButton = new System.Windows.Forms.Button();
+            this.CapacityLabel = new System.Windows.Forms.Label();
+            this.AddElevatorButton = new System.Windows.Forms.Button();
+            this.ErrorLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
-            // textBox1
+            // MaxSpeedTextBox
             // 
-            this.textBox1.Location = new System.Drawing.Point(217, 37);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(100, 20);
-            this.textBox1.TabIndex = 0;
+            this.MaxSpeedTextBox.Location = new System.Drawing.Point(217, 37);
+            this.MaxSpeedTextBox.Name = "MaxSpeedTextBox";
+            this.MaxSpeedTextBox.Size = new System.Drawing.Size(100, 20);
+            this.MaxSpeedTextBox.TabIndex = 0;
             // 
-            // textBox2
+            // CapacityTextBox
             // 
-            this.textBox2.Location = new System.Drawing.Point(217, 113);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(100, 20);
-            this.textBox2.TabIndex = 1;
+            this.CapacityTextBox.Location = new System.Drawing.Point(217, 113);
+            this.CapacityTextBox.Name = "CapacityTextBox";
+            this.CapacityTextBox.Size = new System.Drawing.Size(100, 20);
+            this.CapacityTextBox.TabIndex = 1;
             // 
-            // textBox3
+            // MaxAccelerationTextBox
             // 
-            this.textBox3.Location = new System.Drawing.Point(217, 75);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(100, 20);
-            this.textBox3.TabIndex = 2;
+            this.MaxAccelerationTextBox.Location = new System.Drawing.Point(217, 75);
+            this.MaxAccelerationTextBox.Name = "MaxAccelerationTextBox";
+            this.MaxAccelerationTextBox.Size = new System.Drawing.Size(100, 20);
+            this.MaxAccelerationTextBox.TabIndex = 2;
             // 
             // TamplateCheckBox
             // 
             this.TamplateCheckBox.AutoSize = true;
-            this.TamplateCheckBox.Enabled = false;
             this.TamplateCheckBox.Location = new System.Drawing.Point(171, 151);
             this.TamplateCheckBox.Name = "TamplateCheckBox";
             this.TamplateCheckBox.Size = new System.Drawing.Size(161, 17);
@@ -80,7 +80,6 @@ namespace WinFormsAppSimulation
             this.EndLiftsConfigurationButton.TabIndex = 4;
             this.EndLiftsConfigurationButton.Text = "Завершить конфигурацию";
             this.EndLiftsConfigurationButton.UseVisualStyleBackColor = true;
-            // this.EndLiftsConfigurationButton.Click += new System.EventHandler(this.EndLiftsConfigurationButton_Click);
             // 
             // MaxSpeedLable
             // 
@@ -100,41 +99,51 @@ namespace WinFormsAppSimulation
             this.MaxAccelerationLabel.TabIndex = 6;
             this.MaxAccelerationLabel.Text = "Максимальное ускорение";
             // 
-            // label3
+            // CapacityLabel
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(54, 113);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(76, 13);
-            this.label3.TabIndex = 7;
-            this.label3.Text = "Вместимость";
+            this.CapacityLabel.AutoSize = true;
+            this.CapacityLabel.Location = new System.Drawing.Point(54, 113);
+            this.CapacityLabel.Name = "CapacityLabel";
+            this.CapacityLabel.Size = new System.Drawing.Size(76, 13);
+            this.CapacityLabel.TabIndex = 7;
+            this.CapacityLabel.Text = "Вместимость";
             // 
-            // AddLiftButton
+            // AddElevatorButton
             // 
-            this.AddLiftButton.Location = new System.Drawing.Point(149, 244);
-            this.AddLiftButton.Name = "AddLiftButton";
-            this.AddLiftButton.Size = new System.Drawing.Size(75, 23);
-            this.AddLiftButton.TabIndex = 8;
-            this.AddLiftButton.Text = "Добавить лифт";
-            this.AddLiftButton.UseVisualStyleBackColor = true;
+            this.AddElevatorButton.Location = new System.Drawing.Point(149, 244);
+            this.AddElevatorButton.Name = "AddElevatorButton";
+            this.AddElevatorButton.Size = new System.Drawing.Size(75, 23);
+            this.AddElevatorButton.TabIndex = 8;
+            this.AddElevatorButton.Text = "Добавить лифт";
+            this.AddElevatorButton.UseVisualStyleBackColor = true;
+            // 
+            // ErrorLabel
+            // 
+            this.ErrorLabel.AutoSize = true;
+            this.ErrorLabel.BackColor = System.Drawing.SystemColors.Control;
+            this.ErrorLabel.ForeColor = System.Drawing.Color.Red;
+            this.ErrorLabel.Location = new System.Drawing.Point(146, 197);
+            this.ErrorLabel.Name = "ErrorLabel";
+            this.ErrorLabel.Size = new System.Drawing.Size(0, 13);
+            this.ErrorLabel.TabIndex = 9;
             // 
             // SetElevatorsConfigurationForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(344, 295);
-            this.Controls.Add(this.AddLiftButton);
-            this.Controls.Add(this.label3);
+            this.Controls.Add(this.ErrorLabel);
+            this.Controls.Add(this.AddElevatorButton);
+            this.Controls.Add(this.CapacityLabel);
             this.Controls.Add(this.MaxAccelerationLabel);
             this.Controls.Add(this.MaxSpeedLable);
             this.Controls.Add(this.EndLiftsConfigurationButton);
             this.Controls.Add(this.TamplateCheckBox);
-            this.Controls.Add(this.textBox3);
-            this.Controls.Add(this.textBox2);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.MaxAccelerationTextBox);
+            this.Controls.Add(this.CapacityTextBox);
+            this.Controls.Add(this.MaxSpeedTextBox);
             this.Name = "SetElevatorsConfigurationForm";
-            this.Text = "Ввод параметров лифтов";
-            // this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.SetElevatorsConfigurationForm_FormClosing);
+            this.Text = "Ы";
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -142,14 +151,15 @@ namespace WinFormsAppSimulation
 
         #endregion
 
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.TextBox textBox3;
+        private System.Windows.Forms.TextBox MaxSpeedTextBox;
+        private System.Windows.Forms.TextBox CapacityTextBox;
+        private System.Windows.Forms.TextBox MaxAccelerationTextBox;
         private System.Windows.Forms.CheckBox TamplateCheckBox;
         private System.Windows.Forms.Button EndLiftsConfigurationButton;
         private System.Windows.Forms.Label MaxSpeedLable;
         private System.Windows.Forms.Label MaxAccelerationLabel;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Button AddLiftButton;
+        private System.Windows.Forms.Label CapacityLabel;
+        private System.Windows.Forms.Button AddElevatorButton;
+        private System.Windows.Forms.Label ErrorLabel;
     }
 }

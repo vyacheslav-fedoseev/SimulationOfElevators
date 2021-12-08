@@ -14,11 +14,23 @@ namespace WinFormsAppSimulation
     public partial class SetConfigurationForm : Form, ISetConfigurationView
     {
         public event Action Next;
+        public string elevatorsCount { get { return elevatorsCountTextBox.Text;} }
+        public string floorsCount { get { return floorsCountTextBox.Text;} }
         public SetConfigurationForm()
         {
             InitializeComponent();
             NextButton.Click += (sender, args) => Invoke(Next);
         }
+
+        public void ShowError(string message)
+        {
+            errorLabel.Text = message;
+        }
+        public void HideError()
+        {
+            errorLabel.Text = "";
+        }
+
 
         private void Invoke(Action action)
         {

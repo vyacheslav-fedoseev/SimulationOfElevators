@@ -11,5 +11,14 @@ namespace Presenters.IViews
     {
         event Action EndLiftsConfiguration;
         event Action SetElevatorsConfigurationClosing;
+        event Action AddElevator;
+
+        void ShowError(string message);
+        void HideError();
+
+        string maxSpeed{get; }
+        string maxAcceleration { get; }
+        string capacity { get; }
+        bool isTemplate { get; }
     }
 }

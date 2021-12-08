@@ -11,5 +11,7 @@ namespace Presenters.Common
         void Show();
         void Close();
         void Hide();
+
+        
     }
 }

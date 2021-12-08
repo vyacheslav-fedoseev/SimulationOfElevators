@@ -6,6 +6,7 @@ using System.Windows.Forms;
 using Presenters.Common;
 using Presenters.Presenters;
 using Presenters.IViews;
+using Models.Services;
 
 
 namespace WinFormsAppSimulation
@@ -30,9 +31,11 @@ namespace WinFormsAppSimulation
                 .RegisterView<ISetElevatorsConfigurationView, SetElevatorsConfigurationForm>()
                 .RegisterView<ISimulationView, SimulationForm>()
                 .RegisterView<IStatisticsView, StatisticsForm>()
-                .RegisterView<IStrategyChoosingView, StrategyChoosingForm>();
+                .RegisterView<IStrategyChoosingView, StrategyChoosingForm>()
+                .RegisterService<IConfigurationService, ConfigurationService>();
 
-            
+
+
             controller.Run<StartPresenter>();
             
 

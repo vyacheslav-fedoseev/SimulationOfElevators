@@ -9,13 +9,14 @@ namespace Models.Services
 {
     public class ConfigurationService : IConfigurationService
     {
-        private ConfigurationData _configurationData = new ConfigurationData();
+        private static ConfigurationData _configurationData;
         private int _currentElevator = 0;
 
         public bool SetConfiguration(int countFloors, int countElevators)
         {
-            if (ConfigurationData.MAX_COUNT_FLOORS < countFloors && ConfigurationData.MAX_COUNT_ELEVATORS < countElevators)
+            if (ConfigurationData.MAX_COUNT_FLOORS > countFloors && ConfigurationData.MAX_COUNT_ELEVATORS > countElevators)
             {
+                _configurationData = new ConfigurationData();
                 _configurationData._countFloors = countFloors;
                 _configurationData._countElevators = countElevators;
                 _configurationData._capacity = new int[countElevators];
@@ -28,11 +29,11 @@ namespace Models.Services
         }
         public bool SetElevatorsConfiguration(float maxSpeed, float maxAcceleration, int capacity, bool isTemplate)
         {
-            if (_currentElevator >= ConfigurationData.MAX_COUNT_ELEVATORS)
+            if (_currentElevator >= _configurationData._countElevators)
                 return false;
-            if (isTemplate)
+            else if (isTemplate)
             {
-                for (; _currentElevator < ConfigurationData.MAX_COUNT_ELEVATORS; _currentElevator++)
+                for (; _currentElevator < ConfigurationData.MAX_COUNT_ELEVATORS && _currentElevator < _configurationData._countElevators; _currentElevator++)
                 {
                     _configurationData._capacity[_currentElevator] = capacity;
                     _configurationData._maxAcceleration[_currentElevator] = maxAcceleration;

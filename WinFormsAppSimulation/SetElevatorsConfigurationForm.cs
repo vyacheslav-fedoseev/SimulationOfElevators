@@ -15,11 +15,13 @@ namespace WinFormsAppSimulation
     {
         public event Action EndLiftsConfiguration;
         public event Action SetElevatorsConfigurationClosing;
+        public event Action AddElevator;
 
         public SetElevatorsConfigurationForm()
         {
             InitializeComponent();
             EndLiftsConfigurationButton.Click += (sender, args) => Invoke(EndLiftsConfiguration);
+            AddElevatorButton.Click += (sender, args) => Invoke(AddElevator);
             FormClosing += (sender, args) => Invoke(SetElevatorsConfigurationClosing);
         }
         public new void Show()
@@ -30,6 +32,19 @@ namespace WinFormsAppSimulation
         {
             if (action != null) action();
         }
+        public void ShowError(string message)
+        {
+            ErrorLabel.Text = message;
+        }
+        public void HideError()
+        {
+            ErrorLabel.Text = "";
+        }
+
+        public string maxSpeed { get { return MaxAccelerationTextBox.Text; } }
+        public string maxAcceleration { get { return MaxAccelerationTextBox.Text; } }
+        public string capacity { get { return CapacityTextBox.Text; } }
+        public bool isTemplate { get { return TamplateCheckBox.Checked; } }
         /*
         private void EndLiftsConfigurationButton_Click(object sender, EventArgs e)
         {
