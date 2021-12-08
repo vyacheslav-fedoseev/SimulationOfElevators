@@ -9,18 +9,18 @@ namespace Models.Services
 {
     public class ConfigurationService : IConfigurationService
     {
-        private static ConfigurationData _configurationData = new ConfigurationData();
+        private ConfigurationData _configurationData = new ConfigurationData();
         private int _currentElevator = 0;
 
         public bool SetConfiguration(int countFloors, int countElevators)
         {
             if (ConfigurationData.MAX_COUNT_FLOORS > countFloors && ConfigurationData.MAX_COUNT_ELEVATORS > countElevators)
             {
-                _configurationData._countFloors = countFloors;
-                _configurationData._countElevators = countElevators;
-                _configurationData._capacity = new int[countElevators];
-                _configurationData._maxAcceleration = new float[countElevators];
-                _configurationData._maxSpeed = new float[countElevators];
+                ConfigurationData._countFloors = countFloors;
+                ConfigurationData._countElevators = countElevators;
+                ConfigurationData._capacity = new int[countElevators];
+                ConfigurationData._maxAcceleration = new float[countElevators];
+                ConfigurationData._maxSpeed = new float[countElevators];
                 return true;
             }
             else
@@ -28,22 +28,22 @@ namespace Models.Services
         }
         public bool SetElevatorsConfiguration(float maxSpeed, float maxAcceleration, int capacity, bool isTemplate)
         {
-            if (_currentElevator >= _configurationData._countElevators)
+            if (_currentElevator >= ConfigurationData._countElevators)
                 return false;
             else if (isTemplate)
             {
-                for (; _currentElevator < ConfigurationData.MAX_COUNT_ELEVATORS && _currentElevator < _configurationData._countElevators; _currentElevator++)
+                for (; _currentElevator < ConfigurationData.MAX_COUNT_ELEVATORS && _currentElevator < ConfigurationData._countElevators; _currentElevator++)
                 {
-                    _configurationData._capacity[_currentElevator] = capacity;
-                    _configurationData._maxAcceleration[_currentElevator] = maxAcceleration;
-                    _configurationData._maxSpeed[_currentElevator] = maxSpeed;
+                    ConfigurationData._capacity[_currentElevator] = capacity;
+                    ConfigurationData._maxAcceleration[_currentElevator] = maxAcceleration;
+                    ConfigurationData._maxSpeed[_currentElevator] = maxSpeed;
                 }
             }
             else
             {
-                _configurationData._capacity[_currentElevator] = capacity;
-                _configurationData._maxAcceleration[_currentElevator] = maxAcceleration;
-                _configurationData._maxSpeed[_currentElevator] = maxSpeed;
+                ConfigurationData._capacity[_currentElevator] = capacity;
+                ConfigurationData._maxAcceleration[_currentElevator] = maxAcceleration;
+                ConfigurationData._maxSpeed[_currentElevator] = maxSpeed;
                 _currentElevator++;
             }
             return true;

@@ -10,5 +10,11 @@ namespace Presenters.IViews
     public interface ICreatePeopleView : IView
     {
         event Action Create;
+
+        string  peopleCount { get; }
+        string currentFloor { get; }
+        string destinationFloor { get; }
+        void ShowError(string message);
+        void HideError();
     }
 }

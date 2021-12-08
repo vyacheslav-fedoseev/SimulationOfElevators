@@ -7,7 +7,7 @@ using Models.Entities;
 
 namespace Models.Repositories
 {
-    class FloorRepository : IFloorRepository
+    public class FloorRepository : IFloorRepository
     {
         private static List<Floor> _floor = new List<Floor>();
         private static int _id = 0;

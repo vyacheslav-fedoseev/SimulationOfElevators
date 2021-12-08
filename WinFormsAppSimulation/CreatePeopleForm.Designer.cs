@@ -33,9 +33,10 @@ namespace WinFormsAppSimulation
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.textBox3 = new System.Windows.Forms.TextBox();
+            this.PeopleCountTextBox = new System.Windows.Forms.TextBox();
+            this.DestinationFloorTextBox = new System.Windows.Forms.TextBox();
+            this.CurrentFloorTextBox = new System.Windows.Forms.TextBox();
+            this.ErrorMessageLebel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // CreateButton
@@ -46,7 +47,6 @@ namespace WinFormsAppSimulation
             this.CreateButton.TabIndex = 0;
             this.CreateButton.Text = "Создать";
             this.CreateButton.UseVisualStyleBackColor = true;
-            //this.CreateButton.Click += new System.EventHandler(this.CreateButton_Click);
             // 
             // label1
             // 
@@ -75,35 +75,45 @@ namespace WinFormsAppSimulation
             this.label3.TabIndex = 3;
             this.label3.Text = "Этаж назначения :";
             // 
-            // textBox1
+            // PeopleCountTextBox
             // 
-            this.textBox1.Location = new System.Drawing.Point(191, 42);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(41, 20);
-            this.textBox1.TabIndex = 4;
+            this.PeopleCountTextBox.Location = new System.Drawing.Point(191, 42);
+            this.PeopleCountTextBox.Name = "PeopleCountTextBox";
+            this.PeopleCountTextBox.Size = new System.Drawing.Size(41, 20);
+            this.PeopleCountTextBox.TabIndex = 4;
             // 
-            // textBox2
+            // DestinationFloorTextBox
             // 
-            this.textBox2.Location = new System.Drawing.Point(191, 100);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(41, 20);
-            this.textBox2.TabIndex = 5;
+            this.DestinationFloorTextBox.Location = new System.Drawing.Point(191, 100);
+            this.DestinationFloorTextBox.Name = "DestinationFloorTextBox";
+            this.DestinationFloorTextBox.Size = new System.Drawing.Size(41, 20);
+            this.DestinationFloorTextBox.TabIndex = 5;
             // 
-            // textBox3
+            // CurrentFloorTextBox
             // 
-            this.textBox3.Location = new System.Drawing.Point(191, 74);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(41, 20);
-            this.textBox3.TabIndex = 6;
+            this.CurrentFloorTextBox.Location = new System.Drawing.Point(191, 74);
+            this.CurrentFloorTextBox.Name = "CurrentFloorTextBox";
+            this.CurrentFloorTextBox.Size = new System.Drawing.Size(41, 20);
+            this.CurrentFloorTextBox.TabIndex = 6;
+            // 
+            // ErrorMessageLebel
+            // 
+            this.ErrorMessageLebel.AutoSize = true;
+            this.ErrorMessageLebel.ForeColor = System.Drawing.Color.Red;
+            this.ErrorMessageLebel.Location = new System.Drawing.Point(62, 137);
+            this.ErrorMessageLebel.Name = "ErrorMessageLebel";
+            this.ErrorMessageLebel.Size = new System.Drawing.Size(0, 13);
+            this.ErrorMessageLebel.TabIndex = 7;
             // 
             // CreatePeopleForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(272, 219);
-            this.Controls.Add(this.textBox3);
-            this.Controls.Add(this.textBox2);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.ErrorMessageLebel);
+            this.Controls.Add(this.CurrentFloorTextBox);
+            this.Controls.Add(this.DestinationFloorTextBox);
+            this.Controls.Add(this.PeopleCountTextBox);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
@@ -121,8 +131,9 @@ namespace WinFormsAppSimulation
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.TextBox textBox3;
+        private System.Windows.Forms.TextBox PeopleCountTextBox;
+        private System.Windows.Forms.TextBox DestinationFloorTextBox;
+        private System.Windows.Forms.TextBox CurrentFloorTextBox;
+        private System.Windows.Forms.Label ErrorMessageLebel;
     }
 }

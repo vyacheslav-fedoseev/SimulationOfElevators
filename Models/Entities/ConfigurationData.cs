@@ -8,11 +8,11 @@ namespace Models.Entities
 {
     public class ConfigurationData
     {
-        public int _countFloors { get; set; }
-        public int _countElevators { get; set; }
-        public float[] _maxSpeed { get; set; }
-        public float[] _maxAcceleration { get; set; }
-        public int[] _capacity { get; set; }
+        public static int _countFloors { get; set; }
+        public static int _countElevators { get; set; }
+        public static float[] _maxSpeed { get; set; }
+        public static float[] _maxAcceleration { get; set; }
+        public static int[] _capacity { get; set; }
         public const int MAX_COUNT_ELEVATORS = 5;
         public const int MAX_COUNT_FLOORS = 20;
     }

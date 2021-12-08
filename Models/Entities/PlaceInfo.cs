@@ -17,5 +17,14 @@ namespace Models.Entities
             }
         }
         protected Queue<People> _people;
+        public People GetNextPeople()
+        {
+            return _people.Dequeue();
+        }
+
+        public void AddNextPeople(People people)
+        {
+           _people.Enqueue(people);
+        }
     }
 }

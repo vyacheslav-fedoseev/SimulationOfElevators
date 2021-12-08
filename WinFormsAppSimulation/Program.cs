@@ -7,6 +7,7 @@ using Presenters.Common;
 using Presenters.Presenters;
 using Presenters.IViews;
 using Models.Services;
+using Models.Repositories;
 
 
 namespace WinFormsAppSimulation
@@ -33,9 +34,10 @@ namespace WinFormsAppSimulation
                 .RegisterView<IStatisticsView, StatisticsForm>()
                 .RegisterView<IStrategyChoosingView, StrategyChoosingForm>()
                 .RegisterService<IConfigurationService, ConfigurationService>()
-                .RegisterService<IPeopleService, PeopleService>();
-
-
+                .RegisterService<IPeopleService, PeopleService>()
+                .RegisterService<IPeopleRepository, PeopleRepository>()
+                .RegisterService<IFloorRepository, FloorRepository>()
+                .RegisterService<IElevatorRepository, ElevatorRepository>();
 
             controller.Run<StartPresenter>();
             

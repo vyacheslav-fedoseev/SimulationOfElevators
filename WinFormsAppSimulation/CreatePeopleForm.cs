@@ -25,6 +25,19 @@ namespace WinFormsAppSimulation
         {
             if (action != null) action();
         }
+
+        void ShowError(string message)
+        {
+            ErrorMessageLebel.Text = message;
+        }
+        void HideError()
+        {
+            ErrorMessageLebel.Text = "";
+        }
+
+        public string peopleCount { get { return PeopleCountTextBox.Text; } }
+        public string currentFloor { get { return CurrentFloorTextBox.Text; } }
+        public string destinationFloor { get { return DestinationFloorTextBox.Text; } }
         /*
         private void CreateButton_Click(object sender, EventArgs e)
         {

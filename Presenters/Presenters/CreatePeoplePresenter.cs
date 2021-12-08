@@ -5,19 +5,33 @@ using System.Text;
 using System.Threading.Tasks;
 using Presenters.IViews;
 using Presenters.Common;
+using Models.Services;
 
 namespace Presenters.Presenters
 {
     class CreatePeoplePresenter : BasePresenter<ICreatePeopleView>
     {
-        public CreatePeoplePresenter(IApplicationController controller, ICreatePeopleView view)
+        private IPeopleService _peopleService;
+        public CreatePeoplePresenter(IApplicationController controller, ICreatePeopleView view, IPeopleService peopleService)
             : base(controller, view)
         {
-            View.Create += () => Create();
+            _peopleService = peopleService;
+            View.Create += () => Create(View.peopleCount, View.currentFloor, View.destinationFloor);
         }
-        public void Create()
+        public void Create(string countPeople, string currentFloor, string destinationFloor)
         {
-            // View.Close();
+            if(countPeople!= "" && currentFloor != "" && destinationFloor!="")
+            {
+                int countPeopleInt = int.Parse(countPeople);
+                int currentFloorInt = int.Parse(currentFloor);
+                int destinationFloorInt = int.Parse(destinationFloor);
+
+                if (!_peopleService.CreatePeople(countPeopleInt, currentFloorInt, destinationFloorInt))
+                    View.ShowError("Этаж введен не верно");
+            }
+            else
+                View.ShowError("Данные введены не корректно");
+
         }
     }
 }
