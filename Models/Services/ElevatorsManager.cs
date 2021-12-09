@@ -127,6 +127,7 @@ namespace Models.Services
                 elevator._unLoadingTimer = 3;
                 return;
             }
+            
 
             if( (_currentFloor._peopleDirection == PeopleDirection.UP||
                 _currentFloor._peopleDirection == PeopleDirection.BOOTH)&&
@@ -134,16 +135,19 @@ namespace Models.Services
             {
                 elevator._direction = Direction.UP;
                 //isLoad = true;
+                Console.WriteLine("Загрузка!!!!!!");
                 elevator._loadingTimer = 3;
                 return;
             }
+            
 
-            if((_currentFloor._peopleDirection == PeopleDirection.DOWN ||
+            if ((_currentFloor._peopleDirection == PeopleDirection.DOWN ||
                 _currentFloor._peopleDirection == PeopleDirection.BOOTH) &&
                 (elevator._direction == Direction.DOWN || elevator._direction == Direction.STOP))
             {
                 elevator._direction = Direction.DOWN;
                 //isLoad = true;
+                Console.WriteLine("Загрузка(низ)!!!!!!");
                 elevator._loadingTimer = 3;
                 return;
             }
@@ -154,35 +158,47 @@ namespace Models.Services
             for(int i=elevator._currentFloor; i<ConfigurationData._countFloors; i++)
             {
                 if (elevator._destinationFloor[i])
+                {
                     destinationAbove = true;
+                    
+                }    
+                    
                 if(_floorRepository.Find(i+1).isRequested)
                 {
                     requestsAbove = true;
+                    
                     if (nearlestHigherRequest == 0)
                         nearlestHigherRequest = i+1;
                 }
             }
 
-            for (int i = elevator._currentFloor-2; i > 0; i--)
+            for (int i = elevator._currentFloor-2; i >= 0; i--)
             {
                 if (elevator._destinationFloor[i])
+                {
                     destinationBelow = true;
+                    Console.WriteLine("{P1!!!!!!");
+                }
+                    
                 if (_floorRepository.Find(i + 1).isRequested)
                 {
                     requestsBelow = true;
+                    Console.WriteLine("{P2!!!!!!");
                     if (nearlestLowerRequest == 0)
                         nearlestLowerRequest = i + 1;
                 }
             }
 
             if( !destinationAbove && !requestsAbove &&
-                !destinationBelow && !destinationAbove )
+                !destinationBelow && !requestsBelow)
             {
                 elevator._direction = Direction.STOP;
+                Console.WriteLine("стоп!!!!!!");
                 return;
             }
+            
 
-            if(destinationAbove &&(elevator._direction == Direction.STOP||
+            if (destinationAbove &&(elevator._direction == Direction.STOP||
                 elevator._direction == Direction.UP))
             {
                 elevator._direction = Direction.UP;
@@ -258,6 +274,7 @@ namespace Models.Services
         {
             if(elevator._loadingTimer >0)
             {
+                Console.WriteLine("ХЗ_1");
                 if (elevator._loadingTimer == 3)
                 {
                     Floor floor = _floorRepository.Find(elevator._currentFloor);
@@ -265,6 +282,7 @@ namespace Models.Services
                     {
                         People people = floor.GetNextPeople();
                         elevator._destinationFloor[people._DestinationFloor - 1] = true;
+                        //Console.WriteLine(elevator._destinationFloor[people._DestinationFloor - 1].ToString());
                         elevator.AddNextPeople(people);
                     }
                     floor.isRequested = false;

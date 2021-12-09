@@ -27,11 +27,11 @@ namespace Models.Repositories
         }
         public void UpdatePeopleDirection( int id , PeopleDirection peopleDirection)
         {
-            if ((_floor[id]._peopleDirection == PeopleDirection.UP && peopleDirection == PeopleDirection.DOWN) ||
-                (_floor[id]._peopleDirection == PeopleDirection.DOWN && peopleDirection == PeopleDirection.UP) ||
+            if ((_floor[id-1]._peopleDirection == PeopleDirection.UP && peopleDirection == PeopleDirection.DOWN) ||
+                (_floor[id-1]._peopleDirection == PeopleDirection.DOWN && peopleDirection == PeopleDirection.UP) ||
                     (peopleDirection == PeopleDirection.BOOTH))
-                _floor[id]._peopleDirection = PeopleDirection.BOOTH;
-            else _floor[id]._peopleDirection = peopleDirection;
+                _floor[id-1]._peopleDirection = PeopleDirection.BOOTH;
+            else _floor[id-1]._peopleDirection = peopleDirection;
         }
     }
 }

@@ -6,6 +6,7 @@
         public Floor(int id)
         {
             _id = id;
+            _peopleDirection = PeopleDirection.NODIRECTION;
         }
         public bool isRequested { get; set; }
         //public bool isRequest { get; set; }

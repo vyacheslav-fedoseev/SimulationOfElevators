@@ -30,14 +30,19 @@ namespace Models.Services
                 {
                     _floorRepository.Find(currentFloor).AddNextPeople(_peopleRepository.Find(_peopleRepository.Add(destinationFloor, currentFloor)));
                 }*/
+                for(int i=0; i< countPeople; i++)
+                {
+                    _floorRepository.Find(currentFloor).AddNextPeople(_peopleRepository.Find(_peopleRepository.Add(destinationFloor, currentFloor)));
+                }
 
-                _peopleRepository.Add(destinationFloor, currentFloor);
-
+                
                 if (currentFloor < destinationFloor) _floorRepository.UpdatePeopleDirection(currentFloor, PeopleDirection.UP);
                 else _floorRepository.UpdatePeopleDirection(currentFloor, PeopleDirection.DOWN);
                 _floorRepository.Find(currentFloor).isRequested = true;
+                _floorRepository.Find(currentFloor)._CountPeople = countPeople;
 
-            return true;
+
+                return true;
             }
             else
                 return false;

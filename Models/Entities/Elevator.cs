@@ -29,6 +29,12 @@ namespace Models.Entities
             _id = id;
             _direction = Direction.STOP;
             _destinationFloor = new bool[ConfigurationData._countFloors];
+
+            for(int i=0; i< ConfigurationData._countFloors; i++)
+            {
+                _destinationFloor[i] = false;
+            }
+
             _currentFloor = 1;
         }
 
