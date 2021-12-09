@@ -10,5 +10,6 @@ namespace Models.Repositories
     public interface IFloorRepository : IRepository<Floor>
     {
         void AddNewFloor();
+        void UpdatePeopleDirection(int id, PeopleDirection peopleDirection);
     }
 }

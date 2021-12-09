@@ -40,7 +40,11 @@ namespace WinFormsAppSimulation
             this.PlayPauseButton = new System.Windows.Forms.Button();
             this.StopButton = new System.Windows.Forms.Button();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.ElevatorsGrid = new System.Windows.Forms.DataGridView();
+            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.menuStrip.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.ElevatorsGrid)).BeginInit();
             this.SuspendLayout();
             // 
             // menuStrip
@@ -76,7 +80,7 @@ namespace WinFormsAppSimulation
             // 
             // FireButton
             // 
-            this.FireButton.Location = new System.Drawing.Point(305, 442);
+            this.FireButton.Location = new System.Drawing.Point(306, 537);
             this.FireButton.Name = "FireButton";
             this.FireButton.Size = new System.Drawing.Size(36, 32);
             this.FireButton.TabIndex = 1;
@@ -85,7 +89,7 @@ namespace WinFormsAppSimulation
             // 
             // SpeedUpButton
             // 
-            this.SpeedUpButton.Location = new System.Drawing.Point(389, 442);
+            this.SpeedUpButton.Location = new System.Drawing.Point(390, 537);
             this.SpeedUpButton.Name = "SpeedUpButton";
             this.SpeedUpButton.Size = new System.Drawing.Size(36, 32);
             this.SpeedUpButton.TabIndex = 2;
@@ -94,7 +98,7 @@ namespace WinFormsAppSimulation
             // 
             // SlowDownButton
             // 
-            this.SlowDownButton.Location = new System.Drawing.Point(347, 442);
+            this.SlowDownButton.Location = new System.Drawing.Point(348, 537);
             this.SlowDownButton.Name = "SlowDownButton";
             this.SlowDownButton.Size = new System.Drawing.Size(36, 32);
             this.SlowDownButton.TabIndex = 3;
@@ -103,7 +107,7 @@ namespace WinFormsAppSimulation
             // 
             // PlayPauseButton
             // 
-            this.PlayPauseButton.Location = new System.Drawing.Point(431, 442);
+            this.PlayPauseButton.Location = new System.Drawing.Point(432, 537);
             this.PlayPauseButton.Name = "PlayPauseButton";
             this.PlayPauseButton.Size = new System.Drawing.Size(36, 32);
             this.PlayPauseButton.TabIndex = 4;
@@ -112,7 +116,7 @@ namespace WinFormsAppSimulation
             // 
             // StopButton
             // 
-            this.StopButton.Location = new System.Drawing.Point(473, 442);
+            this.StopButton.Location = new System.Drawing.Point(474, 537);
             this.StopButton.Name = "StopButton";
             this.StopButton.Size = new System.Drawing.Size(36, 32);
             this.StopButton.TabIndex = 5;
@@ -123,11 +127,38 @@ namespace WinFormsAppSimulation
             // 
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
+            // ElevatorsGrid
+            // 
+            this.ElevatorsGrid.AllowUserToAddRows = false;
+            this.ElevatorsGrid.AllowUserToDeleteRows = false;
+            this.ElevatorsGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.ElevatorsGrid.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.Column1,
+            this.Column2});
+            this.ElevatorsGrid.Location = new System.Drawing.Point(138, 27);
+            this.ElevatorsGrid.Name = "ElevatorsGrid";
+            this.ElevatorsGrid.ReadOnly = true;
+            this.ElevatorsGrid.Size = new System.Drawing.Size(551, 504);
+            this.ElevatorsGrid.TabIndex = 6;
+            // 
+            // Column1
+            // 
+            this.Column1.HeaderText = "Column1";
+            this.Column1.Name = "Column1";
+            this.Column1.ReadOnly = true;
+            // 
+            // Column2
+            // 
+            this.Column2.HeaderText = "Column2";
+            this.Column2.Name = "Column2";
+            this.Column2.ReadOnly = true;
+            // 
             // SimulationForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(805, 497);
+            this.ClientSize = new System.Drawing.Size(805, 581);
+            this.Controls.Add(this.ElevatorsGrid);
             this.Controls.Add(this.StopButton);
             this.Controls.Add(this.PlayPauseButton);
             this.Controls.Add(this.SlowDownButton);
@@ -139,6 +170,7 @@ namespace WinFormsAppSimulation
             this.Text = "Симуляция";
             this.menuStrip.ResumeLayout(false);
             this.menuStrip.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.ElevatorsGrid)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -156,5 +188,8 @@ namespace WinFormsAppSimulation
         private System.Windows.Forms.Button PlayPauseButton;
         private System.Windows.Forms.Button StopButton;
         private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.DataGridView ElevatorsGrid;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
     }
 }

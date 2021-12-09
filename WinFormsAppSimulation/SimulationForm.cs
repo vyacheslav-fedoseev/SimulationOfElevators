@@ -45,9 +45,19 @@ namespace WinFormsAppSimulation
             base.ShowDialog();
         }
 
-        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        public void UpdateElevatorsGrid( bool[,] elevatorsGrid )
         {
+            ElevatorsGrid.RowCount = elevatorsGrid.GetLength(0); 
+            ElevatorsGrid.ColumnCount = elevatorsGrid.GetLength(1);
 
+            for(int i =0; i< ElevatorsGrid.RowCount; i++)
+            {
+                for(int j=0; j< ElevatorsGrid.ColumnCount; j++)
+                {
+                    if (elevatorsGrid[i, j]) ElevatorsGrid.Rows[i].Cells[j].Style.BackColor = Color.Red ;
+                    else ElevatorsGrid.Rows[i].Cells[j].Style.BackColor = Color.White;
+                }
+            }
         }
 
         private void timer1_Tick(object sender, EventArgs e)

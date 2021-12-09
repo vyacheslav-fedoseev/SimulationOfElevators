@@ -39,11 +39,12 @@ namespace WinFormsAppSimulation
                 .RegisterService<IElevatorsManager, ElevatorsManager>()
                 .RegisterService<IPeopleRepository, PeopleRepository>()
                 .RegisterService<IFloorRepository, FloorRepository>()
-                .RegisterService<IElevatorRepository, ElevatorRepository>();
+                .RegisterService<IElevatorRepository, ElevatorRepository>()
+                .RegisterService<ITimer, WinFormTimer>();
 
             controller.Run<StartPresenter>();
-            
-
         }
+            internal class WinFormTimer : System.Windows.Forms.Timer, ITimer { }
+    
     }
 }

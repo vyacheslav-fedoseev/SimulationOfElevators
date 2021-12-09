@@ -26,12 +26,18 @@ namespace Models.Services
                 destinationFloor <= ConfigurationData._countFloors &&
                 destinationFloor > 0)
             {
-                for (int i = 0; i < countPeople; i++)
+                /*for (int i = 0; i < countPeople; i++)
                 {
                     _floorRepository.Find(currentFloor).AddNextPeople(_peopleRepository.Find(_peopleRepository.Add(destinationFloor, currentFloor)));
-                }
-                
-                return true;
+                }*/
+
+                _peopleRepository.Add(destinationFloor, currentFloor);
+
+                if (currentFloor < destinationFloor) _floorRepository.UpdatePeopleDirection(currentFloor, PeopleDirection.UP);
+                else _floorRepository.UpdatePeopleDirection(currentFloor, PeopleDirection.DOWN);
+                _floorRepository.Find(currentFloor).isRequested = true;
+
+            return true;
             }
             else
                 return false;

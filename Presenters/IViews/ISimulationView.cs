@@ -17,5 +17,7 @@ namespace Presenters.IViews
         event Action SpeedUp;
         event Action SlowDown;
         event Action Fire;
+
+        void UpdateElevatorsGrid(bool[,] elevatorsGrid);
     }
 }

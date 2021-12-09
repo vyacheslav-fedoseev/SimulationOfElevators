@@ -5,15 +5,20 @@ using System.Text;
 using System.Threading.Tasks;
 using Presenters.IViews;
 using Presenters.Common;
+using Models.Entities;
+using Models.Services;
 
 namespace Presenters.Presenters
 {
     public class SimulationPresenter : BasePresenter<ISimulationView, IStartView>
     {
         private IStartView _previousView;
-        public SimulationPresenter(IApplicationController controller, ISimulationView view)
+        private IElevatorsManager _manager;
+        public SimulationPresenter(IApplicationController controller, ISimulationView view, IElevatorsManager manager)
             : base(controller, view)
         {
+            _manager = manager;
+
             View.Stop += () => Stop();
             View.PlayPause += () => PlayPause();
             View.Fire += () => Fire();
@@ -22,6 +27,15 @@ namespace Presenters.Presenters
             View.SpeedUp += () => SpeedUp();
             View.SimulationClosed += () => SimulationClosed();
             View.CreatePeople += () => CreatePeople();
+            _manager.DataUpdated += () => ViewUpdate(manager.GetElevatorsGrid());
+
+            View.UpdateElevatorsGrid(new bool[ConfigurationData._countFloors, ConfigurationData._countElevators]);
+            manager.StartSimulation();
+        }
+
+        private void ViewUpdate( bool[,] elevatorsGrid )
+        {
+            View.UpdateElevatorsGrid(elevatorsGrid);
         }
         private void Stop()
         {

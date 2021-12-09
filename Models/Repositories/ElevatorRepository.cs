@@ -10,7 +10,7 @@ namespace Models.Repositories
     public class ElevatorRepository : IElevatorRepository
     {
         private static List<Elevator> _elevator = new List<Elevator>();
-        private static int _id = 0;
+        private static int _id = 1;
         public int Add(float maxAcceleration, float maxSpeed, int maxCapacity)
         {
             _elevator.Add(new Elevator(maxAcceleration, maxSpeed, maxCapacity, _id));

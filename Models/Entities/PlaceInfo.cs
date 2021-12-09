@@ -9,6 +9,20 @@ namespace Models.Entities
     public class PlaceInfo
     {
         protected int _id;
+        protected int _countPeople;
+
+        public int _CountPeople
+        {
+            get
+            {
+                return _countPeople;
+            }
+            set
+            {
+                _countPeople = value;
+            }
+        }
+
         public int _ID
         {
             get
@@ -20,6 +34,10 @@ namespace Models.Entities
         public People GetNextPeople()
         {
             return _people.Dequeue();
+        }
+        public People PeekNextPeople()
+        {
+            return _people.Peek();
         }
 
         public void AddNextPeople(People people)

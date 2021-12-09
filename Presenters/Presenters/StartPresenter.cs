@@ -45,6 +45,7 @@ namespace Presenters.Presenters
                 _elevatorsService.InitializeElevatorRepository();
                 View.Hide();
                 Controller.Run<SimulationPresenter, IStartView>(this.View);
+                
             }
             else
                 View.ShowError("Конфигурация не задана либо задана не корректно");

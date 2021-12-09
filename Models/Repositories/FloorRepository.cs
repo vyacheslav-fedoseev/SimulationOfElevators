@@ -10,7 +10,7 @@ namespace Models.Repositories
     public class FloorRepository : IFloorRepository
     {
         private static List<Floor> _floor = new List<Floor>();
-        private static int _id = 0;
+        private static int _id = 1;
         
         public void AddNewFloor()
         {
@@ -24,6 +24,14 @@ namespace Models.Repositories
         public IEnumerable<Floor> GetAll()
         {
             return _floor;
+        }
+        public void UpdatePeopleDirection( int id , PeopleDirection peopleDirection)
+        {
+            if ((_floor[id]._peopleDirection == PeopleDirection.UP && peopleDirection == PeopleDirection.DOWN) ||
+                (_floor[id]._peopleDirection == PeopleDirection.DOWN && peopleDirection == PeopleDirection.UP) ||
+                    (peopleDirection == PeopleDirection.BOOTH))
+                _floor[id]._peopleDirection = PeopleDirection.BOOTH;
+            else _floor[id]._peopleDirection = peopleDirection;
         }
     }
 }
