@@ -8,13 +8,14 @@ using Presenters.Common;
 
 namespace Presenters.Presenters
 {
-    class CheckPeopleStatusPresenter : BasePresenter<ICheckPeopleStatusView>
+    public class CheckPeopleStatusPresenter : BasePresenter<ICheckPeopleStatusView>
     {
         public CheckPeopleStatusPresenter(IApplicationController controller, ICheckPeopleStatusView view)
             : base(controller, view)
         {
-            View.CloseProgram += () => CloseProgram();
+            View.CloseProgram += CloseProgram;
         }
+
         private void CloseProgram()
         {
             View.Close();

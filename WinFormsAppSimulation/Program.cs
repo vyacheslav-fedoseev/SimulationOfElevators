@@ -12,18 +12,15 @@ using Models.Repositories;
 
 namespace WinFormsAppSimulation
 {
-    static class Program
+    public static class Program
     {
-        /// <summary>
-        /// Главная точка входа для приложения.
-        /// </summary>
         [STAThread]
-        static void Main()
+        public static void Main()
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            var controller = new ApplicationController(new LightInjectAdapder())
+            var controller = new ApplicationController(new LightInjectAdapter())
                 .RegisterView<IStartView, StartForm>()
                 .RegisterView<IStartConfigurationView, StartConfigurationForm>()
                 .RegisterView<ICheckPeopleStatusView, CheckPeopleStatusForm>()
@@ -44,7 +41,6 @@ namespace WinFormsAppSimulation
 
             controller.Run<StartPresenter>();
         }
-            internal class WinFormTimer : System.Windows.Forms.Timer, ITimer { }
-    
+        internal class WinFormTimer : System.Windows.Forms.Timer, ITimer { }
     }
 }

@@ -15,6 +15,7 @@ namespace WinFormsAppSimulation
     {
         public event Action Ok;
         public event Action StartConfiguration;
+
         public StartConfigurationForm()
         {
             InitializeComponent();
@@ -22,25 +23,9 @@ namespace WinFormsAppSimulation
             OkButton.Click += (sender, args) => Invoke(Ok);
             SetConfigurationButton.Click += (sender, args) => Invoke(StartConfiguration);
         }
-        private void Invoke(Action action)
-        {
-            if (action != null) action();
-        }
 
-        public new void Show()
-        {
-            base.ShowDialog();
-        }
+        private static void Invoke(Action action) => action?.Invoke();
 
-        /* private void OkButton_Click(object sender, EventArgs e)
-         {
-             this.Close();
-         }
-
-         private void SetConfigurationButton_Click(object sender, EventArgs e)
-         {
-             SetConfigurationForm setConfigurationForm = new SetConfigurationForm();
-             setConfigurationForm.ShowDialog();
-         }*/
+        public new void Show() => base.ShowDialog();
     }
 }

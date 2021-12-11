@@ -7,7 +7,7 @@ using Presenters.Common;
 
 namespace Presenters.IViews
 {
-    public interface IStrategyChoosingView: IView
+    public interface IStrategyChoosingView : IView
     {
         event Action Ok;
     }

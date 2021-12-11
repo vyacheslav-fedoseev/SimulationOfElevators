@@ -7,7 +7,7 @@ using Presenters.Common;
 
 namespace Presenters.IViews
 {
-    public interface ISimulationView: IView
+    public interface ISimulationView : IView
     {
         event Action SimulationClosed;
         event Action CreatePeople;

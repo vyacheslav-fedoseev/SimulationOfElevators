@@ -13,76 +13,71 @@ namespace Presenters.Presenters
     public class SimulationPresenter : BasePresenter<ISimulationView, IStartView>
     {
         private IStartView _previousView;
-        private IElevatorsManager _manager;
+        private readonly IElevatorsManager _manager;
+
         public SimulationPresenter(IApplicationController controller, ISimulationView view, IElevatorsManager manager)
             : base(controller, view)
         {
             _manager = manager;
-
-            View.Stop += () => Stop();
-            View.PlayPause += () => PlayPause();
-            View.Fire += () => Fire();
-            View.CheckPeopleStatus += () => CheckPeopleStatus();
-            View.SlowDown += () => SlowDown();
-            View.SpeedUp += () => SpeedUp();
-            View.SimulationClosed += () => SimulationClosed();
-            View.CreatePeople += () => CreatePeople();
+            View.Stop += Stop;
+            View.PlayPause += PlayPause;
+            View.Fire += Fire;
+            View.CheckPeopleStatus += CheckPeopleStatus;
+            View.SlowDown += SlowDown;
+            View.SpeedUp += SpeedUp;
+            View.SimulationClosed += SimulationClosed;
+            View.CreatePeople += CreatePeople;
             _manager.DataUpdated += () => ViewUpdate(manager.GetElevatorsGrid());
-
             View.UpdateElevatorsGrid(new bool[ConfigurationData._countFloors, ConfigurationData._countElevators]);
             manager.StartSimulation();
         }
 
-        private void ViewUpdate( bool[,] elevatorsGrid )
-        {
-            View.UpdateElevatorsGrid(elevatorsGrid);
-        }
+        private void ViewUpdate(bool[,] elevatorsGrid) => View.UpdateElevatorsGrid(elevatorsGrid);
+
         private void Stop()
         {
             View.Close();
             Controller.Run<StatisticsPresenter, IStartView>(_previousView);
         }
+
         private void PlayPause()
         {
 
         }
+
         private void Fire()
         {
 
         }
+
         private void CheckPeopleStatus()
         {
             Controller.Run<CheckPeopleStatusPresenter>();
         }
+
         private void SlowDown()
         {
 
         }
+
         private void SpeedUp()
         {
 
         }
+
         private void SimulationClosed()
         {
             View.Close();
             _previousView.Show();
 
         }
-        private void CreatePeople()
-        {
-            Controller.Run<CreatePeoplePresenter>();
-        }
+
+        private void CreatePeople() => Controller.Run<CreatePeoplePresenter>();
 
         public override void Run(IStartView previousView)
         {
             _previousView = previousView;
             View.Show();
         }
-        /*
-private void StartConfiguration()
-{
-   Controller.Run<SetConfigurationPresenter>();
-}
-*/
     }
 }

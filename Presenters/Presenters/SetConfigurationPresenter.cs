@@ -9,34 +9,31 @@ using Models.Services;
 
 namespace Presenters.Presenters
 {
-    class SetConfigurationPresenter : BasePresenter<ISetConfigurationView>
+    public class SetConfigurationPresenter : BasePresenter<ISetConfigurationView>
     {
-        private IConfigurationService _configurationService;
+        private readonly IConfigurationService _configurationService;
+
         public SetConfigurationPresenter(IApplicationController controller, ISetConfigurationView view, IConfigurationService service)
             : base(controller, view)
         {
             _configurationService = service;
-            View.Next += () => Next(View.elevatorsCount, View.floorsCount);
+            View.Next += () => Next(View.ElevatorsCount, View.FloorsCount);
         }
+
         private void Next(string floorsCount, string elevatorsCount)
         {
-            if (floorsCount != "" && elevatorsCount != "")
+            if (floorsCount != string.Empty && elevatorsCount != string.Empty)
             {
                 View.HideError();
-                int floorsCountInt = int.Parse(floorsCount);
-                int elevatorsCountInt = int.Parse(elevatorsCount);
-
+                var floorsCountInt = int.Parse(floorsCount);
+                var elevatorsCountInt = int.Parse(elevatorsCount);
                 if (!_configurationService.SetConfiguration(floorsCountInt, elevatorsCountInt))
                     View.ShowError("Некорректные данные");
                 else
                     Controller.Run<SetElevatorsConfigurationPresenter, ISetConfigurationView>(this.View);
-
             }
             else
-            {
                 View.ShowError("Некорректные данные");
-            }
-
         }
     }
 }

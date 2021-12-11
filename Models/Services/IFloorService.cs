@@ -8,6 +8,6 @@ namespace Models.Services
 {
     public interface IFloorService
     {
-        void InitializeFloorRepozitory();
+        void InitializeFloorRepository();
     }
 }

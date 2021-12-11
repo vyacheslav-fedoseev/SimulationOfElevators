@@ -9,29 +9,21 @@ namespace Models.Repositories
 {
     public class FloorRepository : IFloorRepository
     {
-        private static List<Floor> _floor = new List<Floor>();
+        private static readonly List<Floor> Floor = new List<Floor>();
         private static int _id = 1;
-        
-        public void AddNewFloor()
-        {
-            _floor.Add(new Floor(_id++));
-        }
 
-        public Floor Find(int id)
+        public void AddNewFloor() => Floor.Add(new Floor(_id++));
+        public Floor Find(int id) => Floor.Find(c => c.Id == id);
+        public IEnumerable<Floor> GetAll() => Floor;
+        public void UpdatePeopleDirection(int id, PeopleDirection peopleDirection)
         {
-            return _floor.Find(c => c._ID == id);
-        }
-        public IEnumerable<Floor> GetAll()
-        {
-            return _floor;
-        }
-        public void UpdatePeopleDirection( int id , PeopleDirection peopleDirection)
-        {
-            if ((_floor[id-1]._peopleDirection == PeopleDirection.UP && peopleDirection == PeopleDirection.DOWN) ||
-                (_floor[id-1]._peopleDirection == PeopleDirection.DOWN && peopleDirection == PeopleDirection.UP) ||
-                    (peopleDirection == PeopleDirection.BOOTH))
-                _floor[id-1]._peopleDirection = PeopleDirection.BOOTH;
-            else _floor[id-1]._peopleDirection = peopleDirection;
+            Floor[id - 1].PeopleDirection = (Floor[id - 1].PeopleDirection == PeopleDirection.Up &&
+                                             peopleDirection == PeopleDirection.Down) ||
+                                            (Floor[id - 1].PeopleDirection == PeopleDirection.Down &&
+                                             peopleDirection == PeopleDirection.Up) ||
+                                            (peopleDirection == PeopleDirection.Booth)
+                ? PeopleDirection.Booth
+                : peopleDirection;
         }
     }
 }

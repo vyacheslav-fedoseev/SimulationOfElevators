@@ -9,24 +9,16 @@ namespace Models.Repositories
 {
     public class PeopleRepository : IPeopleRepository
     {
-        private static List<People> _people = new List<People>();
+        private static readonly List<People> People = new List<People>();
         private static int _id = 0;
+
         public int Add(int destinationFloor, int currentFloor)
         {
-            _people.Add(new People(_id, currentFloor, destinationFloor));
+            People.Add(new People(_id, currentFloor, destinationFloor));
             return _id++;
         }
-        public People Find(int id)
-        {
-            return _people.Find(c => c._ID == id);
-        }
-        public bool Delete(People obj)
-        {
-            return _people.Remove(obj);
-        }
-        public IEnumerable<People> GetAll()
-        {
-            return _people;
-        }
+        public People Find(int id) => People.Find(c => c.Id == id);
+        public bool Delete(People obj) => People.Remove(obj);
+        public IEnumerable<People> GetAll() => People;
     }
 }

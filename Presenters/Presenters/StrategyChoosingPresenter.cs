@@ -8,16 +8,13 @@ using Presenters.IViews;
 
 namespace Presenters.Presenters
 {
-    class StrategyChoosingPresenter : BasePresenter<IStrategyChoosingView>
+    public class StrategyChoosingPresenter : BasePresenter<IStrategyChoosingView>
     {
         public StrategyChoosingPresenter(IApplicationController controller, IStrategyChoosingView view) : base(controller, view)
         {
-            View.Ok += () => OK();
-        }
-        private void OK()
-        {
-            View.Close();
+            View.Ok += Ok;
         }
 
+        private void Ok() => View.Close();
     }
 }

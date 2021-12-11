@@ -16,9 +16,9 @@ namespace Presenters.IViews
         void ShowError(string message);
         void HideError();
 
-        string maxSpeed{get; }
-        string maxAcceleration { get; }
-        string capacity { get; }
-        bool isTemplate { get; }
+        string MaxSpeed { get; }
+        string MaxAcceleration { get; }
+        string Capacity { get; }
+        bool IsTemplate { get; }
     }
 }

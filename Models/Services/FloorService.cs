@@ -8,20 +8,15 @@ using Models.Entities;
 
 namespace Models.Services
 {
-    public class FloorService: IFloorService
+    public class FloorService : IFloorService
     {
-        private IFloorRepository _floorRepository;
-        public FloorService(IFloorRepository floorRepository)
-        {
-            _floorRepository = floorRepository;
-        }
+        private readonly IFloorRepository _floorRepository;
 
-        public void InitializeFloorRepozitory()
+        public FloorService(IFloorRepository floorRepository) => _floorRepository = floorRepository;
+
+        public void InitializeFloorRepository()
         {
-            for (int i = 0; i < ConfigurationData._countFloors; i++)
-            {
-                _floorRepository.AddNewFloor();
-            }
+            for (var i = 0; i < ConfigurationData._countFloors; i++) _floorRepository.AddNewFloor();
         }
     }
 }

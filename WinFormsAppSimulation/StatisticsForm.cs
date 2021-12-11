@@ -16,34 +16,15 @@ namespace WinFormsAppSimulation
         public event Action Exit;
         public event Action StatisticClosing;
 
-        private void Invoke(Action action)
-        {
-            if (action != null) action();
-        }
-
-        //private SimulationForm simulationForm;
         public StatisticsForm()
         {
             InitializeComponent();
             ExitButton.Click += (sender, args) => Invoke(Exit);
             FormClosed += (sender, args) => Invoke(StatisticClosing);
-            
-            // StatisticClosing.
-            //this.simulationForm = simulationForm;
-        }
-        public new void Show()
-        {
-            base.ShowDialog();
         }
 
-        /* private void ExitButton_Click(object sender, EventArgs e)
-         {
-             this.Close();
-         }
+        private static void Invoke(Action action) => action?.Invoke();
 
-         private void StatisticsForm_FormClosing(object sender, FormClosingEventArgs e)
-         {
-             simulationForm.Close();
-         }*/
+        public new void Show() => base.ShowDialog();
     }
 }

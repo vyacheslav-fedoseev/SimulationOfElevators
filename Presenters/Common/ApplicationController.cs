@@ -41,22 +41,14 @@ namespace Presenters.Common
 
         public void Run<TPresenter>() where TPresenter : class, IPresenter
         {
-            if (!_container.IsRegistered<TPresenter>())
-            {
-                _container.Register<TPresenter>();
-            }
-
+            if (!_container.IsRegistered<TPresenter>()) _container.Register<TPresenter>();
             var presenter = _container.Resolve<TPresenter>();
             presenter.Run();
         }
 
         public void Run<TPresenter, TArgument>(TArgument argument) where TPresenter : class, IPresenter<TArgument>
         {
-            if (!_container.IsRegistered<TPresenter>())
-            {
-                _container.Register<TPresenter>();
-            }
-
+            if (!_container.IsRegistered<TPresenter>()) _container.Register<TPresenter>();
             var presenter = _container.Resolve<TPresenter>();
             presenter.Run(argument);
         }

@@ -10,8 +10,8 @@ namespace Presenters.IViews
     public interface ISetConfigurationView : IView 
     {
         event Action Next;
-        string elevatorsCount { get; }
-        string floorsCount { get; }
+        string ElevatorsCount { get; }
+        string FloorsCount { get; }
 
         void ShowError(string message);
         void HideError();

@@ -14,25 +14,15 @@ namespace WinFormsAppSimulation
     public partial class StrategyChoosingForm : Form, IStrategyChoosingView
     {
         public event Action Ok;
+
         public StrategyChoosingForm()
         {
             InitializeComponent();
             ОкButton.Click += (sender, args) => Invoke(Ok);
         }
 
-        private void Invoke(Action action)
-        {
-            if (action != null) action();
-        }
+        private static void Invoke(Action action) => action?.Invoke();
 
-        public new void Show()
-        {
-            base.ShowDialog();
-        }
-
-        /*private void ОкButton_Click(object sender, EventArgs e)
-        {
-            this.Close();
-        }*/
+        public new void Show() => base.ShowDialog();
     }
 }

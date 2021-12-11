@@ -7,7 +7,7 @@ using Presenters.Common;
 
 namespace Presenters.IViews
 {
-    public interface IStartConfigurationView: IView
+    public interface IStartConfigurationView : IView
     {
         event Action Ok;
         event Action StartConfiguration;

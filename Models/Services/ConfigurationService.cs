@@ -14,20 +14,20 @@ namespace Models.Services
 
         public bool IsConfigurationSet()
         {
-            if (ConfigurationData._capacity != null &&
-                ConfigurationData._maxAcceleration != null &&
-                ConfigurationData._maxSpeed != null &&
-                ConfigurationData._capacity[ConfigurationData._countElevators-1] != 0 &&
-                ConfigurationData._maxAcceleration[ConfigurationData._countElevators-1] != 0 &&
-                ConfigurationData._maxSpeed[ConfigurationData._countElevators-1] != 0 &&
-                ConfigurationData._countElevators != 0 &&
-                ConfigurationData._countFloors != 0 
-                ) return true;
-            else return false;
+            return ConfigurationData._capacity != null &&
+                   ConfigurationData._maxAcceleration != null &&
+                   ConfigurationData._maxSpeed != null &&
+                   ConfigurationData._capacity[ConfigurationData._countElevators - 1] != 0 &&
+                   ConfigurationData._maxAcceleration[ConfigurationData._countElevators - 1] != 0 &&
+                   ConfigurationData._maxSpeed[ConfigurationData._countElevators - 1] != 0 &&
+                   ConfigurationData._countElevators != 0 &&
+                   ConfigurationData._countFloors != 0;
         }
+
         public bool SetConfiguration(int countFloors, int countElevators)
         {
-            if (ConfigurationData.MAX_COUNT_FLOORS >= countFloors && ConfigurationData.MAX_COUNT_ELEVATORS >= countElevators)
+            if (ConfigurationData.MAX_COUNT_FLOORS >= countFloors &&
+                ConfigurationData.MAX_COUNT_ELEVATORS >= countElevators)
             {
                 ConfigurationData._countFloors = countFloors;
                 ConfigurationData._countElevators = countElevators;
@@ -36,16 +36,19 @@ namespace Models.Services
                 ConfigurationData._maxSpeed = new float[countElevators];
                 return true;
             }
-            else
-                return false;
+            return false;
         }
+
         public bool SetElevatorsConfiguration(float maxSpeed, float maxAcceleration, int capacity, bool isTemplate)
         {
             if (_currentElevator >= ConfigurationData._countElevators)
                 return false;
-            else if (isTemplate)
+            if (isTemplate)
             {
-                for (; _currentElevator < ConfigurationData.MAX_COUNT_ELEVATORS && _currentElevator < ConfigurationData._countElevators; _currentElevator++)
+                for (;
+                    _currentElevator < ConfigurationData.MAX_COUNT_ELEVATORS &&
+                    _currentElevator < ConfigurationData._countElevators;
+                    _currentElevator++)
                 {
                     ConfigurationData._capacity[_currentElevator] = capacity;
                     ConfigurationData._maxAcceleration[_currentElevator] = maxAcceleration;

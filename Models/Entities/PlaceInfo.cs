@@ -6,43 +6,14 @@ using System.Threading.Tasks;
 
 namespace Models.Entities
 {
-    public class PlaceInfo
+    public abstract class PlaceInfo
     {
-        protected int _id;
-        protected int _countPeople;
+        public int Id { get; protected set; }
+        public int CountPeople { get; protected internal set; }
+        protected Queue<People> People = new Queue<People>();
 
-        public int _CountPeople
-        {
-            get
-            {
-                return _countPeople;
-            }
-            set
-            {
-                _countPeople = value;
-            }
-        }
-
-        public int _ID
-        {
-            get
-            {
-                return _id;
-            }
-        }
-        protected Queue<People> _people = new Queue<People>();
-        public People GetNextPeople()
-        {
-            return _people.Dequeue();
-        }
-        public People PeekNextPeople()
-        {
-            return _people.Peek();
-        }
-
-        public void AddNextPeople(People people)
-        {
-           _people.Enqueue(people);
-        }
+        public People GetNextPeople() => People.Dequeue();
+        public People PeekNextPeople() => People.Peek();
+        public void AddNextPeople(People people) => People.Enqueue(people);
     }
 }

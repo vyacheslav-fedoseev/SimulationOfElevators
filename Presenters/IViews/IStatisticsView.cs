@@ -7,7 +7,7 @@ using Presenters.Common;
 
 namespace Presenters.IViews
 {
-    public interface IStatisticsView:IView
+    public interface IStatisticsView : IView
     {
         event Action Exit;
         event Action StatisticClosing;

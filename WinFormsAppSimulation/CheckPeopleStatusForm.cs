@@ -20,17 +20,7 @@ namespace WinFormsAppSimulation
             InitializeComponent();
             CloseButton.Click += (sender, args) => Invoke(CloseProgram);
         }
-        private void Invoke(Action action)
-        {
-            if (action != null) action();
-        }
 
-
-        /*
-        private void CloseButton_Click(object sender, EventArgs e)
-        {
-            this.Close();
-        }
-        */
+        private static void Invoke(Action action) => action?.Invoke();
     }
 }

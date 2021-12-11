@@ -13,17 +13,12 @@ namespace Presenters.Presenters
         public StartConfigurationPresenter(IApplicationController controller, IStartConfigurationView view)
             : base(controller, view)
         {
-            View.Ok += () => OK();
-            View.StartConfiguration += () => StartConfiguration();
-        }
-        private void OK()
-        {
-            View.Close();
+            View.Ok += Ok;
+            View.StartConfiguration += StartConfiguration;
         }
 
-        private void StartConfiguration()
-        {
-            Controller.Run<SetConfigurationPresenter>();
-        }
+        private void Ok() => View.Close();
+
+        private void StartConfiguration() => Controller.Run<SetConfigurationPresenter>();
     }
 }

@@ -24,36 +24,20 @@ namespace WinFormsAppSimulation
             AddElevatorButton.Click += (sender, args) => Invoke(AddElevator);
             FormClosing += (sender, args) => Invoke(SetElevatorsConfigurationClosing);
         }
-        public new void Show()
-        {
-            base.ShowDialog();
-        }
-        private void Invoke(Action action)
-        {
-            if (action != null) action();
-        }
-        public void ShowError(string message)
-        {
-            ErrorLabel.Text = message;
-        }
-        public void HideError()
-        {
-            ErrorLabel.Text = "";
-        }
+        public new void Show() => base.ShowDialog();
 
-        public string maxSpeed { get { return MaxAccelerationTextBox.Text; } }
-        public string maxAcceleration { get { return MaxAccelerationTextBox.Text; } }
-        public string capacity { get { return CapacityTextBox.Text; } }
-        public bool isTemplate { get { return TamplateCheckBox.Checked; } }
-        /*
-        private void EndLiftsConfigurationButton_Click(object sender, EventArgs e)
-        {
-            this.Close();
-        }
-        private void SetElevatorsConfigurationForm_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            setConfigurationForm.Close();
-        }
-        */
+        public void Invoke(Action action) => action?.Invoke();
+
+        public void ShowError(string message) => ErrorLabel.Text = message;
+
+        public void HideError() => ErrorLabel.Text = string.Empty;
+
+        public string MaxSpeed => MaxAccelerationTextBox.Text;
+
+        public string MaxAcceleration => MaxAccelerationTextBox.Text;
+
+        public string Capacity => CapacityTextBox.Text;
+
+        public bool IsTemplate => TamplateCheckBox.Checked;
     }
 }

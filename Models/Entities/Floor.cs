@@ -1,15 +1,14 @@
 ﻿namespace Models.Entities
 {
-    public enum PeopleDirection { UP = 0, DOWN = 1, BOOTH = 2, NODIRECTION =3}
+    public enum PeopleDirection { Up = 0, Down = 1, Booth = 2, NoDirection = 3 }
     public class Floor : PlaceInfo
     {
         public Floor(int id)
         {
-            _id = id;
-            _peopleDirection = PeopleDirection.NODIRECTION;
+            Id = id;
+            PeopleDirection = PeopleDirection.NoDirection;
         }
-        public bool isRequested { get; set; }
-        //public bool isRequest { get; set; }
-        public PeopleDirection _peopleDirection{ get; set; }
+        public bool IsRequested { get; set; }
+        public PeopleDirection PeopleDirection { get; set; }
     }
 }

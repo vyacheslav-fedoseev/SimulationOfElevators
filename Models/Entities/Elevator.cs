@@ -2,40 +2,31 @@
 
 namespace Models.Entities
 {
-    public enum Direction { UP = 0, DOWN = 1, STOP = 2 }
+    public enum Direction { Up = 0, Down = 1, Stop = 2 }
     public class Elevator : PlaceInfo
     {
-        public int _currentFloor { get; set; }
-        public bool[] _destinationFloor { get; set; }
-        
-        public bool _isOpenDoor { get; set; }
-        public Direction _direction { get; set; }
+        public int CurrentFloor { get; set; }
+        public bool[] DestinationFloor { get; set; }
+        public bool IsOpenDoor { get; set; }
+        public Direction Direction { get; set; }
         private float _maxAcceleration;
         private float _maxSpeed;
         private float _speed { get; set; }
-        public int _maxCapacity { get; set; }
-        public int _currentCountPeople { get;  set; }
-
-        public int _loadingTimer { get; set; }
-        public int _unLoadingTimer { get; set; }
-
-
+        public int MaxCapacity { get; set; }
+        public int CurrentCountPeople { get; set; }
+        public int LoadingTimer { get; set; }
+        public int UnLoadingTimer { get; set; }
 
         public Elevator(float maxAcceleration, float maxSpeed, int maxCapacity, int id)
         {
             _maxAcceleration = maxAcceleration;
             _maxSpeed = maxSpeed;
-            _maxCapacity = maxCapacity;
-            _id = id;
-            _direction = Direction.STOP;
-            _destinationFloor = new bool[ConfigurationData._countFloors];
-
-            for(int i=0; i< ConfigurationData._countFloors; i++)
-            {
-                _destinationFloor[i] = false;
-            }
-
-            _currentFloor = 1;
+            MaxCapacity = maxCapacity;
+            Id = id;
+            Direction = Direction.Stop;
+            DestinationFloor = new bool[ConfigurationData._countFloors];
+            for (var i = 0; i < ConfigurationData._countFloors; i++) DestinationFloor[i] = false;
+            CurrentFloor = 1;
         }
 
     }
