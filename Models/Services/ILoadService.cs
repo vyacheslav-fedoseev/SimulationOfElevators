@@ -8,7 +8,7 @@ namespace Models.Services
 {
     public interface ILoadService<T>
     {
-        void Import();
+        void Import(string importAddress);
         void Export(string exportAddress);
     }
 }

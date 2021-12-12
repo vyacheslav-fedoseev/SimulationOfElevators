@@ -33,11 +33,11 @@ namespace WinFormsAppSimulation
             this.OkButton = new System.Windows.Forms.Button();
             this.ExportButton = new System.Windows.Forms.Button();
             this.SetConfigurationButton = new System.Windows.Forms.Button();
+            this.ErrorImportLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // ImportButton
             // 
-            this.ImportButton.Enabled = false;
             this.ImportButton.Location = new System.Drawing.Point(12, 12);
             this.ImportButton.Name = "ImportButton";
             this.ImportButton.Size = new System.Drawing.Size(150, 50);
@@ -56,6 +56,7 @@ namespace WinFormsAppSimulation
             // 
             // ExportButton
             // 
+            this.ExportButton.Enabled = false;
             this.ExportButton.Location = new System.Drawing.Point(12, 68);
             this.ExportButton.Name = "ExportButton";
             this.ExportButton.Size = new System.Drawing.Size(150, 50);
@@ -72,11 +73,21 @@ namespace WinFormsAppSimulation
             this.SetConfigurationButton.Text = "Задать Кофигурацию Вручную";
             this.SetConfigurationButton.UseVisualStyleBackColor = true;
             // 
+            // ErrorImportLabel
+            // 
+            this.ErrorImportLabel.AutoSize = true;
+            this.ErrorImportLabel.ForeColor = System.Drawing.Color.Red;
+            this.ErrorImportLabel.Location = new System.Drawing.Point(183, 29);
+            this.ErrorImportLabel.Name = "ErrorImportLabel";
+            this.ErrorImportLabel.Size = new System.Drawing.Size(0, 13);
+            this.ErrorImportLabel.TabIndex = 4;
+            // 
             // StartConfigurationForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(302, 261);
+            this.Controls.Add(this.ErrorImportLabel);
             this.Controls.Add(this.SetConfigurationButton);
             this.Controls.Add(this.ExportButton);
             this.Controls.Add(this.OkButton);
@@ -84,6 +95,7 @@ namespace WinFormsAppSimulation
             this.Name = "StartConfigurationForm";
             this.Text = "Главное окно конфигурации";
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -93,5 +105,6 @@ namespace WinFormsAppSimulation
         private System.Windows.Forms.Button OkButton;
         private System.Windows.Forms.Button ExportButton;
         private System.Windows.Forms.Button SetConfigurationButton;
+        private System.Windows.Forms.Label ErrorImportLabel;
     }
 }

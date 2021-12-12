@@ -16,15 +16,21 @@ namespace WinFormsAppSimulation
         public event Action Ok;
         public event Action StartConfiguration;
         public event Action Export;
+        public event Action Import;
 
         public StartConfigurationForm()
         {
             InitializeComponent();
 
             OkButton.Click += (sender, args) => Invoke(Ok);
-            SetConfigurationButton.Click += (sender, args) => Invoke(StartConfiguration);
+            SetConfigurationButton.Click += (sender, args) =>
+            {
+                Invoke(StartConfiguration);
+                ExportButton.Enabled = true;
+                ErrorImportLabel.Text = string.Empty;
+            };
             ExportButton.Click += (sender, args) => Invoke(Export);
-
+            ImportButton.Click += (sender, args) => Invoke(Import);
         }
 
         private static void Invoke(Action action) => action?.Invoke();
@@ -33,7 +39,7 @@ namespace WinFormsAppSimulation
 
         public string ExportAddress()
         {
-            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            var saveFileDialog = new SaveFileDialog();
             saveFileDialog.InitialDirectory = @"C:\";
             saveFileDialog.Title = "Save text Files";
             saveFileDialog.CheckPathExists = true;
@@ -41,9 +47,30 @@ namespace WinFormsAppSimulation
             saveFileDialog.Filter = "Text files (*.txt)|*.txt|All files (*.*)|*.*";
             saveFileDialog.FilterIndex = 2;
             saveFileDialog.RestoreDirectory = true;
-            if (saveFileDialog.ShowDialog() == DialogResult.Cancel)
-                return null;
-            return saveFileDialog.FileName;
+            return saveFileDialog.ShowDialog() == DialogResult.Cancel ? null : saveFileDialog.FileName;
         }
+
+        public string ImportAddress()
+        {
+            var openFileDialog = new OpenFileDialog();
+            openFileDialog.InitialDirectory = @"C:\";
+            openFileDialog.Title = "Save text Files";
+            openFileDialog.CheckPathExists = true;
+            openFileDialog.CheckFileExists = true;
+            openFileDialog.DefaultExt = "txt";
+            openFileDialog.Filter = "Text files (*.txt)|*.txt|All files (*.*)|*.*";
+            openFileDialog.FilterIndex = 2;
+            openFileDialog.RestoreDirectory = true;
+            if (openFileDialog.ShowDialog() != DialogResult.Cancel)
+            {
+                ErrorImportLabel.Text = string.Empty;
+                ExportButton.Enabled = true;
+                return openFileDialog.FileName;
+            }
+            // ErrorImportLabel.Text = string.Empty;
+            return null;
+        }
+        
+        public void ShowError(string message) => ErrorImportLabel.Text = message;
     }
 }
