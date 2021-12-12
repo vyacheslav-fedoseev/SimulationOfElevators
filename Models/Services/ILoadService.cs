@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Models.Services
 {
-    public interface ILoad
+    public interface ILoadService<T>
     {
         void Import();
-        void Export();
+        void Export(string exportAddress);
     }
 }

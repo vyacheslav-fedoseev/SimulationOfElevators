@@ -11,5 +11,8 @@ namespace Presenters.IViews
     {
         event Action Ok;
         event Action StartConfiguration;
+        event Action Export;
+        
+        string ExportAddress();
     }
 }

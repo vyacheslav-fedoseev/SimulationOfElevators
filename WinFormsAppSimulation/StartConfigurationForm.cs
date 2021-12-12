@@ -15,6 +15,7 @@ namespace WinFormsAppSimulation
     {
         public event Action Ok;
         public event Action StartConfiguration;
+        public event Action Export;
 
         public StartConfigurationForm()
         {
@@ -22,10 +23,27 @@ namespace WinFormsAppSimulation
 
             OkButton.Click += (sender, args) => Invoke(Ok);
             SetConfigurationButton.Click += (sender, args) => Invoke(StartConfiguration);
+            ExportButton.Click += (sender, args) => Invoke(Export);
+
         }
 
         private static void Invoke(Action action) => action?.Invoke();
 
         public new void Show() => base.ShowDialog();
+
+        public string ExportAddress()
+        {
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.InitialDirectory = @"C:\";
+            saveFileDialog.Title = "Save text Files";
+            saveFileDialog.CheckPathExists = true;
+            saveFileDialog.DefaultExt = "txt";
+            saveFileDialog.Filter = "Text files (*.txt)|*.txt|All files (*.*)|*.*";
+            saveFileDialog.FilterIndex = 2;
+            saveFileDialog.RestoreDirectory = true;
+            if (saveFileDialog.ShowDialog() == DialogResult.Cancel)
+                return null;
+            return saveFileDialog.FileName;
+        }
     }
 }

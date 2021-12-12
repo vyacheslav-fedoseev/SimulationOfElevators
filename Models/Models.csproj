@@ -58,11 +58,12 @@
     <Compile Include="Services\IPeopleService.cs" />
     <Compile Include="Entities\Elevator.cs" />
     <Compile Include="Entities\Floor.cs" />
-    <Compile Include="Services\ILoad.cs" />
+    <Compile Include="Services\ILoadService.cs" />
     <Compile Include="Entities\People.cs" />
     <Compile Include="Entities\PlaceInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\ITimer.cs" />
+    <Compile Include="Services\LoadStartConfigurationService.cs" />
     <Compile Include="Services\PeopleService.cs" />
   </ItemGroup>
   <ItemGroup />
