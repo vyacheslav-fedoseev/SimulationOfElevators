@@ -20,6 +20,16 @@ namespace Presenters.Presenters
             View.Ok += Ok;
             View.StartConfiguration += StartConfiguration;
             View.Export += Export;
+            View.Import += Import;
+        }
+
+        private void Import()
+        {
+            var address = View.ImportAddress();
+            if (address == null)
+                View.ShowError("Ошибочный импорт");
+            else
+                _service.Import(address);
         }
 
         private void Export() => _service.Export(View.ExportAddress());

@@ -12,7 +12,11 @@ namespace Presenters.IViews
         event Action Ok;
         event Action StartConfiguration;
         event Action Export;
-        
+        event Action Import;
+
+        void ShowError(string message);
+
         string ExportAddress();
+        string ImportAddress();
     }
 }
