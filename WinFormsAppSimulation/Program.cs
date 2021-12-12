@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Models.Entities;
 using Presenters.Common;
 using Presenters.Presenters;
 using Presenters.IViews;
@@ -37,7 +38,8 @@ namespace WinFormsAppSimulation
                 .RegisterService<IPeopleRepository, PeopleRepository>()
                 .RegisterService<IFloorRepository, FloorRepository>()
                 .RegisterService<IElevatorRepository, ElevatorRepository>()
-                .RegisterService<ITimer, WinFormTimer>();
+                .RegisterService<ITimer, WinFormTimer>()
+                .RegisterService<ILoadService<ConfigurationData>, LoadStartConfigurationService>();
 
             controller.Run<StartPresenter>();
         }
