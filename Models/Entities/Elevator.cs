@@ -16,11 +16,12 @@ namespace Models.Entities
         public float Position { get; set; }
         public float StartMovingPosition { get; set; }
         public int MaxCapacity { get; set; }
-        public int CurrentCountPeople { get; set; }
         public int LoadingTimer { get; set; }
         public int UnLoadingTimer { get; set; }
         public float StartMovingTime { get; set; }
         public float MovingTime { get; set; }
+
+
 
         public Elevator(float maxAcceleration, float maxSpeed, int maxCapacity, int id)
         {
@@ -35,8 +36,10 @@ namespace Models.Entities
             DestinationFloor = new bool[ConfigurationData._countFloors];
             StartMovingTime = 0;
             MovingTime = 0;
+            CountPeople = 0;
             for (var i = 0; i < ConfigurationData._countFloors; i++) DestinationFloor[i] = false;
             CurrentFloor = 1;
+
         }
 
     }

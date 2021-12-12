@@ -110,6 +110,9 @@ namespace Models.Services
             var nearestLowerRequest = 0;
             var currentFloor = _floorRepository.Find(elevator.CurrentFloor);
 
+            var isElevatorFull = (elevator.MaxCapacity == elevator.CountPeople);
+            Console.WriteLine( isElevatorFull.ToString() );
+
             if ((elevator.CurrentFloor == ConfigurationData._countFloors &&
                  elevator.Direction == Direction.Up) ||
                 (elevator.CurrentFloor == 1 &&
@@ -124,7 +127,8 @@ namespace Models.Services
             }
             if ((currentFloor.PeopleDirection == PeopleDirection.Up ||
                  currentFloor.PeopleDirection == PeopleDirection.Booth) &&
-                (elevator.Direction == Direction.Up || elevator.Direction == Direction.Stop))
+                (elevator.Direction == Direction.Up || elevator.Direction == Direction.Stop) &&
+                !isElevatorFull)
             {
                 elevator.Direction = Direction.Up;
                 //isLoad = true;
@@ -134,7 +138,8 @@ namespace Models.Services
             }
             if ((currentFloor.PeopleDirection == PeopleDirection.Down ||
                  currentFloor.PeopleDirection == PeopleDirection.Booth) &&
-                (elevator.Direction == Direction.Down || elevator.Direction == Direction.Stop))
+                (elevator.Direction == Direction.Down || elevator.Direction == Direction.Stop) &&
+                !isElevatorFull)
             {
                 elevator.Direction = Direction.Down;
                 //isLoad = true;
@@ -150,7 +155,7 @@ namespace Models.Services
             {
                 if (elevator.DestinationFloor[i]) destinationAbove = true;
 
-                if (!_floorRepository.Find(i + 1).IsRequested) continue;
+                if (!_floorRepository.Find(i + 1).IsRequested || isElevatorFull) continue;
                 requestsAbove = true;
 
                 if (nearestHigherRequest == 0)
@@ -164,7 +169,7 @@ namespace Models.Services
                     //Console.WriteLine("{P1!!!!!!");
                 }
 
-                if (!_floorRepository.Find(i + 1).IsRequested) continue;
+                if (!_floorRepository.Find(i + 1).IsRequested || isElevatorFull) continue;
                 requestsBelow = true;
                 //Console.WriteLine("{P2!!!!!!");
                 if (nearestLowerRequest == 0)
@@ -261,14 +266,39 @@ namespace Models.Services
                     elevator.StartMovingPosition = elevator.Position;
 
                     var floor = _floorRepository.Find(elevator.CurrentFloor);
-                    for (var i = 0; i < floor.CountPeople; i++)
+                    var ec =  elevator.MaxCapacity - elevator.CountPeople;
+                    var fc = floor.CountPeople;
+                    for (var i = 0; i < fc && i< ec; i++)
                     {
-                        var people = floor.GetNextPeople();
-                        elevator.DestinationFloor[people.DestinationFloor - 1] = true;
-                        elevator.AddNextPeople(people);
+                        var people = floor.PeekNextPeople();
+                        if ((people.DestinationFloor - people.CurrentFloor > 0 && elevator.Direction == Direction.Up) ||
+                            (people.DestinationFloor - people.CurrentFloor < 0 && elevator.Direction == Direction.Down)) //Diretcion.Stop
+                        {                           
+                            elevator.DestinationFloor[people.DestinationFloor - 1] = true;
+                            elevator.AddNextPeople(floor.GetNextPeople());
+                            elevator.CountPeople++;
+                            floor.CountPeople--;
+                        }
+                        else
+                            i--;
+                        
                     }
-                    floor.IsRequested = false;
+
                     floor.PeopleDirection = PeopleDirection.NoDirection;
+
+                    if ( floor.CountPeople == 0 )
+                    {
+                        floor.IsRequested = false;  
+                    }
+                    else
+                    {
+                        for(int i=0; i< floor.CountPeople; i++)
+                        {
+                            var people = floor.PeekNextPeople();
+                            if (people.DestinationFloor - floor.Id < 0) _floorRepository.UpdatePeopleDirection( floor.Id, PeopleDirection.Down );
+                            if (people.DestinationFloor - floor.Id > 0) _floorRepository.UpdatePeopleDirection(floor.Id, PeopleDirection.Up);
+                        }
+                    }
                 }
                 elevator.LoadingTimer--;
                 //isLoad = false;
@@ -283,12 +313,14 @@ namespace Models.Services
                     elevator.Speed = 0;
                     elevator.StartMovingPosition = elevator.Position;
 
-                    for (var i = 0; i < elevator.CountPeople; i++)
+                    int n = elevator.CountPeople;
+                    for (var i = 0; i < n; i++)
                     {
                         var people = elevator.PeekNextPeople();
                         if (people.DestinationFloor == elevator.CurrentFloor)
                         {
                             _peopleRepository.Delete(elevator.GetNextPeople());
+                            elevator.CountPeople--;
                         }
                     }
                     elevator.DestinationFloor[elevator.CurrentFloor - 1] = false;
@@ -312,11 +344,7 @@ namespace Models.Services
             switch (elevator.Direction)
             {
                 case Direction.Up:
-                    Console.WriteLine(elevator.Position.ToString());
-                    Console.WriteLine(elevator.Speed.ToString());
-                    Console.WriteLine(elevator.Direction.ToString());
-                    //Console.WriteLine(elevator.Speed.ToString());
-                    //Console.WriteLine(elevator.MovingTime.ToString());
+
 
                     elevator.Position = elevator.StartMovingPosition + elevator.Speed * elevator.MovingTime;
 
@@ -336,9 +364,7 @@ namespace Models.Services
                     break;
                 case Direction.Down:
 
-                    Console.WriteLine(elevator.Position.ToString());
-                    Console.WriteLine(elevator.Speed.ToString());
-                    Console.WriteLine(elevator.Direction.ToString());
+
 
                     elevator.Position = elevator.StartMovingPosition - elevator.Speed * elevator.MovingTime;
                     if(elevator.Position / _floorHeight <= elevator.CurrentFloor -1)
@@ -360,6 +386,7 @@ namespace Models.Services
 
         public void StopSimulation()
         {
+            if(!_timer.Enabled)_thread.Resume();
             _thread.Abort();
         }
 
