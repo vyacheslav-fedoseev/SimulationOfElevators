@@ -15,26 +15,41 @@ namespace Models.Services
         private readonly IPeopleRepository _peopleRepository;
         private readonly IFloorRepository _floorRepository;
         private Thread _thread;
+        private readonly ITimer _updateTimer;
         private readonly ITimer _timer;
         public object Locker = new object();
         private DateTime _simulationStart;
-        private DateTime[] _elevatorsMoveTime;
+        //private DateTime[] _elevatorsMoveTime;
+        private float _time;
         private readonly bool[,] _elevatorsGrid;
         private bool _isPause;
         public event Action DataUpdated;
 
-        public ElevatorsManager(IElevatorRepository elevatorsRepository, IPeopleRepository peopleRepository, IFloorRepository floorRepository, ITimer timer)
+        private float _simulationSpeed = 1;
+        private const float _floorHeight = 2.5F;
+        public ElevatorsManager(IElevatorRepository elevatorsRepository, IPeopleRepository peopleRepository, IFloorRepository floorRepository, ITimer timer, ITimer updateTimer)
         {
             _elevatorsRepository = elevatorsRepository;
             _peopleRepository = peopleRepository;
             _floorRepository = floorRepository;
+
+            _updateTimer = updateTimer;
+            _updateTimer.Interval = 100;
+            _updateTimer.Tick += (sender, args) => Invoke(DataUpdated);
+
             _timer = timer;
-            _timer.Interval = 250;
-            _timer.Tick += (sender, args) => Invoke(DataUpdated);
+            _timer.Interval = 100;
+            _timer.Tick += (sender, args) => Invoke(TimerTick);
+
             _elevatorsGrid = new bool[ConfigurationData._countFloors, ConfigurationData._countElevators];
             for (var i = 0; i < ConfigurationData._countElevators; i++)
                 _elevatorsGrid[0, i] = true;
             _isPause = false;
+        }
+
+        private void TimerTick()
+        {
+            _time += 0.1F * _simulationSpeed;
         }
 
         public bool[,] GetElevatorsGrid()
@@ -61,8 +76,11 @@ namespace Models.Services
         public void StartSimulation()
         {
             _simulationStart = DateTime.Now;
-            _elevatorsMoveTime = new DateTime[ConfigurationData._countElevators];
+            //_elevatorsMoveTime = new DateTime[ConfigurationData._countElevators];
             _timer.Start();
+            _updateTimer.Start();
+            _time = 0;
+            _simulationStart = DateTime.Now;
             _thread = new Thread(ElevatorsMovingCycle)
             {
                 IsBackground = true
@@ -80,7 +98,7 @@ namespace Models.Services
                     Decide(elevator);
                     MoveElevator(elevator);
                 }
-                Thread.Sleep(200);
+                Thread.Sleep(100);
             }
         }
 
@@ -143,12 +161,12 @@ namespace Models.Services
                 if (elevator.DestinationFloor[i])
                 {
                     destinationBelow = true;
-                    Console.WriteLine("{P1!!!!!!");
+                    //Console.WriteLine("{P1!!!!!!");
                 }
 
                 if (!_floorRepository.Find(i + 1).IsRequested) continue;
                 requestsBelow = true;
-                Console.WriteLine("{P2!!!!!!");
+                //Console.WriteLine("{P2!!!!!!");
                 if (nearestLowerRequest == 0)
                     nearestLowerRequest = i + 1;
             }
@@ -156,7 +174,7 @@ namespace Models.Services
                 !destinationBelow && !requestsBelow)
             {
                 elevator.Direction = Direction.Stop;
-                Console.WriteLine("STOP!!!!!!");
+                //Console.WriteLine("STOP!!!!!!");
                 return;
             }
             if (destinationAbove && (elevator.Direction == Direction.Stop ||
@@ -224,10 +242,24 @@ namespace Models.Services
 
         public void MoveElevator(Elevator elevator)
         {
+            if (elevator.Direction == Direction.Stop)
+            {
+                elevator.StartMovingTime = 0;
+                elevator.MovingTime = 0;
+                elevator.Speed = 0;
+                elevator.StartMovingPosition = elevator.Position;
+            }
+                
+
             if (elevator.LoadingTimer > 0)
             {
                 if (elevator.LoadingTimer == 3)
                 {
+                    elevator.StartMovingTime = 0;
+                    elevator.MovingTime = 0;
+                    elevator.Speed = 0;
+                    elevator.StartMovingPosition = elevator.Position;
+
                     var floor = _floorRepository.Find(elevator.CurrentFloor);
                     for (var i = 0; i < floor.CountPeople; i++)
                     {
@@ -246,6 +278,11 @@ namespace Models.Services
             {
                 if (elevator.UnLoadingTimer == 3)
                 {
+                    elevator.StartMovingTime = 0;
+                    elevator.MovingTime = 0;
+                    elevator.Speed = 0;
+                    elevator.StartMovingPosition = elevator.Position;
+
                     for (var i = 0; i < elevator.CountPeople; i++)
                     {
                         var people = elevator.PeekNextPeople();
@@ -260,28 +297,61 @@ namespace Models.Services
                 elevator.UnLoadingTimer--;
                 return;
             }
+
+            if (elevator.StartMovingTime == 0 && elevator.Direction != Direction.Stop )
+            {
+                elevator.StartMovingTime = _time;
+                //elevator.StartMovingPosition = elevator.Position;
+            }
+            else if (elevator.StartMovingTime != 0) 
+                elevator.MovingTime = _time - elevator.StartMovingTime;
+
+            if (elevator.Speed < elevator.MaxSpeed) elevator.Speed = elevator.MaxAcceleration * elevator.MovingTime;
+            if (elevator.Speed > elevator.MaxSpeed) elevator.Speed = elevator.MaxSpeed;
+
             switch (elevator.Direction)
             {
                 case Direction.Up:
-                    lock (Locker)
+                    Console.WriteLine(elevator.Position.ToString());
+                    Console.WriteLine(elevator.Speed.ToString());
+                    Console.WriteLine(elevator.Direction.ToString());
+                    //Console.WriteLine(elevator.Speed.ToString());
+                    //Console.WriteLine(elevator.MovingTime.ToString());
+
+                    elevator.Position = elevator.StartMovingPosition + elevator.Speed * elevator.MovingTime;
+
+                    if( elevator.Position/_floorHeight >= elevator.CurrentFloor+1 )
                     {
-                        _elevatorsGrid[elevator.CurrentFloor - 1, elevator.Id - 1] = false;
-                    }
-                    elevator.CurrentFloor++;
-                    lock (Locker)
-                    {
-                        _elevatorsGrid[elevator.CurrentFloor - 1, elevator.Id - 1] = true;
+                        //Console.WriteLine("2");
+                        lock (Locker)
+                        {
+                            _elevatorsGrid[elevator.CurrentFloor - 1, elevator.Id - 1] = false;
+                        }
+                        elevator.CurrentFloor++;
+                        lock (Locker)
+                        {
+                            _elevatorsGrid[elevator.CurrentFloor - 1, elevator.Id - 1] = true;
+                        }
                     }
                     break;
                 case Direction.Down:
-                    lock (Locker)
+
+                    Console.WriteLine(elevator.Position.ToString());
+                    Console.WriteLine(elevator.Speed.ToString());
+                    Console.WriteLine(elevator.Direction.ToString());
+
+                    elevator.Position = elevator.StartMovingPosition - elevator.Speed * elevator.MovingTime;
+                    if(elevator.Position / _floorHeight <= elevator.CurrentFloor -1)
                     {
-                        _elevatorsGrid[elevator.CurrentFloor - 1, elevator.Id - 1] = false;
-                    }
-                    elevator.CurrentFloor--;
-                    lock (Locker)
-                    {
-                        _elevatorsGrid[elevator.CurrentFloor - 1, elevator.Id - 1] = true;
+                        lock (Locker)
+                        {
+                            _elevatorsGrid[elevator.CurrentFloor - 1, elevator.Id - 1] = false;
+                        }
+                        elevator.CurrentFloor--;
+                        lock (Locker)
+                        {
+                            _elevatorsGrid[elevator.CurrentFloor - 1, elevator.Id - 1] = true;
+                        }
                     }
                     break;
             }
@@ -299,14 +369,26 @@ namespace Models.Services
             {
                 _thread.Suspend();
                 _timer.Enabled = false;
+                _updateTimer.Enabled = false;
                 _isPause = true;
             }
             else
             {
                 _thread.Resume();
                 _timer.Enabled = true;
+                _updateTimer.Enabled = true;
                 _isPause = false;
             }
+        }
+
+        public void SpeedUp()
+        {
+            if (_simulationSpeed < 4) _simulationSpeed *= 2;
+        }
+
+        public void SlowDown()
+        {
+            if (_simulationSpeed > 0.25) _simulationSpeed /= 2;
         }
     }
 }

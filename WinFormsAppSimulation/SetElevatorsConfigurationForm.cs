@@ -32,7 +32,7 @@ namespace WinFormsAppSimulation
 
         public void HideError() => ErrorLabel.Text = string.Empty;
 
-        public string MaxSpeed => MaxAccelerationTextBox.Text;
+        public string MaxSpeed => MaxSpeedTextBox.Text;
 
         public string MaxAcceleration => MaxAccelerationTextBox.Text;
 

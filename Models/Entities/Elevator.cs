@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Models.Entities
 {
@@ -9,22 +10,31 @@ namespace Models.Entities
         public bool[] DestinationFloor { get; set; }
         public bool IsOpenDoor { get; set; }
         public Direction Direction { get; set; }
-        private float _maxAcceleration;
-        private float _maxSpeed;
-        private float _speed { get; set; }
+        public float MaxAcceleration { get; private set; }
+        public float MaxSpeed { get; private set; }
+        public float Speed { get; set; }
+        public float Position { get; set; }
+        public float StartMovingPosition { get; set; }
         public int MaxCapacity { get; set; }
         public int CurrentCountPeople { get; set; }
         public int LoadingTimer { get; set; }
         public int UnLoadingTimer { get; set; }
+        public float StartMovingTime { get; set; }
+        public float MovingTime { get; set; }
 
         public Elevator(float maxAcceleration, float maxSpeed, int maxCapacity, int id)
         {
-            _maxAcceleration = maxAcceleration;
-            _maxSpeed = maxSpeed;
+            MaxAcceleration = maxAcceleration;
+            MaxSpeed = maxSpeed;
             MaxCapacity = maxCapacity;
             Id = id;
+            Speed = 0;
+            Position = 0;
+            StartMovingPosition = 0;
             Direction = Direction.Stop;
             DestinationFloor = new bool[ConfigurationData._countFloors];
+            StartMovingTime = 0;
+            MovingTime = 0;
             for (var i = 0; i < ConfigurationData._countFloors; i++) DestinationFloor[i] = false;
             CurrentFloor = 1;
         }

@@ -45,7 +45,7 @@ namespace WinFormsAppSimulation
 
             for (var i = 0; i < ElevatorsGrid.RowCount; i++)
                 for (var j = 0; j < ElevatorsGrid.ColumnCount; j++)
-                    ElevatorsGrid.Rows[i].Cells[j].Style.BackColor = elevatorsGrid[i, j] ? Color.Red : Color.White;
+                    ElevatorsGrid.Rows[ElevatorsGrid.RowCount-i-1].Cells[ElevatorsGrid.ColumnCount-j-1].Style.BackColor = elevatorsGrid[i, j] ? Color.Red : Color.White;
         }
 
         private void Timer1_Tick(object sender, EventArgs e)

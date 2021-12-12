@@ -36,13 +36,14 @@ namespace Presenters.Presenters
 
         private void Stop()
         {
+            _manager.StopSimulation();
             View.Close();
             Controller.Run<StatisticsPresenter, IStartView>(_previousView);
         }
 
         private void PlayPause()
         {
-
+            _manager.PlayPauseSimulation();
         }
 
         private void Fire()
@@ -57,12 +58,12 @@ namespace Presenters.Presenters
 
         private void SlowDown()
         {
-
+            _manager.SlowDown();
         }
 
         private void SpeedUp()
         {
-
+            _manager.SpeedUp();
         }
 
         private void SimulationClosed()

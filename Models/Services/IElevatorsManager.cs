@@ -18,5 +18,7 @@ namespace Models.Services
         void MoveElevator(Elevator elevator);
         void StopSimulation();
         void PlayPauseSimulation();
+        void SpeedUp();
+        void SlowDown();
     }
 }
