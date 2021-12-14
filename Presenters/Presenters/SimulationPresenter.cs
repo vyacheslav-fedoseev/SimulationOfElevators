@@ -32,6 +32,7 @@ namespace Presenters.Presenters
             _manager.DataUpdated += () => UpdateView(manager.GetElevatorsGrid(), _peopleService.GetPeopleStatus());
             View.UpdateElevatorsGrid(new bool[ConfigurationData._countFloors, ConfigurationData._countElevators]);
             manager.StartSimulation();
+            peopleService.StartThread();
         }
 
         private void UpdateView(bool[,] elevatorsGrid, string peopleStatus) => View.UpdateView(elevatorsGrid, peopleStatus);
@@ -54,6 +55,7 @@ namespace Presenters.Presenters
         private void Stop()
         {
             _manager.StopSimulation();
+            _peopleService.StopThread();
             View.Close();
             Controller.Run<StatisticsPresenter, IStartView>(_previousView);
         }
@@ -61,6 +63,7 @@ namespace Presenters.Presenters
         private void PlayPause()
         {
             _manager.PlayPauseSimulation();
+            _peopleService.PlayPauseThread();
         }
 
         private void Fire()
@@ -82,6 +85,8 @@ namespace Presenters.Presenters
 
         private void SimulationClosed()
         {
+            _manager.StopSimulation();
+            _peopleService.StopThread();
             View.Close();
             _previousView.Show();
 

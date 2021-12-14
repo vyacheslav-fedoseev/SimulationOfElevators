@@ -10,5 +10,9 @@ namespace Models.Services
     {
         bool CreatePeople(int countPeople, int currentFloor, int destinationFloor);
         string GetPeopleStatus();
+        void StartThread();
+        void StopThread();
+        void PlayPauseThread();
+
     }
 }

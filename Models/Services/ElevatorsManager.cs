@@ -20,9 +20,8 @@ namespace Models.Services
         public object Locker = new object();
         private DateTime _simulationStart;
         //private DateTime[] _elevatorsMoveTime;
-        private float _time;
+        public static float _time { get; private set; }
         private readonly bool[,] _elevatorsGrid;
-        private bool _isPause;
         public event Action DataUpdated;
 
         private float _simulationSpeed = 1;
@@ -44,7 +43,6 @@ namespace Models.Services
             _elevatorsGrid = new bool[ConfigurationData._countFloors, ConfigurationData._countElevators];
             for (var i = 0; i < ConfigurationData._countElevators; i++)
                 _elevatorsGrid[0, i] = true;
-            _isPause = false;
         }
 
         private void TimerTick()
@@ -98,7 +96,7 @@ namespace Models.Services
                     Decide(elevator);
                     MoveElevator(elevator);
                 }
-                //Thread.Sleep(100);
+                Thread.Sleep(50);
             }
         }
 
@@ -272,12 +270,13 @@ namespace Models.Services
                     {
                         var people = floor.PeekNextPeople();
                         if ((people.DestinationFloor - people.CurrentFloor > 0 && elevator.Direction == Direction.Up) ||
-                            (people.DestinationFloor - people.CurrentFloor < 0 && elevator.Direction == Direction.Down)) //Diretcion.Stop
+                            (people.DestinationFloor - people.CurrentFloor < 0 && elevator.Direction == Direction.Down))
                         {                           
                             elevator.DestinationFloor[people.DestinationFloor - 1] = true;
                             elevator.AddNextPeople(floor.GetNextPeople());
                             elevator.CountPeople++;
                             floor.CountPeople--;
+                            people.Status = PeopleStatus.Moving;
                         }
                         else
                             i--;
@@ -319,7 +318,10 @@ namespace Models.Services
                         var people = elevator.PeekNextPeople();
                         if (people.DestinationFloor == elevator.CurrentFloor)
                         {
-                            _peopleRepository.Delete(elevator.GetNextPeople());
+                            //_peopleRepository.Delete(elevator.GetNextPeople());
+                            people.Status = PeopleStatus.Exit;
+                            people.ArrivingTime = _time;
+                            elevator.GetNextPeople();
                             elevator.CountPeople--;
                         }
                     }
@@ -386,25 +388,26 @@ namespace Models.Services
 
         public void StopSimulation()
         {
-            if(!_timer.Enabled)_thread.Resume();
-            _thread.Abort();
+            if (_thread.IsAlive)
+            {
+                if (!_timer.Enabled) _thread.Resume();
+                _thread.Abort();
+            }
         }
 
         public void PlayPauseSimulation()
         {
-            if (!_isPause)
+            if (_timer.Enabled)
             {
                 _thread.Suspend();
                 _timer.Enabled = false;
                 _updateTimer.Enabled = false;
-                _isPause = true;
             }
             else
             {
                 _thread.Resume();
                 _timer.Enabled = true;
                 _updateTimer.Enabled = true;
-                _isPause = false;
             }
         }
 
