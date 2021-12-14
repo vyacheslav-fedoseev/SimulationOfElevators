@@ -18,49 +18,68 @@ namespace Models.Services
         private Thread _thread;
         private bool _isPaused = false;
         private object locker = new object();
-
+        private object locker2 = new object();
         private void PeopleManager()
         {
             List<People> peopleList = (List<People>)_peopleRepository.GetAll();
             while(true)
             {
-                for (var i=0; i< peopleList.Count; i++)
+                lock (locker2)
                 {
-                    var people = peopleList[i];
-                    switch (people.Status)
+                    for (var i = 0; i < peopleList.Count; i++)
                     {
-                        case PeopleStatus.Choosing:
-                            if( ElevatorsManager._time - people.ArrivingTime > 3F )
-                            {
-                                people.Status = PeopleStatus.Waiting;
-                                _floorRepository.UpdatePeopleDirection(people.CurrentFloor,
-                                                people.CurrentFloor < people.DestinationFloor
-                                                    ? PeopleDirection.Up
-                                                    : PeopleDirection.Down);
-                                _floorRepository.Find(people.CurrentFloor).IsRequested = true;
-                                
-                            }
-                            break;
-                        case PeopleStatus.Waiting:
-                            //string d = new Regex(@"\d+").Match(c).Value;
-                            lock(locker)_peopleStatus[i] =
-                                    "Человек № " + (people.Id + 1).ToString() + " : " + " ожидает лифт " + ( ElevatorsManager._time - people.EnteringTime+3).ToString() + " секунд";
-                            break;
-                        case PeopleStatus.Moving:
-                            lock (locker) _peopleStatus[i] =
-                                    "Человек № " + (people.Id + 1).ToString() + " : " + " едет на " + (people.DestinationFloor).ToString() + " этаж";
-                            break;
-                        case PeopleStatus.Exit:
-                            lock (locker) _peopleStatus[i] =
-                                    "Человек № " + (people.Id + 1).ToString() + " : " + " выходит из здания ";
-                            if(ElevatorsManager._time - people.ArrivingTime > 3F)
-                            {
-                                _peopleRepository.Delete(people);
-                                lock (locker) _peopleStatus.Remove(_peopleStatus[i]);
-                                i--;
-                            }
-                            break;
+                        var people = peopleList[i];
+                        if(ElevatorsManager.IsFire && people.Status != PeopleStatus.Moving)
+                        {
+                            people.Status = PeopleStatus.Exit;
+                        }
+                        switch (people.Status)
+                        {
+                            case PeopleStatus.Choosing:
+                                if (ElevatorsManager._time - people.ArrivingTime > 3F)
+                                {
+                                    lock (locker) people.Status = PeopleStatus.Waiting;
+                                    _floorRepository.UpdatePeopleDirection(people.CurrentFloor,
+                                                    people.CurrentFloor < people.DestinationFloor
+                                                        ? PeopleDirection.Up
+                                                        : PeopleDirection.Down);
+                                    _floorRepository.Find(people.CurrentFloor).IsRequested = true;
+
+                                }
+                                break;
+                            case PeopleStatus.Waiting:
+                                //string d = new Regex(@"\d+").Match(c).Value;
+                                lock (locker) _peopleStatus[i] =
+                                        "Человек № " + (people.Id + 1).ToString() + " : " + " ожидает лифт " + (ElevatorsManager._time - people.EnteringTime + 3).ToString() + " секунд";
+                                break;
+                            case PeopleStatus.Moving:
+                                lock (locker) _peopleStatus[i] =
+                                        "Человек № " + (people.Id + 1).ToString() + " : " + " едет на " + (people.DestinationFloor).ToString() + " этаж";
+                                break;
+                            case PeopleStatus.Exit:
+                                if (ElevatorsManager._time - people.ArrivingTime > 3F)
+                                {
+                                    _peopleRepository.Delete(people);
+                                    lock (locker) _peopleStatus.Remove(_peopleStatus[i]);
+                                    i--;
+                                }
+                                else
+                                {
+                                    lock (locker)
+                                    {
+                                        if (!ElevatorsManager.IsFire)
+                                            _peopleStatus[i] =
+                                                "Человек № " + (people.Id + 1).ToString() + " : " + " выходит из здания ";
+                                        else
+                                            _peopleStatus[i] =
+                                                    "Человек № " + (people.Id + 1).ToString() + " : " + " спускается по лестнице ";
+                                    }
+                                }
+                                break;
+                        }
+                        
                     }
+                
                 }
             } 
         }

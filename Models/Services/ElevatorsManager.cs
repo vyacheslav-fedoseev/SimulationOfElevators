@@ -24,6 +24,7 @@ namespace Models.Services
         private readonly bool[,] _elevatorsGrid;
         public event Action DataUpdated;
 
+        public static bool IsFire { get; private set; }
         private float _simulationSpeed = 1;
         private const float _floorHeight = 2.5F;
         public ElevatorsManager(IElevatorRepository elevatorsRepository, IPeopleRepository peopleRepository, IFloorRepository floorRepository, ITimer timer, ITimer updateTimer)
@@ -36,6 +37,7 @@ namespace Models.Services
             _updateTimer.Interval = 100;
             _updateTimer.Tick += (sender, args) => Invoke(DataUpdated);
 
+            IsFire = false;
             _timer = timer;
             _timer.Interval = 100;
             _timer.Tick += (sender, args) => Invoke(TimerTick);
@@ -109,20 +111,37 @@ namespace Models.Services
             var currentFloor = _floorRepository.Find(elevator.CurrentFloor);
 
             var isElevatorFull = (elevator.MaxCapacity == elevator.CountPeople);
-            Console.WriteLine( isElevatorFull.ToString() );
+            //Console.WriteLine( isElevatorFull.ToString() );
 
             if ((elevator.CurrentFloor == ConfigurationData._countFloors &&
                  elevator.Direction == Direction.Up) ||
                 (elevator.CurrentFloor == 1 &&
-                 elevator.Direction == Direction.Down)) elevator.Direction = Direction.Stop;
+                 elevator.Direction == Direction.Down))
+            {
+                elevator.Direction = Direction.Stop;
+            }
+
+            //Console.WriteLine(elevator.Direction.ToString());
+            
+
             if (elevator.DestinationFloor[elevator.CurrentFloor - 1])
             {
                 elevator.DestinationFloor[elevator.CurrentFloor - 1] = false;
                 //elevator._isOpenDoor = true;
                 //isUnload = true;
+                Console.WriteLine("UNLOAD!!!!!!");
+
                 elevator.UnLoadingTimer = 3;
                 return;
             }
+
+            if (IsFire)
+            {
+                if (elevator.Direction != Direction.Down && !(elevator.CurrentFloor == 1)) elevator.Direction = Direction.Down;
+                //if (!elevator.DestinationFloor[0]) elevator.DestinationFloor[0] = true;
+                return;
+            }
+
             if ((currentFloor.PeopleDirection == PeopleDirection.Up ||
                  currentFloor.PeopleDirection == PeopleDirection.Booth) &&
                 (elevator.Direction == Direction.Up || elevator.Direction == Direction.Stop) &&
@@ -130,7 +149,7 @@ namespace Models.Services
             {
                 elevator.Direction = Direction.Up;
                 //isLoad = true;
-                Console.WriteLine("LOAD!!!!!!");
+                //Console.WriteLine("LOAD!!!!!!");
                 elevator.LoadingTimer = 3;
                 return;
             }
@@ -141,7 +160,7 @@ namespace Models.Services
             {
                 elevator.Direction = Direction.Down;
                 //isLoad = true;
-                Console.WriteLine("LOAD(DOWN)!!!!!!");
+                //Console.WriteLine("LOAD(DOWN)!!!!!!");
                 elevator.LoadingTimer = 3;
                 return;
             }
@@ -316,7 +335,8 @@ namespace Models.Services
                     for (var i = 0; i < n; i++)
                     {
                         var people = elevator.PeekNextPeople();
-                        if (people.DestinationFloor == elevator.CurrentFloor)
+                        if ((people.DestinationFloor == elevator.CurrentFloor && !IsFire) ||
+                             (IsFire && elevator.CurrentFloor == 1))
                         {
                             //_peopleRepository.Delete(elevator.GetNextPeople());
                             people.Status = PeopleStatus.Exit;
@@ -419,6 +439,27 @@ namespace Models.Services
         public void SlowDown()
         {
             if (_simulationSpeed > 0.25) _simulationSpeed /= 2;
+        }
+
+        public void Fire()
+        {
+            if (!IsFire)
+            {
+                IsFire = true;
+                for (var i = 0; i < ConfigurationData._countElevators; i++)
+                {
+                    _elevatorsRepository.Find(i + 1).DestinationFloor[0] = true;
+                }
+            }
+            else
+            {
+                IsFire = false;
+                for (var i = 0; i < ConfigurationData._countElevators; i++)
+                {
+                    _elevatorsRepository.Find(i + 1).DestinationFloor[0] = false;
+                }
+            }
+            
         }
     }
 }

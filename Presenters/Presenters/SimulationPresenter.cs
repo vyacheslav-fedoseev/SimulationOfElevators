@@ -68,7 +68,7 @@ namespace Presenters.Presenters
 
         private void Fire()
         {
-
+            _manager.Fire();
         }
 
         //private void CheckPeopleStatus() => Controller.Run<CheckPeopleStatusPresenter>();
