@@ -17,7 +17,13 @@ namespace Presenters.IViews
         event Action SpeedUp;
         event Action SlowDown;
         event Action Fire;
-
+        void ShowError(string message);
+        void HideError();
+        string PeopleCount { get; }
+        string CurrentFloor { get; }
+        string DestinationFloor { get; }
         void UpdateElevatorsGrid(bool[,] elevatorsGrid);
+        void UpdatePeopleStatusLabel(string peopleStatus);
+        void UpdateView(bool[,] elevatorsGrid, string peopleStatus);
     }
 }

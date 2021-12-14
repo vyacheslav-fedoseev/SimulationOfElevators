@@ -10,5 +10,6 @@ namespace Presenters.IViews
     public interface ICheckPeopleStatusView : IView
     {
         event Action CloseProgram;
+        void UpdateView(string peopleStatusList);
     }
 }

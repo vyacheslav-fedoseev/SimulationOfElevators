@@ -14,26 +14,43 @@ namespace Presenters.Presenters
     {
         private IStartView _previousView;
         private readonly IElevatorsManager _manager;
+        private readonly IPeopleService _peopleService;
 
-        public SimulationPresenter(IApplicationController controller, ISimulationView view, IElevatorsManager manager)
+        public SimulationPresenter(IApplicationController controller, ISimulationView view, IElevatorsManager manager, IPeopleService peopleService)
             : base(controller, view)
         {
             _manager = manager;
+            _peopleService = peopleService;
             View.Stop += Stop;
             View.PlayPause += PlayPause;
             View.Fire += Fire;
-            View.CheckPeopleStatus += CheckPeopleStatus;
+            //View.CheckPeopleStatus += CheckPeopleStatus;
             View.SlowDown += SlowDown;
             View.SpeedUp += SpeedUp;
             View.SimulationClosed += SimulationClosed;
-            View.CreatePeople += CreatePeople;
-            _manager.DataUpdated += () => ViewUpdate(manager.GetElevatorsGrid());
+            View.CreatePeople += () => Create(View.PeopleCount, View.CurrentFloor, View.DestinationFloor);
+            _manager.DataUpdated += () => UpdateView(manager.GetElevatorsGrid(), _peopleService.GetPeopleStatus());
             View.UpdateElevatorsGrid(new bool[ConfigurationData._countFloors, ConfigurationData._countElevators]);
             manager.StartSimulation();
         }
 
-        private void ViewUpdate(bool[,] elevatorsGrid) => View.UpdateElevatorsGrid(elevatorsGrid);
+        private void UpdateView(bool[,] elevatorsGrid, string peopleStatus) => View.UpdateView(elevatorsGrid, peopleStatus);
+        public void Create(string countPeople, string currentFloor, string destinationFloor)
+        {
+            if (countPeople != string.Empty && currentFloor != string.Empty &&
+                destinationFloor != string.Empty && currentFloor != destinationFloor)
+            {
+                View.HideError();
+                var countPeopleInt = int.Parse(countPeople);
+                var currentFloorInt = int.Parse(currentFloor);
+                var destinationFloorInt = int.Parse(destinationFloor);
 
+                if (!_peopleService.CreatePeople(countPeopleInt, currentFloorInt, destinationFloorInt))
+                    View.ShowError("Этаж введен неверно");
+            }
+            else
+                View.ShowError("Данные введены некорректно");
+        }
         private void Stop()
         {
             _manager.StopSimulation();
@@ -51,10 +68,7 @@ namespace Presenters.Presenters
 
         }
 
-        private void CheckPeopleStatus()
-        {
-            Controller.Run<CheckPeopleStatusPresenter>();
-        }
+        //private void CheckPeopleStatus() => Controller.Run<CheckPeopleStatusPresenter>();
 
         private void SlowDown()
         {
@@ -72,8 +86,6 @@ namespace Presenters.Presenters
             _previousView.Show();
 
         }
-
-        private void CreatePeople() => Controller.Run<CreatePeoplePresenter>();
 
         public override void Run(IStartView previousView)
         {

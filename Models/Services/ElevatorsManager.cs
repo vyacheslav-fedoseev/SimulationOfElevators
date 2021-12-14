@@ -98,7 +98,7 @@ namespace Models.Services
                     Decide(elevator);
                     MoveElevator(elevator);
                 }
-                Thread.Sleep(100);
+                //Thread.Sleep(100);
             }
         }
 

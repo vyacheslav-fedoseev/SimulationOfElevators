@@ -21,12 +21,16 @@ namespace WinFormsAppSimulation
         public event Action SpeedUp;
         public event Action SlowDown;
         public event Action Fire;
+        public string PeopleCount => PeopleCountTextBox.Text;
+        public string CurrentFloor => CurrentFloorTextBox.Text;
+        public string DestinationFloor => DestinationFloorTextBox.Text;
         public SimulationForm()
         {
             InitializeComponent();
             FormClosed += (sender, args) => Invoke(SimulationClosed);
-            CreatePeopleToolStripMenuItem.Click += (sender, args) => Invoke(CreatePeople);
-            CheckPeopleStatusToolStripMenuItem.Click += (sender, args) => Invoke(CheckPeopleStatus);
+            //CreatePeopleToolStripMenuItem.Click += (sender, args) => Invoke(CreatePeople);
+            //CheckPeopleStatusToolStripMenuItem.Click += (sender, args) => Invoke(CheckPeopleStatus);
+            CreateButton.Click += (sender, args) => Invoke(CreatePeople);
             StopButton.Click += (sender, args) => Invoke(Stop);
             PlayPauseButton.Click += (sender, args) => Invoke(PlayPause);
             SpeedUpButton.Click += (sender, args) => Invoke(SpeedUp);
@@ -36,6 +40,9 @@ namespace WinFormsAppSimulation
 
         private static void Invoke(Action action) => action?.Invoke();
 
+        public void ShowError(string message) => ErrorMessageLebel.Text = message;
+
+        public void HideError() => ErrorMessageLebel.Text = string.Empty;
         public new void Show() => base.ShowDialog();
 
         public void UpdateElevatorsGrid(bool[,] elevatorsGrid)
@@ -48,8 +55,30 @@ namespace WinFormsAppSimulation
                     ElevatorsGrid.Rows[ElevatorsGrid.RowCount-i-1].Cells[ElevatorsGrid.ColumnCount-j-1].Style.BackColor = elevatorsGrid[i, j] ? Color.Red : Color.White;
         }
 
+        public void UpdatePeopleStatusLabel(string peopleStatus)
+        {
+            PeopleStatusLabel.Text = peopleStatus;
+        }
+
+        public void UpdateView(bool[,] elevatorsGrid, string peopleStatus)
+        {
+            UpdateElevatorsGrid(elevatorsGrid);
+            UpdatePeopleStatusLabel(peopleStatus);
+        }
         private void Timer1_Tick(object sender, EventArgs e)
         {
+
+        }
+
+        private void ElevatorsGrid_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+
+
+
+
+
+
 
         }
     }
