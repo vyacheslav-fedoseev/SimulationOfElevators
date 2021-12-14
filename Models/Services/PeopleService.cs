@@ -12,12 +12,20 @@ namespace Models.Services
     {
         private readonly IPeopleRepository _peopleRepository;
         private readonly IFloorRepository _floorRepository;
+        private string _peopleStatus;
         private Models.Entities.ConfigurationData _configurationData = new ConfigurationData();
 
         public PeopleService(IPeopleRepository peopleRepository, IFloorRepository floorRepository)
         {
             _peopleRepository = peopleRepository;
             _floorRepository = floorRepository;
+            _peopleStatus = "";
+        }
+
+        public string GetPeopleStatus()
+        {
+            var peopleStatus = _peopleStatus;
+            return peopleStatus;
         }
 
         public bool CreatePeople(int countPeople, int currentFloor, int destinationFloor)

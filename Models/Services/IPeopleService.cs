@@ -9,5 +9,6 @@ namespace Models.Services
     public interface IPeopleService
     {
         bool CreatePeople(int countPeople, int currentFloor, int destinationFloor);
+        string GetPeopleStatus();
     }
 }

@@ -22,5 +22,10 @@ namespace WinFormsAppSimulation
         }
 
         private static void Invoke(Action action) => action?.Invoke();
+
+        public void UpdateView( string peopleStatus )
+        {
+            peopleStatusLabel.Text = peopleStatus;
+        }
     }
 }
