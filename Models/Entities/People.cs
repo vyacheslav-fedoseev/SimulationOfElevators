@@ -10,6 +10,8 @@ namespace Models.Entities
         public int DestinationFloor { get; set; }
         public float EnteringTime { get; set; }
         public float ArrivingTime { get; set; }
+        public bool IsInElevator { get; set; }
+        public bool IsArrived { get; set; }
         public PeopleStatus Status { get; set; }
 
         public People(int id, int currentFloor, int destinationFloor)
@@ -19,6 +21,8 @@ namespace Models.Entities
             DestinationFloor = destinationFloor;
             Status = PeopleStatus.Choosing;
             EnteringTime = ElevatorsManager._time;
+            IsInElevator = false;
+            IsArrived = false;
         }
     }
 }

@@ -10,10 +10,10 @@ namespace Models.Entities
     {
         public int Id { get; protected set; }
         public int CountPeople { get; protected internal set; }
-        protected Queue<People> People = new Queue<People>();
 
-        public People GetNextPeople() => People.Dequeue();
-        public People PeekNextPeople() => People.Peek();
-        public void AddNextPeople(People people) => People.Enqueue(people);
+        protected List<People> People = new List<People>();
+        public bool RemovePeople(People people) => People.Remove(people);
+        public People GetPeople(int num) => People[num];
+        public void AddNextPeople(People people) => People.Add(people);
     }
 }

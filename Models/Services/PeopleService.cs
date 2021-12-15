@@ -27,11 +27,13 @@ namespace Models.Services
                 lock (locker2)
                 {
                     for (var i = 0; i < peopleList.Count; i++)
-                    {
+                    { 
+                        
                         var people = peopleList[i];
-                        if(ElevatorsManager.IsFire && people.Status != PeopleStatus.Moving)
+                        if (ElevatorsManager.IsFire && people.Status != PeopleStatus.Moving && people.Status != PeopleStatus.Exit)
                         {
                             people.Status = PeopleStatus.Exit;
+                            people.ArrivingTime = ElevatorsManager._time;
                         }
                         switch (people.Status)
                         {
@@ -53,14 +55,33 @@ namespace Models.Services
                                         "Человек № " + (people.Id + 1).ToString() + " : " + " ожидает лифт " + (ElevatorsManager._time - people.EnteringTime + 3).ToString() + " секунд";
                                 break;
                             case PeopleStatus.Moving:
-                                lock (locker) _peopleStatus[i] =
-                                        "Человек № " + (people.Id + 1).ToString() + " : " + " едет на " + (people.DestinationFloor).ToString() + " этаж";
+                                lock (locker)
+                                {
+                                    if( !ElevatorsManager.IsFire )_peopleStatus[i] =
+                                       "Человек № " + (people.Id + 1).ToString() + " : " + " едет на " + (people.DestinationFloor).ToString() + " этаж";
+                                    else _peopleStatus[i] =
+                                       "Человек № " + (people.Id + 1).ToString() + " : " + " едет на 1 этаж";
+                                }
+                               
                                 break;
                             case PeopleStatus.Exit:
                                 if (ElevatorsManager._time - people.ArrivingTime > 3F)
                                 {
+                                    Console.WriteLine("bghnijmo");
                                     _peopleRepository.Delete(people);
-                                    lock (locker) _peopleStatus.Remove(_peopleStatus[i]);
+                                    lock(locker)_peopleStatus.Remove(_peopleStatus[i]);
+                                    if (ElevatorsManager.IsFire && !people.IsArrived)
+                                    {
+                                        var floor = _floorRepository.Find(people.CurrentFloor);
+                                        floor.RemovePeople(people);
+                                        floor.CountPeople--;
+                                        if( floor.CountPeople == 0 )
+                                        {
+                                            floor.IsRequested = false;
+                                            floor.PeopleDirection = PeopleDirection.NoDirection;
+                                        }
+
+                                    }
                                     i--;
                                 }
                                 else
@@ -72,7 +93,7 @@ namespace Models.Services
                                                 "Человек № " + (people.Id + 1).ToString() + " : " + " выходит из здания ";
                                         else
                                             _peopleStatus[i] =
-                                                    "Человек № " + (people.Id + 1).ToString() + " : " + " спускается по лестнице ";
+                                                    "Человек № " + (people.Id + 1).ToString() + " : " + " спускается по пожарной лестнице ";
                                     }
                                 }
                                 break;
@@ -81,6 +102,7 @@ namespace Models.Services
                     }
                 
                 }
+                Thread.Sleep(50);
             } 
         }
         public void StartThread()
@@ -145,8 +167,7 @@ namespace Models.Services
                     var id = _peopleRepository.Add(destinationFloor, currentFloor);
                     lock (locker) 
                     {
-                        _floorRepository.Find(currentFloor)
-                        .AddNextPeople(_peopleRepository.Find(id));
+                        _floorRepository.Find(currentFloor).AddNextPeople(_peopleRepository.Find(id));
 
                         _peopleStatus.Add("Человек № " + (id + 1).ToString() + " : " + "выбирает номер лифта");
                     }

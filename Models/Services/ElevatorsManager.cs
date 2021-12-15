@@ -113,6 +113,21 @@ namespace Models.Services
             var isElevatorFull = (elevator.MaxCapacity == elevator.CountPeople);
             //Console.WriteLine( isElevatorFull.ToString() );
 
+            if (IsFire)
+            {
+                if (!elevator.DestinationFloor[0]) elevator.DestinationFloor[0] = true;
+                if (elevator.Direction == Direction.Up)
+                {
+                    elevator.Direction = Direction.Stop;
+                    return;
+                }
+                else if( elevator.Direction != Direction.Up && elevator.CurrentFloor != 1 )
+                {
+                    elevator.Direction = Direction.Down;
+                    return;
+                }
+            }
+
             if ((elevator.CurrentFloor == ConfigurationData._countFloors &&
                  elevator.Direction == Direction.Up) ||
                 (elevator.CurrentFloor == 1 &&
@@ -129,16 +144,9 @@ namespace Models.Services
                 elevator.DestinationFloor[elevator.CurrentFloor - 1] = false;
                 //elevator._isOpenDoor = true;
                 //isUnload = true;
-                Console.WriteLine("UNLOAD!!!!!!");
+                //Console.WriteLine("UNLOAD!!!!!!");
 
                 elevator.UnLoadingTimer = 3;
-                return;
-            }
-
-            if (IsFire)
-            {
-                if (elevator.Direction != Direction.Down && !(elevator.CurrentFloor == 1)) elevator.Direction = Direction.Down;
-                //if (!elevator.DestinationFloor[0]) elevator.DestinationFloor[0] = true;
                 return;
             }
 
@@ -283,22 +291,25 @@ namespace Models.Services
                     elevator.StartMovingPosition = elevator.Position;
 
                     var floor = _floorRepository.Find(elevator.CurrentFloor);
-                    var ec =  elevator.MaxCapacity - elevator.CountPeople;
-                    var fc = floor.CountPeople;
-                    for (var i = 0; i < fc && i< ec; i++)
+                    //var ec =  elevator.MaxCapacity - elevator.CountPeople;
+                    //var fc = floor.CountPeople;
+                    for (var i = 0; i < floor.CountPeople && i< elevator.MaxCapacity - elevator.CountPeople; i++)
                     {
-                        var people = floor.PeekNextPeople();
+                        var people = floor.GetPeople(i);
                         if ((people.DestinationFloor - people.CurrentFloor > 0 && elevator.Direction == Direction.Up) ||
                             (people.DestinationFloor - people.CurrentFloor < 0 && elevator.Direction == Direction.Down))
                         {                           
                             elevator.DestinationFloor[people.DestinationFloor - 1] = true;
-                            elevator.AddNextPeople(floor.GetNextPeople());
+                            elevator.AddNextPeople(people);
+                            floor.RemovePeople(people);
+                            i--;
                             elevator.CountPeople++;
                             floor.CountPeople--;
                             people.Status = PeopleStatus.Moving;
+                            people.IsInElevator = true;
                         }
-                        else
-                            i--;
+                        //else
+                            //i--;
                         
                     }
 
@@ -312,7 +323,7 @@ namespace Models.Services
                     {
                         for(int i=0; i< floor.CountPeople; i++)
                         {
-                            var people = floor.PeekNextPeople();
+                            var people = floor.GetPeople(i);
                             if (people.DestinationFloor - floor.Id < 0) _floorRepository.UpdatePeopleDirection( floor.Id, PeopleDirection.Down );
                             if (people.DestinationFloor - floor.Id > 0) _floorRepository.UpdatePeopleDirection(floor.Id, PeopleDirection.Up);
                         }
@@ -331,21 +342,25 @@ namespace Models.Services
                     elevator.Speed = 0;
                     elevator.StartMovingPosition = elevator.Position;
 
-                    int n = elevator.CountPeople;
-                    for (var i = 0; i < n; i++)
+                    for (var i = 0; i < elevator.CountPeople; i++)
                     {
-                        var people = elevator.PeekNextPeople();
+                        var people = elevator.GetPeople(i);
                         if ((people.DestinationFloor == elevator.CurrentFloor && !IsFire) ||
                              (IsFire && elevator.CurrentFloor == 1))
                         {
                             //_peopleRepository.Delete(elevator.GetNextPeople());
                             people.Status = PeopleStatus.Exit;
+                            people.IsInElevator = false;
+                            people.IsArrived = true;
                             people.ArrivingTime = _time;
-                            elevator.GetNextPeople();
+                            elevator.RemovePeople(people);
+                            if(IsFire)elevator.DestinationFloor[people.DestinationFloor - 1] = false;
                             elevator.CountPeople--;
+                            i--;
                         }
                     }
                     elevator.DestinationFloor[elevator.CurrentFloor - 1] = false;
+
                 }
                 //isUnload = false;
                 elevator.UnLoadingTimer--;
@@ -443,23 +458,9 @@ namespace Models.Services
 
         public void Fire()
         {
-            if (!IsFire)
-            {
-                IsFire = true;
-                for (var i = 0; i < ConfigurationData._countElevators; i++)
-                {
-                    _elevatorsRepository.Find(i + 1).DestinationFloor[0] = true;
-                }
-            }
-            else
-            {
-                IsFire = false;
-                for (var i = 0; i < ConfigurationData._countElevators; i++)
-                {
-                    _elevatorsRepository.Find(i + 1).DestinationFloor[0] = false;
-                }
-            }
-            
+            if (!IsFire) IsFire = true;
+
+            else IsFire = false;
         }
     }
 }
