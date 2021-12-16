@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Entities\ConfigurationData.cs" />
+    <Compile Include="Entities\StatisticsData.cs" />
     <Compile Include="Repositories\ElevatorRepository.cs" />
     <Compile Include="Repositories\FloorRepository.cs" />
     <Compile Include="Repositories\IElevatorRepository.cs" />
@@ -65,6 +66,8 @@
     <Compile Include="Services\ITimer.cs" />
     <Compile Include="Services\LoadStartConfigurationService.cs" />
     <Compile Include="Services\PeopleService.cs" />
+    <Compile Include="Services\StatisticsService.cs" />
+    <Compile Include="Services\IStatisticsService.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

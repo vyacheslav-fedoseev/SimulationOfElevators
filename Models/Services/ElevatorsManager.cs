@@ -14,6 +14,7 @@ namespace Models.Services
         private readonly IElevatorRepository _elevatorsRepository;
         private readonly IPeopleRepository _peopleRepository;
         private readonly IFloorRepository _floorRepository;
+        private readonly StatisticsService _statistics;
         private Thread _thread;
         private readonly ITimer _updateTimer;
         private readonly ITimer _timer;
@@ -47,6 +48,10 @@ namespace Models.Services
                 _elevatorsGrid[0, i] = true;
         }
 
+        public float GetTime()
+        {
+            return _time;
+        }
         private void TimerTick()
         {
             _time += 0.1F * _simulationSpeed;

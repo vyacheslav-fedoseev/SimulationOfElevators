@@ -65,26 +65,17 @@ namespace WinFormsAppSimulation
             PeopleStatusLabel.Text = peopleStatus;
         }
 
-        public void UpdateView(bool[,] elevatorsGrid, string peopleStatus, string[] floorInfo)
+        public void UpdateView(bool[,] elevatorsGrid, string peopleStatus, string[] floorInfo, float time)
         {
             UpdateElevatorsGrid(elevatorsGrid, floorInfo);
             UpdatePeopleStatusLabel(peopleStatus);
-        }
-        private void Timer1_Tick(object sender, EventArgs e)
-        {
-
+            UpdateTime(time);
         }
 
-        private void ElevatorsGrid_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        private void UpdateTime(float time)
         {
-
-
-
-
-
-
-
-
+            MinutesLabel.Text = ((int)(time / 60)).ToString();
+            SecondsLabel.Text = ((int)(time % 60)).ToString();
         }
     }
 }

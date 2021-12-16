@@ -23,6 +23,10 @@ namespace WinFormsAppSimulation
             FormClosed += (sender, args) => Invoke(StatisticClosing);
         }
 
+        public void ShowStatistics( string statistics )
+        {
+            StatisticsLabel.Text = statistics;
+        }
         private static void Invoke(Action action) => action?.Invoke();
 
         public new void Show() => base.ShowDialog();

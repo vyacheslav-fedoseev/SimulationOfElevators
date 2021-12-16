@@ -31,13 +31,13 @@ namespace Presenters.Presenters
             View.SpeedUp += SpeedUp;
             View.SimulationClosed += SimulationClosed;
             View.CreatePeople += () => Create(View.PeopleCount, View.CurrentFloor, View.DestinationFloor);
-            _manager.DataUpdated += () => UpdateView(manager.GetElevatorsGrid(), _peopleService.GetPeopleStatus(), _floorService.GetFloorInfo());
+            _manager.DataUpdated += () => UpdateView(manager.GetElevatorsGrid(), _peopleService.GetPeopleStatus(), _floorService.GetFloorInfo(), _manager.GetTime());
             View.UpdateElevatorsGrid(new bool[ConfigurationData._countFloors, ConfigurationData._countElevators], _floorService.GetFloorInfo());
             manager.StartSimulation();
             peopleService.StartThread();
         }
 
-        private void UpdateView(bool[,] elevatorsGrid, string peopleStatus, string[] floorInfo) => View.UpdateView(elevatorsGrid, peopleStatus, floorInfo);
+        private void UpdateView(bool[,] elevatorsGrid, string peopleStatus, string[] floorInfo, float time) => View.UpdateView(elevatorsGrid, peopleStatus, floorInfo, time);
         public void Create(string countPeople, string currentFloor, string destinationFloor)
         {
             if (countPeople != string.Empty && currentFloor != string.Empty &&

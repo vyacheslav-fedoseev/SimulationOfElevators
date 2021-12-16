@@ -24,6 +24,6 @@ namespace Presenters.IViews
         string DestinationFloor { get; }
         void UpdateElevatorsGrid(bool[,] elevatorsGrid, string[] floorInfo);
         void UpdatePeopleStatusLabel(string peopleStatus);
-        void UpdateView(bool[,] elevatorsGrid, string peopleStatus, string[] floorInfo);
+        void UpdateView(bool[,] elevatorsGrid, string peopleStatus, string[] floorInfo, float time);
     }
 }

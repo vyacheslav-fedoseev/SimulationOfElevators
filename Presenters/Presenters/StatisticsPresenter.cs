@@ -35,6 +35,7 @@ namespace Presenters.Presenters
         {
             _previousView = previousView;
             View.Show();
+            View.ShowStatistics("");
         }
     }
 
