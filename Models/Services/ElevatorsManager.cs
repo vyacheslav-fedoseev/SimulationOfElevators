@@ -104,170 +104,174 @@ namespace Models.Services
 
         public void Decide(Elevator elevator)
         {
-            var requestsAbove = false;
-            var requestsBelow = false;
-            var nearestHigherRequest = 0;
-            var nearestLowerRequest = 0;
-            var currentFloor = _floorRepository.Find(elevator.CurrentFloor);
-
-            var isElevatorFull = (elevator.MaxCapacity == elevator.CountPeople);
-            //Console.WriteLine( isElevatorFull.ToString() );
-
-            if (IsFire)
+            lock(FloorService.Locker)
             {
-                if (!elevator.DestinationFloor[0]) elevator.DestinationFloor[0] = true;
-                if (elevator.Direction == Direction.Up)
+                var requestsAbove = false;
+                var requestsBelow = false;
+                var nearestHigherRequest = 0;
+                var nearestLowerRequest = 0;
+                var currentFloor = _floorRepository.Find(elevator.CurrentFloor);
+
+                var isElevatorFull = (elevator.MaxCapacity == elevator.CountPeople);
+                //Console.WriteLine( isElevatorFull.ToString() );
+
+                if (IsFire)
+                {
+                    if (!elevator.DestinationFloor[0]) elevator.DestinationFloor[0] = true;
+                    if (elevator.Direction == Direction.Up)
+                    {
+                        elevator.Direction = Direction.Stop;
+                        return;
+                    }
+                    else if (elevator.Direction != Direction.Up && elevator.CurrentFloor != 1)
+                    {
+                        elevator.Direction = Direction.Down;
+                        return;
+                    }
+                }
+
+                if ((elevator.CurrentFloor == ConfigurationData._countFloors &&
+                     elevator.Direction == Direction.Up) ||
+                    (elevator.CurrentFloor == 1 &&
+                     elevator.Direction == Direction.Down))
                 {
                     elevator.Direction = Direction.Stop;
+                }
+
+                //Console.WriteLine(elevator.Direction.ToString());
+
+
+                if (elevator.DestinationFloor[elevator.CurrentFloor - 1])
+                {
+                    elevator.DestinationFloor[elevator.CurrentFloor - 1] = false;
+                    //elevator._isOpenDoor = true;
+                    //isUnload = true;
+                    //Console.WriteLine("UNLOAD!!!!!!");
+
+                    elevator.UnLoadingTimer = 3;
                     return;
                 }
-                else if( elevator.Direction != Direction.Up && elevator.CurrentFloor != 1 )
+
+                if ((currentFloor.PeopleDirection == PeopleDirection.Up ||
+                     currentFloor.PeopleDirection == PeopleDirection.Booth) &&
+                    (elevator.Direction == Direction.Up || elevator.Direction == Direction.Stop) &&
+                    !isElevatorFull)
+                {
+                    elevator.Direction = Direction.Up;
+                    //isLoad = true;
+                    //Console.WriteLine("LOAD!!!!!!");
+                    elevator.LoadingTimer = 3;
+                    return;
+                }
+                if ((currentFloor.PeopleDirection == PeopleDirection.Down ||
+                     currentFloor.PeopleDirection == PeopleDirection.Booth) &&
+                    (elevator.Direction == Direction.Down || elevator.Direction == Direction.Stop) &&
+                    !isElevatorFull)
+                {
+                    elevator.Direction = Direction.Down;
+                    //isLoad = true;
+                    //Console.WriteLine("LOAD(DOWN)!!!!!!");
+                    elevator.LoadingTimer = 3;
+                    return;
+                }
+
+                var destinationAbove = false;
+                var destinationBelow = false;
+
+                for (var i = elevator.CurrentFloor; i < ConfigurationData._countFloors; i++)
+                {
+                    if (elevator.DestinationFloor[i]) destinationAbove = true;
+
+                    if (!_floorRepository.Find(i + 1).IsRequested || isElevatorFull) continue;
+                    requestsAbove = true;
+
+                    if (nearestHigherRequest == 0)
+                        nearestHigherRequest = i + 1;
+                }
+                for (var i = elevator.CurrentFloor - 2; i >= 0; i--)
+                {
+                    if (elevator.DestinationFloor[i])
+                    {
+                        destinationBelow = true;
+                        //Console.WriteLine("{P1!!!!!!");
+                    }
+
+                    if (!_floorRepository.Find(i + 1).IsRequested || isElevatorFull) continue;
+                    requestsBelow = true;
+                    //Console.WriteLine("{P2!!!!!!");
+                    if (nearestLowerRequest == 0)
+                        nearestLowerRequest = i + 1;
+                }
+                if (!destinationAbove && !requestsAbove &&
+                    !destinationBelow && !requestsBelow)
+                {
+                    elevator.Direction = Direction.Stop;
+                    //Console.WriteLine("STOP!!!!!!");
+                    return;
+                }
+                if (destinationAbove && (elevator.Direction == Direction.Stop ||
+                                         elevator.Direction == Direction.Up))
+                {
+                    elevator.Direction = Direction.Up;
+                    return;
+                }
+                if (destinationBelow && (elevator.Direction == Direction.Stop ||
+                    elevator.Direction == Direction.Down))
                 {
                     elevator.Direction = Direction.Down;
                     return;
                 }
-            }
 
-            if ((elevator.CurrentFloor == ConfigurationData._countFloors &&
-                 elevator.Direction == Direction.Up) ||
-                (elevator.CurrentFloor == 1 &&
-                 elevator.Direction == Direction.Down))
-            {
+                var elevatorsBetweenDown = false;
+                var elevatorsBetweenUp = false;
+                var elevatorsOppositeDown = false;
+                var elevatorsOppositeUp = false;
+                var elevatorList = (List<Elevator>)_elevatorsRepository.GetAll();
+
+                for (var i = 0; i < ConfigurationData._countElevators; i++)
+                {
+                    if (elevatorList[i].Id == elevator.Id) continue;
+                    var oppositeFloor = elevatorList[i].CurrentFloor;
+                    var oppositeDirection = elevatorList[i].Direction;
+                    if ((oppositeDirection == Direction.Up || oppositeDirection == Direction.Stop) && requestsAbove)
+                    {
+                        if ((oppositeFloor > elevator.CurrentFloor && oppositeFloor <= nearestHigherRequest) ||
+                            (oppositeFloor == elevator.CurrentFloor && i < elevator.Id))
+                            elevatorsBetweenUp = true;
+                    }
+                    if ((oppositeDirection == Direction.Down || oppositeDirection == Direction.Stop) && requestsBelow)
+                    {
+                        if ((oppositeFloor < elevator.CurrentFloor && oppositeFloor >= nearestLowerRequest) ||
+                            (oppositeFloor == elevator.CurrentFloor && i < elevator.Id))
+                            elevatorsBetweenDown = true;
+                    }
+                    if ((oppositeDirection == Direction.Up || oppositeDirection == Direction.Stop) && requestsBelow)
+                    {
+                        if (nearestLowerRequest >= oppositeFloor && nearestLowerRequest - oppositeFloor < elevator.CurrentFloor - nearestLowerRequest)
+                            elevatorsOppositeUp = true;
+                    }
+                    if ((oppositeDirection == Direction.Down || oppositeDirection == Direction.Stop) && requestsAbove)
+                    {
+                        if (nearestLowerRequest <= oppositeFloor && oppositeFloor - nearestLowerRequest < nearestLowerRequest - elevator.CurrentFloor)
+                            elevatorsOppositeDown = true;
+                    }
+
+                }
+                if ((elevator.Direction == Direction.Up || elevator.Direction == Direction.Stop) &&
+                    requestsAbove && !elevatorsBetweenUp && !elevatorsOppositeDown)
+                {
+                    elevator.Direction = Direction.Up;
+                    return;
+                }
+                if ((elevator.Direction == Direction.Down || elevator.Direction == Direction.Stop) &&
+                    requestsBelow && !elevatorsBetweenDown && !elevatorsOppositeUp)
+                {
+                    elevator.Direction = Direction.Down;
+                    return;
+                }
                 elevator.Direction = Direction.Stop;
             }
-
-            //Console.WriteLine(elevator.Direction.ToString());
             
-
-            if (elevator.DestinationFloor[elevator.CurrentFloor - 1])
-            {
-                elevator.DestinationFloor[elevator.CurrentFloor - 1] = false;
-                //elevator._isOpenDoor = true;
-                //isUnload = true;
-                //Console.WriteLine("UNLOAD!!!!!!");
-
-                elevator.UnLoadingTimer = 3;
-                return;
-            }
-
-            if ((currentFloor.PeopleDirection == PeopleDirection.Up ||
-                 currentFloor.PeopleDirection == PeopleDirection.Booth) &&
-                (elevator.Direction == Direction.Up || elevator.Direction == Direction.Stop) &&
-                !isElevatorFull)
-            {
-                elevator.Direction = Direction.Up;
-                //isLoad = true;
-                //Console.WriteLine("LOAD!!!!!!");
-                elevator.LoadingTimer = 3;
-                return;
-            }
-            if ((currentFloor.PeopleDirection == PeopleDirection.Down ||
-                 currentFloor.PeopleDirection == PeopleDirection.Booth) &&
-                (elevator.Direction == Direction.Down || elevator.Direction == Direction.Stop) &&
-                !isElevatorFull)
-            {
-                elevator.Direction = Direction.Down;
-                //isLoad = true;
-                //Console.WriteLine("LOAD(DOWN)!!!!!!");
-                elevator.LoadingTimer = 3;
-                return;
-            }
-
-            var destinationAbove = false;
-            var destinationBelow = false;
-
-            for (var i = elevator.CurrentFloor; i < ConfigurationData._countFloors; i++)
-            {
-                if (elevator.DestinationFloor[i]) destinationAbove = true;
-
-                if (!_floorRepository.Find(i + 1).IsRequested || isElevatorFull) continue;
-                requestsAbove = true;
-
-                if (nearestHigherRequest == 0)
-                    nearestHigherRequest = i + 1;
-            }
-            for (var i = elevator.CurrentFloor - 2; i >= 0; i--)
-            {
-                if (elevator.DestinationFloor[i])
-                {
-                    destinationBelow = true;
-                    //Console.WriteLine("{P1!!!!!!");
-                }
-
-                if (!_floorRepository.Find(i + 1).IsRequested || isElevatorFull) continue;
-                requestsBelow = true;
-                //Console.WriteLine("{P2!!!!!!");
-                if (nearestLowerRequest == 0)
-                    nearestLowerRequest = i + 1;
-            }
-            if (!destinationAbove && !requestsAbove &&
-                !destinationBelow && !requestsBelow)
-            {
-                elevator.Direction = Direction.Stop;
-                //Console.WriteLine("STOP!!!!!!");
-                return;
-            }
-            if (destinationAbove && (elevator.Direction == Direction.Stop ||
-                                     elevator.Direction == Direction.Up))
-            {
-                elevator.Direction = Direction.Up;
-                return;
-            }
-            if (destinationBelow && (elevator.Direction == Direction.Stop ||
-                elevator.Direction == Direction.Down))
-            {
-                elevator.Direction = Direction.Down;
-                return;
-            }
-
-            var elevatorsBetweenDown = false;
-            var elevatorsBetweenUp = false;
-            var elevatorsOppositeDown = false;
-            var elevatorsOppositeUp = false;
-            var elevatorList = (List<Elevator>)_elevatorsRepository.GetAll();
-
-            for (var i = 0; i < ConfigurationData._countElevators; i++)
-            {
-                if (elevatorList[i].Id == elevator.Id) continue;
-                var oppositeFloor = elevatorList[i].CurrentFloor;
-                var oppositeDirection = elevatorList[i].Direction;
-                if ((oppositeDirection == Direction.Up || oppositeDirection == Direction.Stop) && requestsAbove)
-                {
-                    if ((oppositeFloor > elevator.CurrentFloor && oppositeFloor <= nearestHigherRequest) ||
-                        (oppositeFloor == elevator.CurrentFloor && i < elevator.Id))
-                        elevatorsBetweenUp = true;
-                }
-                if ((oppositeDirection == Direction.Down || oppositeDirection == Direction.Stop) && requestsBelow)
-                {
-                    if ((oppositeFloor < elevator.CurrentFloor && oppositeFloor >= nearestLowerRequest) ||
-                        (oppositeFloor == elevator.CurrentFloor && i < elevator.Id))
-                        elevatorsBetweenDown = true;
-                }
-                if ((oppositeDirection == Direction.Up || oppositeDirection == Direction.Stop) && requestsBelow)
-                {
-                    if (nearestLowerRequest >= oppositeFloor && nearestLowerRequest - oppositeFloor < elevator.CurrentFloor - nearestLowerRequest)
-                        elevatorsOppositeUp = true;
-                }
-                if ((oppositeDirection == Direction.Down || oppositeDirection == Direction.Stop) && requestsAbove)
-                {
-                    if (nearestLowerRequest <= oppositeFloor && oppositeFloor - nearestLowerRequest < nearestLowerRequest - elevator.CurrentFloor)
-                        elevatorsOppositeDown = true;
-                }
-
-            }
-            if ((elevator.Direction == Direction.Up || elevator.Direction == Direction.Stop) &&
-                requestsAbove && !elevatorsBetweenUp && !elevatorsOppositeDown)
-            {
-                elevator.Direction = Direction.Up;
-                return;
-            }
-            if ((elevator.Direction == Direction.Down || elevator.Direction == Direction.Stop) &&
-                requestsBelow && !elevatorsBetweenDown && !elevatorsOppositeUp)
-            {
-                elevator.Direction = Direction.Down;
-                return;
-            }
-            elevator.Direction = Direction.Stop;
         }
 
         public void MoveElevator(Elevator elevator)
@@ -289,8 +293,12 @@ namespace Models.Services
                     elevator.MovingTime = 0;
                     elevator.Speed = 0;
                     elevator.StartMovingPosition = elevator.Position;
-
-                    var floor = _floorRepository.Find(elevator.CurrentFloor);
+                    Floor floor;
+                    lock (FloorService.Locker)
+                    {
+                        floor = _floorRepository.Find(elevator.CurrentFloor);
+                    }
+                    
                     //var ec =  elevator.MaxCapacity - elevator.CountPeople;
                     //var fc = floor.CountPeople;
                     for (var i = 0; i < floor.CountPeople && i< elevator.MaxCapacity - elevator.CountPeople; i++)
@@ -299,35 +307,43 @@ namespace Models.Services
                         if ((people.DestinationFloor - people.CurrentFloor > 0 && elevator.Direction == Direction.Up) ||
                             (people.DestinationFloor - people.CurrentFloor < 0 && elevator.Direction == Direction.Down))
                         {                           
-                            elevator.DestinationFloor[people.DestinationFloor - 1] = true;
-                            elevator.AddNextPeople(people);
-                            floor.RemovePeople(people);
-                            i--;
                             elevator.CountPeople++;
-                            floor.CountPeople--;
-                            people.Status = PeopleStatus.Moving;
-                            people.IsInElevator = true;
+                            lock (FloorService.Locker)
+                            {
+                                elevator.DestinationFloor[people.DestinationFloor - 1] = true;
+                                elevator.AddNextPeople(people);
+                                floor.RemovePeople(people);
+                                i--;
+                                floor.CountPeople--;
+                                people.Status = PeopleStatus.Moving;
+                                people.IsInElevator = true;
+                            }
+                            
                         }
                         //else
                             //i--;
                         
                     }
 
-                    floor.PeopleDirection = PeopleDirection.NoDirection;
+                    lock (FloorService.Locker)
+                    {
+                        floor.PeopleDirection = PeopleDirection.NoDirection;
 
-                    if ( floor.CountPeople == 0 )
-                    {
-                        floor.IsRequested = false;  
-                    }
-                    else
-                    {
-                        for(int i=0; i< floor.CountPeople; i++)
+                        if (floor.CountPeople == 0)
                         {
-                            var people = floor.GetPeople(i);
-                            if (people.DestinationFloor - floor.Id < 0) _floorRepository.UpdatePeopleDirection( floor.Id, PeopleDirection.Down );
-                            if (people.DestinationFloor - floor.Id > 0) _floorRepository.UpdatePeopleDirection(floor.Id, PeopleDirection.Up);
+                            floor.IsRequested = false;
+                        }
+                        else
+                        {
+                            for (int i = 0; i < floor.CountPeople; i++)
+                            {
+                                var people = floor.GetPeople(i);
+                                if (people.DestinationFloor - floor.Id < 0) _floorRepository.UpdatePeopleDirection(floor.Id, PeopleDirection.Down);
+                                if (people.DestinationFloor - floor.Id > 0) _floorRepository.UpdatePeopleDirection(floor.Id, PeopleDirection.Up);
+                            }
                         }
                     }
+                    
                 }
                 elevator.LoadingTimer--;
                 //isLoad = false;
