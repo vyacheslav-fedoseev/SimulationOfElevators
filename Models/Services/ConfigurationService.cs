@@ -17,11 +17,11 @@ namespace Models.Services
             return ConfigurationData._capacity != null &&
                    ConfigurationData._maxAcceleration != null &&
                    ConfigurationData._maxSpeed != null &&
+                   ConfigurationData._countElevators != 0 &&
+                   ConfigurationData._countFloors != 0 &&
                    ConfigurationData._capacity[ConfigurationData._countElevators - 1] != 0 &&
                    ConfigurationData._maxAcceleration[ConfigurationData._countElevators - 1] != 0 &&
-                   ConfigurationData._maxSpeed[ConfigurationData._countElevators - 1] != 0 &&
-                   ConfigurationData._countElevators != 0 &&
-                   ConfigurationData._countFloors != 0;
+                   ConfigurationData._maxSpeed[ConfigurationData._countElevators - 1] != 0;
         }
 
         public bool SetConfiguration(int countFloors, int countElevators)
