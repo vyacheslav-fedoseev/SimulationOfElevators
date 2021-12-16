@@ -45,14 +45,19 @@ namespace WinFormsAppSimulation
         public void HideError() => ErrorMessageLebel.Text = string.Empty;
         public new void Show() => base.ShowDialog();
 
-        public void UpdateElevatorsGrid(bool[,] elevatorsGrid)
+        public void UpdateElevatorsGrid(bool[,] elevatorsGrid, string[] floorInfo)
         {
             ElevatorsGrid.RowCount = elevatorsGrid.GetLength(0);
-            ElevatorsGrid.ColumnCount = elevatorsGrid.GetLength(1);
+            ElevatorsGrid.ColumnCount = elevatorsGrid.GetLength(1)+1;
 
             for (var i = 0; i < ElevatorsGrid.RowCount; i++)
                 for (var j = 0; j < ElevatorsGrid.ColumnCount; j++)
-                    ElevatorsGrid.Rows[ElevatorsGrid.RowCount-i-1].Cells[ElevatorsGrid.ColumnCount-j-1].Style.BackColor = elevatorsGrid[i, j] ? Color.Red : Color.White;
+                {
+                    if (j != ElevatorsGrid.ColumnCount-1)
+                        ElevatorsGrid.Rows[ElevatorsGrid.RowCount - i -1].Cells[ElevatorsGrid.ColumnCount - j-1].Style.BackColor = elevatorsGrid[i, j] ? Color.Red : Color.White;
+                    else
+                        ElevatorsGrid.Rows[ElevatorsGrid.RowCount - i -1].Cells[ElevatorsGrid.ColumnCount - j-1].Value = floorInfo[i];
+                }        
         }
 
         public void UpdatePeopleStatusLabel(string peopleStatus)
@@ -60,9 +65,9 @@ namespace WinFormsAppSimulation
             PeopleStatusLabel.Text = peopleStatus;
         }
 
-        public void UpdateView(bool[,] elevatorsGrid, string peopleStatus)
+        public void UpdateView(bool[,] elevatorsGrid, string peopleStatus, string[] floorInfo)
         {
-            UpdateElevatorsGrid(elevatorsGrid);
+            UpdateElevatorsGrid(elevatorsGrid, floorInfo);
             UpdatePeopleStatusLabel(peopleStatus);
         }
         private void Timer1_Tick(object sender, EventArgs e)

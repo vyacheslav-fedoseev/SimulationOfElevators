@@ -13,7 +13,16 @@ namespace Models.Entities
 
         protected List<People> People = new List<People>();
         public bool RemovePeople(People people) => People.Remove(people);
+
         public People GetPeople(int num) => People[num];
         public void AddNextPeople(People people) => People.Add(people);
+
+        public People GetNextPeople()
+        {
+            var people = People[0];
+            People.Remove(people);
+            return people;
+        }
+        public People PeekNextPeople() => People[0];
     }
 }

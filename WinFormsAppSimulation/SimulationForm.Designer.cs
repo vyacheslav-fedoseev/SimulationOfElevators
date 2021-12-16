@@ -64,7 +64,7 @@ namespace WinFormsAppSimulation
             this.действиеToolStripMenuItem});
             this.menuStrip.Location = new System.Drawing.Point(0, 0);
             this.menuStrip.Name = "menuStrip";
-            this.menuStrip.Size = new System.Drawing.Size(994, 24);
+            this.menuStrip.Size = new System.Drawing.Size(1040, 24);
             this.menuStrip.TabIndex = 0;
             this.menuStrip.Text = "menuStrip1";
             // 
@@ -148,10 +148,10 @@ namespace WinFormsAppSimulation
             this.ElevatorsGrid.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Column1,
             this.Column2});
-            this.ElevatorsGrid.Location = new System.Drawing.Point(390, 27);
+            this.ElevatorsGrid.Location = new System.Drawing.Point(415, 27);
             this.ElevatorsGrid.Name = "ElevatorsGrid";
             this.ElevatorsGrid.ReadOnly = true;
-            this.ElevatorsGrid.Size = new System.Drawing.Size(551, 504);
+            this.ElevatorsGrid.Size = new System.Drawing.Size(613, 504);
             this.ElevatorsGrid.TabIndex = 6;
             this.ElevatorsGrid.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.ElevatorsGrid_CellContentClick);
             // 
@@ -264,7 +264,7 @@ namespace WinFormsAppSimulation
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(994, 581);
+            this.ClientSize = new System.Drawing.Size(1040, 581);
             this.Controls.Add(this.ErrorMessageLebel);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);

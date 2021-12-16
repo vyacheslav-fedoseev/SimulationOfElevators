@@ -28,7 +28,6 @@ namespace Models.Services
                 {
                     for (var i = 0; i < peopleList.Count; i++)
                     { 
-                        
                         var people = peopleList[i];
                         if (ElevatorsManager.IsFire && people.Status != PeopleStatus.Moving && people.Status != PeopleStatus.Exit)
                         {
@@ -38,7 +37,7 @@ namespace Models.Services
                         switch (people.Status)
                         {
                             case PeopleStatus.Choosing:
-                                if (ElevatorsManager._time - people.ArrivingTime > 3F)
+                                if (ElevatorsManager._time - people.EnteringTime > 3F)
                                 {
                                     lock (locker) people.Status = PeopleStatus.Waiting;
                                     _floorRepository.UpdatePeopleDirection(people.CurrentFloor,
@@ -72,15 +71,17 @@ namespace Models.Services
                                     lock(locker)_peopleStatus.Remove(_peopleStatus[i]);
                                     if (ElevatorsManager.IsFire && !people.IsArrived)
                                     {
-                                        var floor = _floorRepository.Find(people.CurrentFloor);
-                                        floor.RemovePeople(people);
-                                        floor.CountPeople--;
-                                        if( floor.CountPeople == 0 )
+                                        lock (FloorService.Locker)
                                         {
-                                            floor.IsRequested = false;
-                                            floor.PeopleDirection = PeopleDirection.NoDirection;
+                                            var floor = _floorRepository.Find(people.CurrentFloor);
+                                            floor.RemovePeople(people);
+                                            floor.CountPeople--;
+                                            if (floor.CountPeople == 0)
+                                            {
+                                                floor.IsRequested = false;
+                                                floor.PeopleDirection = PeopleDirection.NoDirection;
+                                            }
                                         }
-
                                     }
                                     i--;
                                 }
@@ -174,7 +175,7 @@ namespace Models.Services
                     
                 }
 
-                _floorRepository.Find(currentFloor).CountPeople = countPeople;
+                _floorRepository.Find(currentFloor).CountPeople += countPeople;
                 return true;
             }
             return false;

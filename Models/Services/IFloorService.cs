@@ -9,5 +9,6 @@ namespace Models.Services
     public interface IFloorService
     {
         void InitializeFloorRepository();
+        string[] GetFloorInfo();
     }
 }
