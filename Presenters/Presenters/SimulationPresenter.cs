@@ -70,7 +70,10 @@ namespace Presenters.Presenters
 
         private void Fire()
         {
-            _manager.Fire();
+            if (!_manager.Fire())
+                View.ShowError("Люди еще не покинули здание");
+            else
+                View.HideError();
         }
 
         //private void CheckPeopleStatus() => Controller.Run<CheckPeopleStatusPresenter>();

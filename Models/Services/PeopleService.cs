@@ -37,7 +37,7 @@ namespace Models.Services
                         switch (people.Status)
                         {
                             case PeopleStatus.Choosing:
-                                if (ElevatorsManager._time - people.ArrivingTime > 3F)
+                                if (ElevatorsManager._time - people.EnteringTime > 3F)
                                 {
                                     lock (locker) people.Status = PeopleStatus.Waiting;
                                     _floorRepository.UpdatePeopleDirection(people.CurrentFloor,
@@ -175,7 +175,7 @@ namespace Models.Services
                     
                 }
 
-                _floorRepository.Find(currentFloor).CountPeople = countPeople;
+                _floorRepository.Find(currentFloor).CountPeople += countPeople;
                 return true;
             }
             return false;

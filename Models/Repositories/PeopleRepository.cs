@@ -17,6 +17,7 @@ namespace Models.Repositories
             People.Add(new People(_id, currentFloor, destinationFloor));
             return _id++;
         }
+        public int GetPeopleCount() => People.Count;
         public People Find(int id) => People.Find(c => c.Id == id);
         public bool Delete(People obj) => People.Remove(obj);
         public IEnumerable<People> GetAll() => People;

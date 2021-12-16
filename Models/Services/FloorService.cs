@@ -32,6 +32,7 @@ namespace Models.Services
                 {
                     var CountPeopleDirUp = 0;
                     var CountPeopleDirDown = 0;
+                    //Console.WriteLine("C = " + floor.CountPeople);
 
                     for (var i = 0; i < floor.CountPeople; i++)
                     {
@@ -41,6 +42,7 @@ namespace Models.Services
                             CountPeopleDirUp++;
                     }
 
+                    
                     if (floor.PeopleDirection == PeopleDirection.Up || floor.PeopleDirection == PeopleDirection.Booth)
                     {
                         FloorInfo[floor.Id - 1] += "Up - " + CountPeopleDirUp.ToString();
@@ -49,6 +51,7 @@ namespace Models.Services
                     {
                         FloorInfo[floor.Id - 1] += "Down - " + CountPeopleDirDown.ToString();
                     }
+                    //Console.WriteLine(FloorInfo[floor.Id - 1]);
                 }
             }
             return FloorInfo;

@@ -20,6 +20,6 @@ namespace Models.Services
         void PlayPauseSimulation();
         void SpeedUp();
         void SlowDown();
-        void Fire();
+        bool Fire();
     }
 }
