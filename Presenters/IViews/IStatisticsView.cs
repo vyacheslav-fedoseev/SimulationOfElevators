@@ -11,5 +11,6 @@ namespace Presenters.IViews
     {
         event Action Exit;
         event Action StatisticClosing;
+        void ShowStatistics(string statistics);
     }
 }

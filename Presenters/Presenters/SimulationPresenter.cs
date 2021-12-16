@@ -15,12 +15,14 @@ namespace Presenters.Presenters
         private IStartView _previousView;
         private readonly IElevatorsManager _manager;
         private readonly IPeopleService _peopleService;
+        private readonly IFloorService _floorService;
 
-        public SimulationPresenter(IApplicationController controller, ISimulationView view, IElevatorsManager manager, IPeopleService peopleService)
+        public SimulationPresenter(IApplicationController controller, ISimulationView view, IElevatorsManager manager, IPeopleService peopleService, IFloorService floorService)
             : base(controller, view)
         {
             _manager = manager;
             _peopleService = peopleService;
+            _floorService = floorService;
             View.Stop += Stop;
             View.PlayPause += PlayPause;
             View.Fire += Fire;
@@ -29,13 +31,13 @@ namespace Presenters.Presenters
             View.SpeedUp += SpeedUp;
             View.SimulationClosed += SimulationClosed;
             View.CreatePeople += () => Create(View.PeopleCount, View.CurrentFloor, View.DestinationFloor);
-            _manager.DataUpdated += () => UpdateView(manager.GetElevatorsGrid(), _peopleService.GetPeopleStatus());
-            View.UpdateElevatorsGrid(new bool[ConfigurationData._countFloors, ConfigurationData._countElevators]);
+            _manager.DataUpdated += () => UpdateView(manager.GetElevatorsGrid(), _peopleService.GetPeopleStatus(), _floorService.GetFloorInfo(), _manager.GetTime());
+            View.UpdateElevatorsGrid(new bool[ConfigurationData._countFloors, ConfigurationData._countElevators], _floorService.GetFloorInfo());
             manager.StartSimulation();
             peopleService.StartThread();
         }
 
-        private void UpdateView(bool[,] elevatorsGrid, string peopleStatus) => View.UpdateView(elevatorsGrid, peopleStatus);
+        private void UpdateView(bool[,] elevatorsGrid, string peopleStatus, string[] floorInfo, float time) => View.UpdateView(elevatorsGrid, peopleStatus, floorInfo, time);
         public void Create(string countPeople, string currentFloor, string destinationFloor)
         {
             if (countPeople != string.Empty && currentFloor != string.Empty &&
@@ -68,7 +70,10 @@ namespace Presenters.Presenters
 
         private void Fire()
         {
-            _manager.Fire();
+            if (!_manager.Fire())
+                View.ShowError("Люди еще не покинули здание");
+            else
+                View.HideError();
         }
 
         //private void CheckPeopleStatus() => Controller.Run<CheckPeopleStatusPresenter>();

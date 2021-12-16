@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace Models.Services
 {
-    public interface IFloorService
+    public interface IStatisticsService
     {
-        void InitializeFloorRepository();
-        string[] GetFloorInfo();
+
     }
 }

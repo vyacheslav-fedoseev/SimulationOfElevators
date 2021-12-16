@@ -9,6 +9,7 @@ namespace Models.Services
 {
     public interface IElevatorsManager
     {
+        float GetTime();
         void InitializeElevatorRepository();
         void StartSimulation();
         event Action DataUpdated;
@@ -20,6 +21,6 @@ namespace Models.Services
         void PlayPauseSimulation();
         void SpeedUp();
         void SlowDown();
-        void Fire();
+        bool Fire();
     }
 }

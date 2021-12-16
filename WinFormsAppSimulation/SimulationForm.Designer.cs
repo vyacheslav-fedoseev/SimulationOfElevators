@@ -29,17 +29,11 @@ namespace WinFormsAppSimulation
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
-            this.menuStrip = new System.Windows.Forms.MenuStrip();
-            this.действиеToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.CreatePeopleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.CheckPeopleStatusToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.FireButton = new System.Windows.Forms.Button();
             this.SpeedUpButton = new System.Windows.Forms.Button();
             this.SlowDownButton = new System.Windows.Forms.Button();
             this.PlayPauseButton = new System.Windows.Forms.Button();
             this.StopButton = new System.Windows.Forms.Button();
-            this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.ElevatorsGrid = new System.Windows.Forms.DataGridView();
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -54,44 +48,15 @@ namespace WinFormsAppSimulation
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.ErrorMessageLebel = new System.Windows.Forms.Label();
-            this.menuStrip.SuspendLayout();
+            this.MinutesLabel = new System.Windows.Forms.Label();
+            this.SecondsLabel = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.ElevatorsGrid)).BeginInit();
             this.SuspendLayout();
             // 
-            // menuStrip
-            // 
-            this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.действиеToolStripMenuItem});
-            this.menuStrip.Location = new System.Drawing.Point(0, 0);
-            this.menuStrip.Name = "menuStrip";
-            this.menuStrip.Size = new System.Drawing.Size(994, 24);
-            this.menuStrip.TabIndex = 0;
-            this.menuStrip.Text = "menuStrip1";
-            // 
-            // действиеToolStripMenuItem
-            // 
-            this.действиеToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.CreatePeopleToolStripMenuItem,
-            this.CheckPeopleStatusToolStripMenuItem});
-            this.действиеToolStripMenuItem.Name = "действиеToolStripMenuItem";
-            this.действиеToolStripMenuItem.Size = new System.Drawing.Size(70, 20);
-            this.действиеToolStripMenuItem.Text = "Действие";
-            // 
-            // CreatePeopleToolStripMenuItem
-            // 
-            this.CreatePeopleToolStripMenuItem.Name = "CreatePeopleToolStripMenuItem";
-            this.CreatePeopleToolStripMenuItem.Size = new System.Drawing.Size(217, 22);
-            this.CreatePeopleToolStripMenuItem.Text = "Создать группу людей";
-            // 
-            // CheckPeopleStatusToolStripMenuItem
-            // 
-            this.CheckPeopleStatusToolStripMenuItem.Name = "CheckPeopleStatusToolStripMenuItem";
-            this.CheckPeopleStatusToolStripMenuItem.Size = new System.Drawing.Size(217, 22);
-            this.CheckPeopleStatusToolStripMenuItem.Text = "Посмотреть статус людей";
-            // 
             // FireButton
             // 
-            this.FireButton.Location = new System.Drawing.Point(559, 537);
+            this.FireButton.Location = new System.Drawing.Point(449, 537);
             this.FireButton.Name = "FireButton";
             this.FireButton.Size = new System.Drawing.Size(36, 32);
             this.FireButton.TabIndex = 1;
@@ -100,7 +65,7 @@ namespace WinFormsAppSimulation
             // 
             // SpeedUpButton
             // 
-            this.SpeedUpButton.Location = new System.Drawing.Point(643, 537);
+            this.SpeedUpButton.Location = new System.Drawing.Point(533, 537);
             this.SpeedUpButton.Name = "SpeedUpButton";
             this.SpeedUpButton.Size = new System.Drawing.Size(36, 32);
             this.SpeedUpButton.TabIndex = 2;
@@ -109,7 +74,7 @@ namespace WinFormsAppSimulation
             // 
             // SlowDownButton
             // 
-            this.SlowDownButton.Location = new System.Drawing.Point(601, 537);
+            this.SlowDownButton.Location = new System.Drawing.Point(491, 537);
             this.SlowDownButton.Name = "SlowDownButton";
             this.SlowDownButton.Size = new System.Drawing.Size(36, 32);
             this.SlowDownButton.TabIndex = 3;
@@ -118,7 +83,7 @@ namespace WinFormsAppSimulation
             // 
             // PlayPauseButton
             // 
-            this.PlayPauseButton.Location = new System.Drawing.Point(685, 537);
+            this.PlayPauseButton.Location = new System.Drawing.Point(575, 537);
             this.PlayPauseButton.Name = "PlayPauseButton";
             this.PlayPauseButton.Size = new System.Drawing.Size(36, 32);
             this.PlayPauseButton.TabIndex = 4;
@@ -127,16 +92,12 @@ namespace WinFormsAppSimulation
             // 
             // StopButton
             // 
-            this.StopButton.Location = new System.Drawing.Point(727, 537);
+            this.StopButton.Location = new System.Drawing.Point(617, 537);
             this.StopButton.Name = "StopButton";
             this.StopButton.Size = new System.Drawing.Size(36, 32);
             this.StopButton.TabIndex = 5;
             this.StopButton.Text = "█";
             this.StopButton.UseVisualStyleBackColor = true;
-            // 
-            // timer1
-            // 
-            this.timer1.Tick += new System.EventHandler(this.Timer1_Tick);
             // 
             // ElevatorsGrid
             // 
@@ -148,12 +109,11 @@ namespace WinFormsAppSimulation
             this.ElevatorsGrid.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Column1,
             this.Column2});
-            this.ElevatorsGrid.Location = new System.Drawing.Point(390, 27);
+            this.ElevatorsGrid.Location = new System.Drawing.Point(415, 27);
             this.ElevatorsGrid.Name = "ElevatorsGrid";
             this.ElevatorsGrid.ReadOnly = true;
-            this.ElevatorsGrid.Size = new System.Drawing.Size(551, 504);
+            this.ElevatorsGrid.Size = new System.Drawing.Size(613, 504);
             this.ElevatorsGrid.TabIndex = 6;
-            this.ElevatorsGrid.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.ElevatorsGrid_CellContentClick);
             // 
             // Column1
             // 
@@ -260,11 +220,44 @@ namespace WinFormsAppSimulation
             this.ErrorMessageLebel.Size = new System.Drawing.Size(0, 13);
             this.ErrorMessageLebel.TabIndex = 17;
             // 
+            // MinutesLabel
+            // 
+            this.MinutesLabel.AutoSize = true;
+            this.MinutesLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.MinutesLabel.Location = new System.Drawing.Point(815, 547);
+            this.MinutesLabel.Name = "MinutesLabel";
+            this.MinutesLabel.Size = new System.Drawing.Size(19, 22);
+            this.MinutesLabel.TabIndex = 18;
+            this.MinutesLabel.Text = "x";
+            // 
+            // SecondsLabel
+            // 
+            this.SecondsLabel.AutoSize = true;
+            this.SecondsLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.SecondsLabel.Location = new System.Drawing.Point(841, 547);
+            this.SecondsLabel.Name = "SecondsLabel";
+            this.SecondsLabel.Size = new System.Drawing.Size(19, 22);
+            this.SecondsLabel.TabIndex = 19;
+            this.SecondsLabel.Text = "x";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label7.Location = new System.Drawing.Point(830, 547);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(15, 22);
+            this.label7.TabIndex = 20;
+            this.label7.Text = ":";
+            // 
             // SimulationForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(994, 581);
+            this.ClientSize = new System.Drawing.Size(1040, 581);
+            this.Controls.Add(this.label7);
+            this.Controls.Add(this.SecondsLabel);
+            this.Controls.Add(this.MinutesLabel);
             this.Controls.Add(this.ErrorMessageLebel);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
@@ -282,12 +275,8 @@ namespace WinFormsAppSimulation
             this.Controls.Add(this.SlowDownButton);
             this.Controls.Add(this.SpeedUpButton);
             this.Controls.Add(this.FireButton);
-            this.Controls.Add(this.menuStrip);
-            this.MainMenuStrip = this.menuStrip;
             this.Name = "SimulationForm";
             this.Text = "Симуляция";
-            this.menuStrip.ResumeLayout(false);
-            this.menuStrip.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ElevatorsGrid)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -295,17 +284,11 @@ namespace WinFormsAppSimulation
         }
 
         #endregion
-
-        private System.Windows.Forms.MenuStrip menuStrip;
-        private System.Windows.Forms.ToolStripMenuItem действиеToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem CreatePeopleToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem CheckPeopleStatusToolStripMenuItem;
         private System.Windows.Forms.Button FireButton;
         private System.Windows.Forms.Button SpeedUpButton;
         private System.Windows.Forms.Button SlowDownButton;
         private System.Windows.Forms.Button PlayPauseButton;
         private System.Windows.Forms.Button StopButton;
-        private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.DataGridView ElevatorsGrid;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
@@ -320,5 +303,8 @@ namespace WinFormsAppSimulation
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label ErrorMessageLebel;
+        private System.Windows.Forms.Label MinutesLabel;
+        private System.Windows.Forms.Label SecondsLabel;
+        private System.Windows.Forms.Label label7;
     }
 }

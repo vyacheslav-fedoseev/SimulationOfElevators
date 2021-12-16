@@ -21,7 +21,7 @@ namespace Models.Repositories
                                              peopleDirection == PeopleDirection.Down) ||
                                             (Floor[id - 1].PeopleDirection == PeopleDirection.Down &&
                                              peopleDirection == PeopleDirection.Up) ||
-                                            (peopleDirection == PeopleDirection.Booth)
+                                            (Floor[id - 1].PeopleDirection == PeopleDirection.Booth)
                 ? PeopleDirection.Booth
                 : peopleDirection;
         }
