@@ -299,11 +299,11 @@ namespace Models.Services
                         floor = _floorRepository.Find(elevator.CurrentFloor);
                     }
                     
-                    //var ec =  elevator.MaxCapacity - elevator.CountPeople;
-                    //var fc = floor.CountPeople;
-                    for (var i = 0; i < floor.CountPeople && i< elevator.MaxCapacity - elevator.CountPeople; i++)
+                    var ec =  elevator.MaxCapacity - elevator.CountPeople;
+                    var fc = floor.CountPeople;
+                    for (var i = 0; i < fc && i< ec; i++)
                     {
-                        var people = floor.GetPeople(i);
+                        var people = floor.PeekNextPeople();
                         if ((people.DestinationFloor - people.CurrentFloor > 0 && elevator.Direction == Direction.Up) ||
                             (people.DestinationFloor - people.CurrentFloor < 0 && elevator.Direction == Direction.Down))
                         {                           
@@ -311,17 +311,16 @@ namespace Models.Services
                             lock (FloorService.Locker)
                             {
                                 elevator.DestinationFloor[people.DestinationFloor - 1] = true;
-                                elevator.AddNextPeople(people);
-                                floor.RemovePeople(people);
-                                i--;
+                                elevator.AddNextPeople(floor.GetNextPeople());
+                                elevator.CountPeople++;
                                 floor.CountPeople--;
                                 people.Status = PeopleStatus.Moving;
                                 people.IsInElevator = true;
                             }
                             
                         }
-                        //else
-                            //i--;
+                        else
+                            i--;
                         
                     }
 
@@ -357,8 +356,9 @@ namespace Models.Services
                     elevator.MovingTime = 0;
                     elevator.Speed = 0;
                     elevator.StartMovingPosition = elevator.Position;
+                    var n = elevator.CountPeople;
 
-                    for (var i = 0; i < elevator.CountPeople; i++)
+                    for (var i = 0; i < n; i++)
                     {
                         var people = elevator.GetPeople(i);
                         if ((people.DestinationFloor == elevator.CurrentFloor && !IsFire) ||
@@ -369,10 +369,9 @@ namespace Models.Services
                             people.IsInElevator = false;
                             people.IsArrived = true;
                             people.ArrivingTime = _time;
-                            elevator.RemovePeople(people);
-                            if(IsFire)elevator.DestinationFloor[people.DestinationFloor - 1] = false;
+                            elevator.GetNextPeople();
+                            if(IsFire)elevator.DestinationFloor[people.DestinationFloor - 1] = false; //!!!!
                             elevator.CountPeople--;
-                            i--;
                         }
                     }
                     elevator.DestinationFloor[elevator.CurrentFloor - 1] = false;
