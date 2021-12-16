@@ -63,6 +63,12 @@
     <Compile Include="CheckPeopleStatusForm.Designer.cs">
       <DependentUpon>CheckPeopleStatusForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="CreateEventsListForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CreateEventsListForm.Designer.cs">
+      <DependentUpon>CreateEventsListForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="CreatePeopleForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -70,6 +76,12 @@
       <DependentUpon>CreatePeopleForm.cs</DependentUpon>
     </Compile>
     <Compile Include="LightInjectAdapter.cs" />
+    <Compile Include="SetElevatorsConfigurationForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SetElevatorsConfigurationForm.Designer.cs">
+      <DependentUpon>SetElevatorsConfigurationForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="SimulationForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -89,12 +101,6 @@
     </Compile>
     <Compile Include="SetConfigurationForm.Designer.cs">
       <DependentUpon>SetConfigurationForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="SetElevatorsConfigurationForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="SetElevatorsConfigurationForm.Designer.cs">
-      <DependentUpon>SetElevatorsConfigurationForm.cs</DependentUpon>
     </Compile>
     <Compile Include="StartForm.cs">
       <SubType>Form</SubType>
@@ -117,8 +123,14 @@
     <EmbeddedResource Include="CheckPeopleStatusForm.resx">
       <DependentUpon>CheckPeopleStatusForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="CreateEventsListForm.resx">
+      <DependentUpon>CreateEventsListForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="CreatePeopleForm.resx">
       <DependentUpon>CreatePeopleForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SetElevatorsConfigurationForm.resx">
+      <DependentUpon>SetElevatorsConfigurationForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SimulationForm.resx">
       <DependentUpon>SimulationForm.cs</DependentUpon>
@@ -137,9 +149,6 @@
     </Compile>
     <EmbeddedResource Include="SetConfigurationForm.resx">
       <DependentUpon>SetConfigurationForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="SetElevatorsConfigurationForm.resx">
-      <DependentUpon>SetElevatorsConfigurationForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="StartForm.resx">
       <DependentUpon>StartForm.cs</DependentUpon>
@@ -177,5 +186,6 @@
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

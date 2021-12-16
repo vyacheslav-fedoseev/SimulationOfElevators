@@ -27,6 +27,7 @@ namespace Presenters.Presenters
             View.StrategyChoosing += StrategyChoosing;
             View.StartSimulation += StartSimulation;
             View.Exit += Exit;
+            View.CreateEventsList += CreateEventsList;
         }
 
         private void StartConfiguration() => Controller.Run<StartConfigurationPresenter>();
@@ -50,5 +51,7 @@ namespace Presenters.Presenters
         }
 
         private void Exit() => View.Close();
+
+        private void CreateEventsList() => Controller.Run<CreateEventsListPresenter>();
     }
 }

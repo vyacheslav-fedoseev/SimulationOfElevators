@@ -47,6 +47,7 @@
     <Compile Include="Common\IContainer.cs" />
     <Compile Include="Common\IPresenter.cs" />
     <Compile Include="IViews\ICheckPeopleStatusView.cs" />
+    <Compile Include="IViews\ICreateEventsListView.cs" />
     <Compile Include="IViews\ICreatePeopleView.cs" />
     <Compile Include="IViews\ISetConfigurationView.cs" />
     <Compile Include="IViews\ISetElevatorsConfigurationView.cs" />
@@ -57,6 +58,7 @@
     <Compile Include="IViews\IStrategyChoosingView.cs" />
     <Compile Include="Common\IView.cs" />
     <Compile Include="Presenters\CheckPeopleStatusPresenter.cs" />
+    <Compile Include="Presenters\CreateEventsListPresenter.cs" />
     <Compile Include="Presenters\CreatePeoplePresenter.cs" />
     <Compile Include="Presenters\SetConfigurationPresenter.cs" />
     <Compile Include="Presenters\SetElevatorsConfigurationPresenter.cs" />

@@ -75,13 +75,13 @@ namespace WinFormsAppSimulation
             // 
             // CreateEventsListButton
             // 
-            this.CreateEventsListButton.Enabled = false;
             this.CreateEventsListButton.Location = new System.Drawing.Point(169, 139);
             this.CreateEventsListButton.Name = "CreateEventsListButton";
             this.CreateEventsListButton.Size = new System.Drawing.Size(150, 50);
             this.CreateEventsListButton.TabIndex = 4;
             this.CreateEventsListButton.Text = "Список событий";
             this.CreateEventsListButton.UseVisualStyleBackColor = true;
+            // this.CreateEventsListButton.Click += new System.EventHandler(this.CreateEventsListButton_Click);
             // 
             // ErrorMessageLabel
             // 

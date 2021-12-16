@@ -29,7 +29,6 @@ namespace Presenters.Presenters
                 var countPeopleInt = int.Parse(countPeople);
                 var currentFloorInt = int.Parse(currentFloor);
                 var destinationFloorInt = int.Parse(destinationFloor);
-
                 if (!_peopleService.CreatePeople(countPeopleInt, currentFloorInt, destinationFloorInt))
                     View.ShowError("Этаж введен неверно");
             }
