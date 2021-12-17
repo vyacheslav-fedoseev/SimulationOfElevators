@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace Models.Entities
 {
+    public enum Strategy { None = 0,  MinWaitingTime = 1, MinIdleRides = 2}
     public class ConfigurationData
     {
         public static int _countFloors;
@@ -15,5 +16,6 @@ namespace Models.Entities
         public static int[] _capacity;
         public const int MAX_COUNT_ELEVATORS = 5;
         public const int MAX_COUNT_FLOORS = 20;
+        public static Strategy _strategy;
     }
 }

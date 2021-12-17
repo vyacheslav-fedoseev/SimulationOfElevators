@@ -62,7 +62,6 @@ namespace WinFormsAppSimulation
             this.ОкButton.TabIndex = 2;
             this.ОкButton.Text = "ОК";
             this.ОкButton.UseVisualStyleBackColor = true;
-            // this.ОкButton.Click += new System.EventHandler(this.ОкButton_Click);
             // 
             // StrategyChoosingForm
             // 

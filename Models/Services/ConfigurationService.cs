@@ -21,7 +21,8 @@ namespace Models.Services
                    ConfigurationData._countFloors != 0 &&
                    ConfigurationData._capacity[ConfigurationData._countElevators - 1] != 0 &&
                    ConfigurationData._maxAcceleration[ConfigurationData._countElevators - 1] != 0 &&
-                   ConfigurationData._maxSpeed[ConfigurationData._countElevators - 1] != 0;
+                   ConfigurationData._maxSpeed[ConfigurationData._countElevators - 1] != 0 &&
+                   ConfigurationData._strategy != Strategy.None;
         }
 
         public bool SetConfiguration(int countFloors, int countElevators)
@@ -37,6 +38,12 @@ namespace Models.Services
                 return true;
             }
             return false;
+        }
+
+        public void SetStrategy(string strategy)
+        {
+            if (strategy.Equals("Минимальное время ожидания")) ConfigurationData._strategy = Strategy.MinWaitingTime;
+            else ConfigurationData._strategy = Strategy.MinIdleRides;
         }
 
         public bool SetElevatorsConfiguration(float maxSpeed, float maxAcceleration, int capacity, bool isTemplate)

@@ -14,10 +14,11 @@ namespace WinFormsAppSimulation
     public partial class StrategyChoosingForm : Form, IStrategyChoosingView
     {
         public event Action Ok;
-
+        public string Strategy => StrategyComboBox.SelectedItem.ToString();
         public StrategyChoosingForm()
         {
             InitializeComponent();
+            StrategyComboBox.SelectedIndex = 0;
             ОкButton.Click += (sender, args) => Invoke(Ok);
         }
 
