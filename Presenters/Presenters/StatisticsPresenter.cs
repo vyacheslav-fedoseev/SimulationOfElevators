@@ -5,16 +5,18 @@ using System.Text;
 using System.Threading.Tasks;
 using Presenters.IViews;
 using Presenters.Common;
+using Models.Services;
 
 namespace Presenters.Presenters
 {
     public class StatisticsPresenter : BasePresenter<IStatisticsView, IStartView>
     {
         private IStartView _previousView;
-
-        public StatisticsPresenter(IApplicationController controller, IStatisticsView view)
+        private IStatisticsService _statisticsService;
+        public StatisticsPresenter(IApplicationController controller, IStatisticsView view, IStatisticsService statisticsService)
             : base(controller, view)
         {
+            _statisticsService = statisticsService;
             View.Exit += Exit;
             View.StatisticClosing += StatisticsClosing;
         }
@@ -34,8 +36,8 @@ namespace Presenters.Presenters
         public override void Run(IStartView previousView)
         {
             _previousView = previousView;
-            View.Show();
-            View.ShowStatistics("");
+            View.ShowStatistics(_statisticsService.GetStatistcs());
+            View.Show(); 
         }
     }
 

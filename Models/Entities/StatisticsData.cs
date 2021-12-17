@@ -19,26 +19,5 @@ namespace Models.Entities
         public int CountOfFireAlarms;
         public float FireAlarmsTime;
 
-        public StatisticsData()
-        {
-            CountOfRides = new List<int>();
-            IdleRides = new List<int>() ;
-            CountOfPeople = new List<int>();
-
-            for(var i=0; i< ConfigurationData._countElevators;i++)
-            {
-                CountOfRides.Add(0);
-                IdleRides.Add(0);
-                CountOfPeople.Add(0);
-            }
-
-             TotalCountOfPeople=0;
-             TotalCountOfRides=0;
-             PeopleWaitingTime=0;
-             AveragePeopleWaitingTime=0;
-             MaxPeopleWaitingTime=0;
-             CountOfFireAlarms=0;
-             FireAlarmsTime=0;
-        }
     }
 }

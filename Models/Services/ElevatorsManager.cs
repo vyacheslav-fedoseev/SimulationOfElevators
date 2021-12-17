@@ -14,13 +14,11 @@ namespace Models.Services
         private readonly IElevatorRepository _elevatorsRepository;
         private readonly IPeopleRepository _peopleRepository;
         private readonly IFloorRepository _floorRepository;
-        private readonly StatisticsService _statistics;
+        private readonly IStatisticsService _statisticsService;
         private Thread _thread;
         private readonly ITimer _updateTimer;
         private readonly ITimer _timer;
         public object Locker = new object();
-        private DateTime _simulationStart;
-        //private DateTime[] _elevatorsMoveTime;
         public static float _time { get; private set; }
         private readonly bool[,] _elevatorsGrid;
         public event Action DataUpdated;
@@ -28,11 +26,12 @@ namespace Models.Services
         public static bool IsFire { get; private set; }
         private float _simulationSpeed = 1;
         private const float _floorHeight = 2.5F;
-        public ElevatorsManager(IElevatorRepository elevatorsRepository, IPeopleRepository peopleRepository, IFloorRepository floorRepository, ITimer timer, ITimer updateTimer)
+        public ElevatorsManager(IElevatorRepository elevatorsRepository, IPeopleRepository peopleRepository, IFloorRepository floorRepository, ITimer timer, ITimer updateTimer, IStatisticsService statisticsService)
         {
             _elevatorsRepository = elevatorsRepository;
             _peopleRepository = peopleRepository;
             _floorRepository = floorRepository;
+            _statisticsService = statisticsService;
 
             _updateTimer = updateTimer;
             _updateTimer.Interval = 100;
@@ -80,12 +79,9 @@ namespace Models.Services
 
         public void StartSimulation()
         {
-            _simulationStart = DateTime.Now;
-            //_elevatorsMoveTime = new DateTime[ConfigurationData._countElevators];
             _timer.Start();
             _updateTimer.Start();
             _time = 0;
-            _simulationStart = DateTime.Now;
             _thread = new Thread(ElevatorsMovingCycle)
             {
                 IsBackground = true
@@ -130,6 +126,7 @@ namespace Models.Services
                     }
                     else if (elevator.Direction != Direction.Up && elevator.CurrentFloor != 1)
                     {
+                        if( elevator.Direction == Direction.Stop )_statisticsService.IncrementCountOfRides(elevator.Id);
                         elevator.Direction = Direction.Down;
                         return;
                     }
@@ -162,6 +159,7 @@ namespace Models.Services
                     (elevator.Direction == Direction.Up || elevator.Direction == Direction.Stop) &&
                     !isElevatorFull)
                 {
+                    if (elevator.Direction == Direction.Stop) _statisticsService.IncrementCountOfRides(elevator.Id);
                     elevator.Direction = Direction.Up;
                     //isLoad = true;
                     Console.WriteLine("LOAD!!!!!!");
@@ -173,6 +171,7 @@ namespace Models.Services
                     (elevator.Direction == Direction.Down || elevator.Direction == Direction.Stop) &&
                     !isElevatorFull)
                 {
+                    if (elevator.Direction == Direction.Stop) _statisticsService.IncrementCountOfRides(elevator.Id);
                     elevator.Direction = Direction.Down;
                     //isLoad = true;
                     //Console.WriteLine("LOAD(DOWN)!!!!!!");
@@ -217,12 +216,14 @@ namespace Models.Services
                 if (destinationAbove && (elevator.Direction == Direction.Stop ||
                                          elevator.Direction == Direction.Up))
                 {
+                    if (elevator.Direction == Direction.Stop) _statisticsService.IncrementCountOfRides(elevator.Id);
                     elevator.Direction = Direction.Up;
                     return;
                 }
                 if (destinationBelow && (elevator.Direction == Direction.Stop ||
                     elevator.Direction == Direction.Down))
                 {
+                    if (elevator.Direction == Direction.Stop) _statisticsService.IncrementCountOfRides(elevator.Id);
                     elevator.Direction = Direction.Down;
                     return;
                 }
@@ -265,12 +266,14 @@ namespace Models.Services
                 if ((elevator.Direction == Direction.Up || elevator.Direction == Direction.Stop) &&
                     requestsAbove && !elevatorsBetweenUp && !elevatorsOppositeDown)
                 {
+                    if (elevator.Direction == Direction.Stop) _statisticsService.IncrementCountOfRides(elevator.Id);
                     elevator.Direction = Direction.Up;
                     return;
                 }
                 if ((elevator.Direction == Direction.Down || elevator.Direction == Direction.Stop) &&
                     requestsBelow && !elevatorsBetweenDown && !elevatorsOppositeUp)
                 {
+                    if (elevator.Direction == Direction.Stop) _statisticsService.IncrementCountOfRides(elevator.Id);
                     elevator.Direction = Direction.Down;
                     return;
                 }

@@ -66,7 +66,7 @@ namespace Models.Services
                             case PeopleStatus.Exit:
                                 if (ElevatorsManager._time - people.ArrivingTime > 3F)
                                 {
-                                    Console.WriteLine(people.Id.ToString());
+                                    //Console.WriteLine(people.Id.ToString());
                                     _peopleRepository.Delete(people);
                                     lock(locker)_peopleStatus.Remove(_peopleStatus[i]);
                                     if (ElevatorsManager.IsFire && !people.IsArrived)

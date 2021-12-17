@@ -39,6 +39,7 @@ namespace WinFormsAppSimulation
                 .RegisterService<IPeopleRepository, PeopleRepository>()
                 .RegisterService<IFloorRepository, FloorRepository>()
                 .RegisterService<IElevatorRepository, ElevatorRepository>()
+                .RegisterService<IStatisticsService, StatisticsService>()
                 .RegisterService<ITimer, WinFormTimer>()
                 .RegisterService<ILoadService<ConfigurationData>, LoadStartConfigurationService>();
 

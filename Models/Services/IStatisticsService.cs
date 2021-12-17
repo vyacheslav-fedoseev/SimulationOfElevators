@@ -8,6 +8,7 @@ namespace Models.Services
 {
     public interface IStatisticsService
     {
-
+        string GetStatistcs();
+        void IncrementCountOfRides(int id);
     }
 }
