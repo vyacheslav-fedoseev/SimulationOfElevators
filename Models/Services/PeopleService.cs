@@ -14,7 +14,7 @@ namespace Models.Services
     {
         private readonly IPeopleRepository _peopleRepository;
         private readonly IFloorRepository _floorRepository;
-        private List<string> _peopleStatus;
+        private static List<string> _peopleStatus;
         private Thread _thread;
         private bool _isPaused = false;
         private object locker = new object();

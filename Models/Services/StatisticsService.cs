@@ -62,7 +62,7 @@ namespace Models.Services
 
         private void InitializeStatistics()
         {
-            if (ConfigurationData._countElevators == 0 || _statisticsData.CountOfRides != null ) return;
+            if (ConfigurationData._countElevators == 0 || _statisticsData.CountOfRides != null && _statisticsData.CountOfRides.Count != 0) return;
             _statisticsData.CountOfRides = new List<int>();
             _statisticsData.IdleRides = new List<int>();
             _statisticsData.CountOfPeople = new List<int>();

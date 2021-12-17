@@ -15,6 +15,7 @@ namespace Models.Services
         private readonly IPeopleRepository _peopleRepository;
         private readonly IFloorRepository _floorRepository;
         private readonly IStatisticsService _statisticsService;
+        private readonly IEventsListService _eventsListService;
         private Thread _thread;
         private readonly ITimer _updateTimer;
         private readonly ITimer _timer;
@@ -22,16 +23,16 @@ namespace Models.Services
         public static float _time { get; private set; }
         private readonly bool[,] _elevatorsGrid;
         public event Action DataUpdated;
-
         public static bool IsFire { get; private set; }
         private float _simulationSpeed = 1;
         private const float _floorHeight = 2.5F;
-        public ElevatorsManager(IElevatorRepository elevatorsRepository, IPeopleRepository peopleRepository, IFloorRepository floorRepository, ITimer timer, ITimer updateTimer, IStatisticsService statisticsService)
+        public ElevatorsManager(IElevatorRepository elevatorsRepository, IPeopleRepository peopleRepository, IFloorRepository floorRepository, ITimer timer, ITimer updateTimer, IStatisticsService statisticsService, IEventsListService eventsListService)
         {
             _elevatorsRepository = elevatorsRepository;
             _peopleRepository = peopleRepository;
             _floorRepository = floorRepository;
             _statisticsService = statisticsService;
+            _eventsListService = eventsListService;
 
             _updateTimer = updateTimer;
             _updateTimer.Interval = 100;
@@ -54,6 +55,7 @@ namespace Models.Services
         private void TimerTick()
         {
             _time += 0.1F * _simulationSpeed;
+            _eventsListService.TurnOnEvent(_time, this);
         }
 
         public bool[,] GetElevatorsGrid()

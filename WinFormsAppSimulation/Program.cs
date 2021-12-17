@@ -41,7 +41,8 @@ namespace WinFormsAppSimulation
                 .RegisterService<IElevatorRepository, ElevatorRepository>()
                 .RegisterService<IStatisticsService, StatisticsService>()
                 .RegisterService<ITimer, WinFormTimer>()
-                .RegisterService<ILoadService<ConfigurationData>, LoadStartConfigurationService>();
+                .RegisterService<ILoadService<ConfigurationData>, LoadStartConfigurationService>()
+                .RegisterService<IEventsListService, EventsListService>();
 
             controller.Run<StartPresenter>();
         }

@@ -6,14 +6,17 @@ using System.Text;
 using System.Threading.Tasks;
 using Presenters.Common;
 using Presenters.IViews;
+using Models.Services;
 
 namespace Presenters.Presenters
 {
     public class CreateEventsListPresenter : BasePresenter<ICreateEventsListView>
     {
-        public CreateEventsListPresenter(IApplicationController controller, ICreateEventsListView view)
+        private readonly IEventsListService _eventsListService;
+        public CreateEventsListPresenter(IApplicationController controller, ICreateEventsListView view, IEventsListService eventsListService)
             : base(controller, view)
         {
+            _eventsListService = eventsListService;
             View.CreateFireAlarm += () =>
                 CreateFireAlarm(View.TurnOnFireAlarmTime, View.DurationTimeFireAlarm);
             View.CreatePeople += () =>
@@ -44,10 +47,12 @@ namespace Presenters.Presenters
                 View.HideFireAlarmError();
                 var turnOnFireAlarmTimeInt = float.Parse(turnOnFireAlarmTime);
                 var durationTimeFireAlarmInt = float.Parse(durationTimeFireAlarm);
-                // needs service
+                
                 View.AddEventInList("ПОЖАРНАЯ ТРЕВОГА: " +
                                     $"включить на {turnOnFireAlarmTime} секунде. " +
                                     $"Длительность: {durationTimeFireAlarm} секунд.");
+
+                _eventsListService.AddFireAlarmEvent(turnOnFireAlarmTimeInt, durationTimeFireAlarmInt);
                 return;
             }
             View.ShowErrorFireAlarm("Некорректные данные!");
@@ -66,10 +71,12 @@ namespace Presenters.Presenters
                 var currentFloorInt = int.Parse(currentFloor);
                 var destinationFloorInt = int.Parse(destinationFloor);
                 var createPeopleTimeInt = int.Parse(createPeopleTime);
-                //needs service
+                
                 View.AddEventInList("СОЗДАНИЕ ЛЮДЕЙ: " +
                                     $"{peopleCount} человек, следующих с {currentFloor} " +
                                     $"на {destinationFloor} этаж на {createPeopleTime} секунде.");
+
+                _eventsListService.AddCreatePeopleEvent(peopleCountInt, currentFloorInt, destinationFloorInt, createPeopleTimeInt);
                 return;
             }
             View.ShowErrorCreatePeople("Некорректные данные!");
@@ -78,6 +85,7 @@ namespace Presenters.Presenters
 
         private void Ok()
         {
+            _eventsListService.SortListOfEvents();
             View.Close();
         }
     }

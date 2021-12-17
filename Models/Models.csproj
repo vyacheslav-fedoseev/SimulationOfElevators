@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Entities\ConfigurationData.cs" />
+    <Compile Include="Entities\EventItem.cs" />
     <Compile Include="Entities\StatisticsData.cs" />
     <Compile Include="Repositories\ElevatorRepository.cs" />
     <Compile Include="Repositories\FloorRepository.cs" />
@@ -52,9 +53,11 @@
     <Compile Include="Repositories\PeopleRepository.cs" />
     <Compile Include="Services\ConfigurationService.cs" />
     <Compile Include="Services\ElevatorsManager.cs" />
+    <Compile Include="Services\EventsListService.cs" />
     <Compile Include="Services\FloorService.cs" />
     <Compile Include="Services\IConfigurationService.cs" />
     <Compile Include="Services\IElevatorsManager.cs" />
+    <Compile Include="Services\IEventsListService.cs" />
     <Compile Include="Services\IFloorService.cs" />
     <Compile Include="Services\IPeopleService.cs" />
     <Compile Include="Entities\Elevator.cs" />
