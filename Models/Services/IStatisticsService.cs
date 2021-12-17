@@ -10,5 +10,7 @@ namespace Models.Services
     {
         string GetStatistcs();
         void IncrementCountOfRides(int id);
+        void IncrementCountOfFireAlarms();
+        void IncrementCountOfPeople(int id);
     }
 }

@@ -15,45 +15,46 @@ namespace Models.Services
         {
             InitializeStatistics();
         }
-        //public void IncrementCountOfRides( int id ) => _statisticsData.CountOfRides[id - 1]++;
+
         public void IncrementCountOfRides(int id)
         {
             _statisticsData.CountOfRides[id - 1]++;
-            Console.WriteLine($"id - {id } \n");
-            Console.WriteLine(_statisticsData.CountOfRides[id - 1]);
+            _statisticsData.TotalCountOfRides++;
         }
+        public void IncrementCountOfFireAlarms() => _statisticsData.CountOfFireAlarms++;
 
+        public void IncrementCountOfPeople(int id) => _statisticsData.CountOfPeople[id-1]++;
 
         public string GetStatistcs()
         {
             var statistics = string.Empty;
 
-            statistics += $@"Общее количество поездок {_statisticsData.TotalCountOfRides}
-Количество пожарных тревог {_statisticsData.CountOfFireAlarms}
-Суммарная длительность тревог { _statisticsData.FireAlarmsTime }
-Среднее время ожидания лифтов {_statisticsData.AveragePeopleWaitingTime}
+            statistics += $@"Общее количество поездок      {_statisticsData.TotalCountOfRides}
+Количество пожарных тревог       {_statisticsData.CountOfFireAlarms}
+Суммарная длительность тревог    { _statisticsData.FireAlarmsTime }
+Среднее время ожидания лифтов    {_statisticsData.AveragePeopleWaitingTime}
 Наибольшее время ожидания лифтов { _statisticsData.MaxPeopleWaitingTime}
-Суммарное время ожидания лифтов { _statisticsData.PeopleWaitingTime}
-Номер лифта     ";
+Суммарное время ожидания лифтов  { _statisticsData.PeopleWaitingTime}
+Номер лифта                                  ";
 
             for(var i=0; i < ConfigurationData._countElevators; i++)
             {
-                statistics += $"     {i + 1}";     
+                statistics += $"         {i + 1}";     
             }
-            statistics += "\n Общее количество поездок";
+            statistics += "\nОбщее количество поездок          ";
             for (var i = 0; i < ConfigurationData._countElevators; i++)
             {
-                statistics += $"     {_statisticsData.CountOfRides[i]}";
+                statistics += $"         {_statisticsData.CountOfRides[i]}";
             }
-            statistics += "\n Процент холостых поездок ";
+            statistics += "\nПроцент холостых поездок           ";
             for (var i = 0; i < ConfigurationData._countElevators; i++)
             {
-                statistics += $"      {_statisticsData.IdleRides[i]}";
+                statistics += $"         {_statisticsData.IdleRides[i]}";
             }
-            statistics += "\n Количество перевезенных людей ";
+            statistics += "\nКоличество перевезенных людей ";
             for (var i = 0; i < ConfigurationData._countElevators; i++)
             {
-                statistics += $"     {_statisticsData.CountOfPeople[i]}";
+                statistics += $"         {_statisticsData.CountOfPeople[i]}";
             }
             ClearStatistics();
 

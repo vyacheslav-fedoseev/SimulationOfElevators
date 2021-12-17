@@ -321,6 +321,7 @@ namespace Models.Services
                                 elevator.AddNextPeople(people);
                                 floor.RemovePeople(people);
                                 elevator.CountPeople++;
+                                _statisticsService.IncrementCountOfPeople(elevator.Id);
                                 floor.CountPeople--;
                                 i--;
                                 people.Status = PeopleStatus.Moving;
@@ -486,6 +487,7 @@ namespace Models.Services
         {
             if (!IsFire)
             {
+                _statisticsService.IncrementCountOfFireAlarms();
                 IsFire = true;
                 return true;
             }
