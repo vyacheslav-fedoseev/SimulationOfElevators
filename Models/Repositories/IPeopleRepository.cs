@@ -12,5 +12,6 @@ namespace Models.Repositories
         int Add(int destinationFloor, int currentFloor);
         bool Delete(People obj);
         int GetPeopleCount();
+        void Clear();
     }
 }

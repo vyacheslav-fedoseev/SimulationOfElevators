@@ -120,6 +120,8 @@ namespace Models.Services
             {
                 if (_isPaused) _thread.Resume();
                 _thread.Abort();
+                _peopleRepository.Clear();
+                _peopleStatus = new List<string>();
             }
         }
         public void PlayPauseThread()

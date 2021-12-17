@@ -9,7 +9,7 @@ namespace Models.Repositories
 {
     public class PeopleRepository : IPeopleRepository
     {
-        private static readonly List<People> People = new List<People>();
+        private static List<People> People = new List<People>();
         private static int _id = 0;
 
         public int Add(int destinationFloor, int currentFloor)
@@ -21,5 +21,6 @@ namespace Models.Repositories
         public People Find(int id) => People.Find(c => c.Id == id);
         public bool Delete(People obj) => People.Remove(obj);
         public IEnumerable<People> GetAll() => People;
+        public void Clear() => People = new List<People>();
     }
 }
