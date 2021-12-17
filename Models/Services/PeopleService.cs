@@ -14,6 +14,7 @@ namespace Models.Services
     {
         private readonly IPeopleRepository _peopleRepository;
         private readonly IFloorRepository _floorRepository;
+        private readonly IStatisticsService _statisticsService;
         private static List<string> _peopleStatus;
         private Thread _thread;
         private bool _isPaused = false;
@@ -49,9 +50,10 @@ namespace Models.Services
                                 }
                                 break;
                             case PeopleStatus.Waiting:
-                                //string d = new Regex(@"\d+").Match(c).Value;
+
                                 lock (locker) _peopleStatus[i] =
-                                        "Человек № " + (people.Id + 1).ToString() + " : " + " ожидает лифт " + (ElevatorsManager._time - people.EnteringTime + 3).ToString() + " секунд";
+                                        "Человек № " + (people.Id + 1).ToString() + " : " + " ожидает лифт " + (ElevatorsManager._time - people.EnteringTime - 3).ToString() + " секунд";
+
                                 break;
                             case PeopleStatus.Moving:
                                 lock (locker)
@@ -66,7 +68,6 @@ namespace Models.Services
                             case PeopleStatus.Exit:
                                 if (ElevatorsManager._time - people.ArrivingTime > 3F)
                                 {
-                                    //Console.WriteLine(people.Id.ToString());
                                     _peopleRepository.Delete(people);
                                     lock(locker)_peopleStatus.Remove(_peopleStatus[i]);
                                     if (ElevatorsManager.IsFire && !people.IsArrived)
@@ -136,10 +137,11 @@ namespace Models.Services
             }
         }       
 
-        public PeopleService(IPeopleRepository peopleRepository, IFloorRepository floorRepository)
+        public PeopleService(IPeopleRepository peopleRepository, IFloorRepository floorRepository, IStatisticsService statisticsService)
         {
             _peopleRepository = peopleRepository;
             _floorRepository = floorRepository;
+            _statisticsService = statisticsService;
             _peopleStatus = new List<string>();
         }
 

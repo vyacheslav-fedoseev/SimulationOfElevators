@@ -54,9 +54,9 @@ namespace WinFormsAppSimulation
                 for (var j = 0; j < ElevatorsGrid.ColumnCount; j++)
                 {
                     if (j != ElevatorsGrid.ColumnCount-1)
-                        ElevatorsGrid.Rows[ElevatorsGrid.RowCount - i -1].Cells[ElevatorsGrid.ColumnCount - j-1].Style.BackColor = elevatorsGrid[i, j] ? Color.Red : Color.White;
+                        ElevatorsGrid.Rows[ElevatorsGrid.RowCount - i -1].Cells[i].Style.BackColor = elevatorsGrid[i, j] ? Color.Red : Color.White;
                     else
-                        ElevatorsGrid.Rows[ElevatorsGrid.RowCount - i -1].Cells[ElevatorsGrid.ColumnCount - j-1].Value = floorInfo[i];
+                        ElevatorsGrid.Rows[ElevatorsGrid.RowCount - i -1].Cells[i].Value = floorInfo[i];
                 }        
         }
 

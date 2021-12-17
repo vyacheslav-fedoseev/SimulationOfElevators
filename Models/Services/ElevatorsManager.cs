@@ -21,6 +21,7 @@ namespace Models.Services
         private readonly ITimer _timer;
         public object Locker = new object();
         public static float _time { get; private set; }
+        private float _fireAlarmStartTime=0;
         private readonly bool[,] _elevatorsGrid;
         public event Action DataUpdated;
         public static bool IsFire { get; private set; }
@@ -120,7 +121,7 @@ namespace Models.Services
 
                 if (IsFire)
                 {
-                    if (!elevator.DestinationFloor[0]) elevator.DestinationFloor[0] = true;
+                    if (!elevator.DestinationFloor[0] && elevator.CurrentFloor != 1) elevator.DestinationFloor[0] = true;
                     if (elevator.Direction == Direction.Up)
                     {
                         elevator.Direction = Direction.Stop;
@@ -128,7 +129,7 @@ namespace Models.Services
                     }
                     else if (elevator.Direction != Direction.Up && elevator.CurrentFloor != 1)
                     {
-                        if( elevator.Direction == Direction.Stop )_statisticsService.IncrementCountOfRides(elevator.Id);
+                        if( elevator.Direction == Direction.Stop )_statisticsService.IncrementCountOfRides(elevator.Id, elevator.CountPeople == 0);
                         elevator.Direction = Direction.Down;
                         return;
                     }
@@ -151,7 +152,7 @@ namespace Models.Services
                     //elevator._isOpenDoor = true;
                     //isUnload = true;
                     //Console.WriteLine("UNLOAD!!!!!!");
-
+                    _statisticsService.IncrementCountOfRides(elevator.Id, false);
                     elevator.UnLoadingTimer = 3;
                     return;
                 }
@@ -161,10 +162,10 @@ namespace Models.Services
                     (elevator.Direction == Direction.Up || elevator.Direction == Direction.Stop) &&
                     !isElevatorFull)
                 {
-                    if (elevator.Direction == Direction.Stop) _statisticsService.IncrementCountOfRides(elevator.Id);
+                    if (elevator.Direction == Direction.Stop) _statisticsService.IncrementCountOfRides(elevator.Id, elevator.CountPeople == 0);
                     elevator.Direction = Direction.Up;
                     //isLoad = true;
-                    Console.WriteLine("LOAD!!!!!!");
+                    _statisticsService.IncrementCountOfRides(elevator.Id, false);
                     elevator.LoadingTimer = 3;
                     return;
                 }
@@ -173,10 +174,11 @@ namespace Models.Services
                     (elevator.Direction == Direction.Down || elevator.Direction == Direction.Stop) &&
                     !isElevatorFull)
                 {
-                    if (elevator.Direction == Direction.Stop) _statisticsService.IncrementCountOfRides(elevator.Id);
+                    if (elevator.Direction == Direction.Stop) _statisticsService.IncrementCountOfRides(elevator.Id, elevator.CountPeople == 0);
                     elevator.Direction = Direction.Down;
                     //isLoad = true;
                     //Console.WriteLine("LOAD(DOWN)!!!!!!");
+                    _statisticsService.IncrementCountOfRides(elevator.Id, false);
                     elevator.LoadingTimer = 3;
                     return;
                 }
@@ -218,14 +220,14 @@ namespace Models.Services
                 if (destinationAbove && (elevator.Direction == Direction.Stop ||
                                          elevator.Direction == Direction.Up))
                 {
-                    if (elevator.Direction == Direction.Stop) _statisticsService.IncrementCountOfRides(elevator.Id);
+                    if (elevator.Direction != Direction.Up) _statisticsService.IncrementCountOfRides(elevator.Id, elevator.CountPeople == 0);
                     elevator.Direction = Direction.Up;
                     return;
                 }
                 if (destinationBelow && (elevator.Direction == Direction.Stop ||
                     elevator.Direction == Direction.Down))
                 {
-                    if (elevator.Direction == Direction.Stop) _statisticsService.IncrementCountOfRides(elevator.Id);
+                    if (elevator.Direction != Direction.Down) _statisticsService.IncrementCountOfRides(elevator.Id, elevator.CountPeople == 0);
                     elevator.Direction = Direction.Down;
                     return;
                 }
@@ -268,14 +270,14 @@ namespace Models.Services
                 if ((elevator.Direction == Direction.Up || elevator.Direction == Direction.Stop) &&
                     requestsAbove && !elevatorsBetweenUp && !elevatorsOppositeDown)
                 {
-                    if (elevator.Direction == Direction.Stop) _statisticsService.IncrementCountOfRides(elevator.Id);
+                    if (elevator.Direction != Direction.Up) _statisticsService.IncrementCountOfRides(elevator.Id, elevator.CountPeople == 0);
                     elevator.Direction = Direction.Up;
                     return;
                 }
                 if ((elevator.Direction == Direction.Down || elevator.Direction == Direction.Stop) &&
                     requestsBelow && !elevatorsBetweenDown && !elevatorsOppositeUp)
                 {
-                    if (elevator.Direction == Direction.Stop) _statisticsService.IncrementCountOfRides(elevator.Id);
+                    if (elevator.Direction != Direction.Down) _statisticsService.IncrementCountOfRides(elevator.Id, elevator.CountPeople == 0);
                     elevator.Direction = Direction.Down;
                     return;
                 }
@@ -322,9 +324,12 @@ namespace Models.Services
                                 floor.RemovePeople(people);
                                 elevator.CountPeople++;
                                 _statisticsService.IncrementCountOfPeople(elevator.Id);
+                                _statisticsService.IncrementCountOfPeople();
                                 floor.CountPeople--;
                                 i--;
                                 people.Status = PeopleStatus.Moving;
+                                _statisticsService.IncrementPeopleWaitingTime(_time-people.EnteringTime-3);
+                                _statisticsService.SetMaxPeopleWaitingTime(_time - people.EnteringTime-3);
                                 people.IsInElevator = true;
                             }
                             
@@ -488,12 +493,14 @@ namespace Models.Services
             if (!IsFire)
             {
                 _statisticsService.IncrementCountOfFireAlarms();
+                _fireAlarmStartTime = _time;
                 IsFire = true;
                 return true;
             }
             else if (_peopleRepository.GetPeopleCount() == 0)
             {
                 IsFire = false;
+                _statisticsService.IncrementFireAlarmsTime(_time - _fireAlarmStartTime);
                 return true;
             } 
             else return false;

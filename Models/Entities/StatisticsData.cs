@@ -11,6 +11,7 @@ namespace Models.Entities
         public List<int> CountOfRides;
         public List<int> IdleRides;
         public List<int> CountOfPeople;
+        public List<float> PercentOfIdleRides;
         public int TotalCountOfPeople;
         public int TotalCountOfRides;
         public float PeopleWaitingTime;
