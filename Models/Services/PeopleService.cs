@@ -14,7 +14,6 @@ namespace Models.Services
     {
         private readonly IPeopleRepository _peopleRepository;
         private readonly IFloorRepository _floorRepository;
-        private readonly IStatisticsService _statisticsService;
         private static List<string> _peopleStatus;
         private Thread _thread;
         private bool _isPaused = false;
@@ -141,7 +140,6 @@ namespace Models.Services
         {
             _peopleRepository = peopleRepository;
             _floorRepository = floorRepository;
-            _statisticsService = statisticsService;
             _peopleStatus = new List<string>();
         }
 

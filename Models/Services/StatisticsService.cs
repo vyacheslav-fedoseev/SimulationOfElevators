@@ -65,7 +65,7 @@ namespace Models.Services
                 if(_statisticsData.CountOfRides[i] !=0) _statisticsData.PercentOfIdleRides[i] = ((float)_statisticsData.IdleRides[i] / (float)_statisticsData.CountOfRides[i]) * 100f;
                 statistics += $"         {_statisticsData.PercentOfIdleRides[i]}";
             }
-            statistics += "\nКоличество холостых поездок           ";
+            statistics += "\nКоличество холостых поездок        ";
             for (var i = 0; i < ConfigurationData._countElevators; i++)
             {
                 statistics += $"         {_statisticsData.IdleRides[i]}";

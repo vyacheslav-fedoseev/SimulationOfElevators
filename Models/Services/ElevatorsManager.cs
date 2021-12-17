@@ -165,7 +165,7 @@ namespace Models.Services
                     if (elevator.Direction == Direction.Stop) _statisticsService.IncrementCountOfRides(elevator.Id, elevator.CountPeople == 0);
                     elevator.Direction = Direction.Up;
                     //isLoad = true;
-                    _statisticsService.IncrementCountOfRides(elevator.Id, false);
+                    //_statisticsService.IncrementCountOfRides(elevator.Id, false);
                     elevator.LoadingTimer = 3;
                     return;
                 }
@@ -178,7 +178,7 @@ namespace Models.Services
                     elevator.Direction = Direction.Down;
                     //isLoad = true;
                     //Console.WriteLine("LOAD(DOWN)!!!!!!");
-                    _statisticsService.IncrementCountOfRides(elevator.Id, false);
+                    //_statisticsService.IncrementCountOfRides(elevator.Id, false);
                     elevator.LoadingTimer = 3;
                     return;
                 }
