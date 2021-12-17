@@ -16,6 +16,9 @@ namespace WinFormsAppSimulation
         public event Action CreatePeople;
         public event Action CreateFireAlarm;
         public event Action OK;
+        public event Action Import;
+        public event Action Export;
+        
 
         public CreateEventsListForm()
         {
@@ -23,6 +26,8 @@ namespace WinFormsAppSimulation
             CreatePeopleButton.Click += (sender, args) => Invoke(CreatePeople);
             CreateFireAlarmButton.Click += (sender, args) => Invoke(CreateFireAlarm);
             Ok.Click += (sender, args) => Invoke(OK);
+            ImportToolStripMenuItem.Click += (sender, args) => Invoke(Import);
+            ExportToolStripMenuItem.Click += (sender, args) => Invoke(Export);
         }
 
         private static void Invoke(Action action) => action?.Invoke();
@@ -50,5 +55,39 @@ namespace WinFormsAppSimulation
         // public new void Show() => base.ShowDialog();
 
         public void AddEventInList(string eventData) => EventsListLabel.Text += eventData + "\n";
+
+        public string ExportAddress()
+        {
+            var saveFileDialog = new SaveFileDialog();
+            saveFileDialog.InitialDirectory = @"C:\";
+            saveFileDialog.Title = "Save text Files";
+            saveFileDialog.CheckPathExists = true;
+            saveFileDialog.DefaultExt = "txt";
+            saveFileDialog.Filter = "Text files (*.txt)|*.txt|All files (*.*)|*.*";
+            saveFileDialog.FilterIndex = 2;
+            saveFileDialog.RestoreDirectory = true;
+            return saveFileDialog.ShowDialog() == DialogResult.Cancel ? null : saveFileDialog.FileName;
+        }
+
+        public string ImportAddress()
+        {
+            var openFileDialog = new OpenFileDialog();
+            openFileDialog.InitialDirectory = @"C:\";
+            openFileDialog.Title = "Save text Files";
+            openFileDialog.CheckPathExists = true;
+            openFileDialog.CheckFileExists = true;
+            openFileDialog.DefaultExt = "txt";
+            openFileDialog.Filter = "Text files (*.txt)|*.txt|All files (*.*)|*.*";
+            openFileDialog.FilterIndex = 2;
+            openFileDialog.RestoreDirectory = true;
+            if (openFileDialog.ShowDialog() != DialogResult.Cancel)
+            {
+                // ErrorImportLabel.Text = string.Empty;
+                // ExportToolStripMenuItem.Enabled = true;
+                // ExportButton.Enabled = true;
+                return openFileDialog.FileName;
+            }
+            return null;
+        }
     }
 }

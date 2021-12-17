@@ -8,10 +8,12 @@ using Presenters.Common;
 namespace Presenters.IViews
 {
     public interface ICreateEventsListView : IView
-    { 
+    {
         event Action CreatePeople;
         event Action CreateFireAlarm;
         event Action OK;
+        event Action Import;
+        event Action Export;
 
         string PeopleCount { get; }
 
@@ -34,5 +36,9 @@ namespace Presenters.IViews
         void HideFireAlarmError();
 
         void AddEventInList(string eventData);
+
+        string ExportAddress();
+
+        string ImportAddress();
     }
 }
