@@ -4,6 +4,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using Models.Entities;
 using Presenters.Common;
 using Presenters.IViews;
 using Models.Services;
@@ -13,35 +14,35 @@ namespace Presenters.Presenters
     public class CreateEventsListPresenter : BasePresenter<ICreateEventsListView>
     {
         private readonly IEventsListService _eventsListService;
-        public CreateEventsListPresenter(IApplicationController controller, ICreateEventsListView view, IEventsListService eventsListService)
+        private readonly ILoadService<EventItem> _loadService;
+
+        public CreateEventsListPresenter(IApplicationController controller, ICreateEventsListView view, IEventsListService eventsListService, ILoadService<EventItem> loadService)
             : base(controller, view)
         {
             _eventsListService = eventsListService;
+            _loadService = loadService;
             View.CreateFireAlarm += () =>
                 CreateFireAlarm(View.TurnOnFireAlarmTime, View.DurationTimeFireAlarm);
             View.CreatePeople += () =>
                 CreatePeople(View.PeopleCount, View.CurrentFloor, View.DestinationFloor, View.CreatePeopleTime);
             View.OK += Ok;
+            View.Import += Import;
+            View.Export += Export;
         }
+
+
+        private void Import()
+        {
+            var address = View.ImportAddress();
+            if (address != null)
+                _loadService.Import(address);
+        }
+
+        private void Export() => _loadService.Export(View.ExportAddress());
+
 
         private void CreateFireAlarm(string turnOnFireAlarmTime, string durationTimeFireAlarm)
         {
-
-            /*
-              if (countPeople != string.Empty && currentFloor != string.Empty && 
-                destinationFloor != string.Empty && currentFloor != destinationFloor)
-            {
-                View.HideError();
-                var countPeopleInt = int.Parse(countPeople);
-                var currentFloorInt = int.Parse(currentFloor);
-                var destinationFloorInt = int.Parse(destinationFloor);
-                if (!_peopleService.CreatePeople(countPeopleInt, currentFloorInt, destinationFloorInt))
-                    View.ShowError("Этаж введен неверно");
-            }
-            else
-                View.ShowError("Данные введены некорректно");
-             */
-
             if (turnOnFireAlarmTime != string.Empty && durationTimeFireAlarm != string.Empty)
             {
                 View.HideFireAlarmError();
