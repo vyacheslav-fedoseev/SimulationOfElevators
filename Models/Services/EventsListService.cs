@@ -13,7 +13,6 @@ namespace Models.Services
         private float startFireAlarmTime;
         private readonly IPeopleService _peopleService;
         private IElevatorsManager _elevatorsManager;
-
         public EventsListService(IPeopleService peopleService)
         {
             _peopleService = peopleService;
