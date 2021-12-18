@@ -7,8 +7,13 @@
         {
             Id = id;
             PeopleDirection = PeopleDirection.NoDirection;
+            CountOfDownRequests = 0;
+            CountOfUpRequests = 0;
         }
         public bool IsRequested { get; set; }
+
+        public int CountOfUpRequests { get; set; }
+        public int CountOfDownRequests { get; set; }
         public PeopleDirection PeopleDirection { get; set; }
     }
 }

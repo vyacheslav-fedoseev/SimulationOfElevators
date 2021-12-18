@@ -44,7 +44,10 @@ namespace Models.Services
                                                     people.CurrentFloor < people.DestinationFloor
                                                         ? PeopleDirection.Up
                                                         : PeopleDirection.Down);
-                                    _floorRepository.Find(people.CurrentFloor).IsRequested = true;
+                                    var floor = _floorRepository.Find(people.CurrentFloor);
+                                    floor.IsRequested = true;
+                                    if (people.CurrentFloor < people.DestinationFloor) floor.CountOfUpRequests++;
+                                    else floor.CountOfDownRequests++;
 
                                 }
                                 break;
