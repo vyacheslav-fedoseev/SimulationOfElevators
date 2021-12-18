@@ -36,6 +36,7 @@ namespace Presenters.Presenters
             var address = View.ImportAddress();
             if (address != null)
                 _loadService.Import(address);
+
         }
 
         private void Export() => _loadService.Export(View.ExportAddress());
