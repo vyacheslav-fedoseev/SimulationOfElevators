@@ -145,8 +145,6 @@ namespace Models.Services
 
                 if (elevator.DestinationFloor[elevator.CurrentFloor - 1])
                 {
-                    elevator.DestinationFloor[elevator.CurrentFloor - 1] = false;
-                    _statisticsService.IncrementCountOfRides(elevator.Id, false);
                     elevator.UnLoadingTimer = 3;
                     return;
                 }
@@ -156,7 +154,7 @@ namespace Models.Services
                     (elevator.Direction == Direction.Up || elevator.Direction == Direction.Stop) &&
                     !isElevatorFull)
                 {
-                    if (elevator.Direction == Direction.Stop) _statisticsService.IncrementCountOfRides(elevator.Id, elevator.CountPeople == 0);
+                    if (elevator.Direction == Direction.Stop) _statisticsService.IncrementCountOfRides(elevator.Id, false);
                     elevator.Direction = Direction.Up;
                     elevator.LoadingTimer = 3;
                     return;
@@ -167,7 +165,7 @@ namespace Models.Services
                     (elevator.Direction == Direction.Down || elevator.Direction == Direction.Stop) &&
                     !isElevatorFull)
                 {
-                    if (elevator.Direction == Direction.Stop) _statisticsService.IncrementCountOfRides(elevator.Id, elevator.CountPeople == 0);
+                    if (elevator.Direction == Direction.Stop) _statisticsService.IncrementCountOfRides(elevator.Id, false);
                     elevator.Direction = Direction.Down;
                     elevator.LoadingTimer = 3;
                     return;
