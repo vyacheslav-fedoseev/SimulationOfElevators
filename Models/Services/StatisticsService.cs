@@ -21,6 +21,7 @@ namespace Models.Services
             if (_statisticsData.CountOfRides.Count < id) return;
             _statisticsData.CountOfRides[id - 1]++;
             _statisticsData.TotalCountOfRides++;
+            Console.WriteLine(id);
             if (IsIdle)
             {
                 _statisticsData.IdleRides[id - 1]++;
