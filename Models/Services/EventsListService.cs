@@ -9,11 +9,10 @@ namespace Models.Services
 {
     public class EventsListService: IEventsListService
     {
-        private static List<EventItem> _listOfEvents = new List<EventItem>();
+        public static List<EventItem> _listOfEvents = new List<EventItem>();
         private float startFireAlarmTime;
         private readonly IPeopleService _peopleService;
         private IElevatorsManager _elevatorsManager;
-
         public EventsListService(IPeopleService peopleService)
         {
             _peopleService = peopleService;
@@ -31,7 +30,7 @@ namespace Models.Services
 
         public void SortListOfEvents()
         {
-            _listOfEvents.OrderBy(s => s.TimeMarkers[0]);
+            _listOfEvents = _listOfEvents.OrderBy(s => s.TimeMarkers[0]).ToList();
         }
 
         public void TurnOnEvent( float time, IElevatorsManager elevatorsManager )
