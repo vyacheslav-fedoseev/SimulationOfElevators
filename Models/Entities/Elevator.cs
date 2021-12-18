@@ -33,11 +33,11 @@ namespace Models.Entities
             Position = 0;
             StartMovingPosition = 0;
             Direction = Direction.Stop;
-            DestinationFloor = new bool[ConfigurationData._countFloors];
+            DestinationFloor = new bool[ConfigurationData.CountFloors];
             StartMovingTime = 0;
             MovingTime = 0;
             CountPeople = 0;
-            for (var i = 0; i < ConfigurationData._countFloors; i++) DestinationFloor[i] = false;
+            for (var i = 0; i < ConfigurationData.CountFloors; i++) DestinationFloor[i] = false;
             CurrentFloor = 1;
 
         }

@@ -44,13 +44,5 @@ namespace WinFormsAppSimulation
             if (_firstLaunch++ == 0)
                 Application.Run(this);
         }
-
-        /*
-        private void CreateEventsListButton_Click(object sender, EventArgs e)
-        {
-            CreateEventsListForm form = new CreateEventsListForm();
-            form.Show();
-        }
-        */
     }
 }

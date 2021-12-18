@@ -9,13 +9,13 @@ namespace Models.Entities
     public enum Strategy { None = 0,  MinWaitingTime = 1, MinIdleRides = 2}
     public class ConfigurationData
     {
-        public static int _countFloors;
-        public static int _countElevators;
-        public static float[] _maxSpeed;
-        public static float[] _maxAcceleration;
-        public static int[] _capacity;
-        public const int MAX_COUNT_ELEVATORS = 5;
-        public const int MAX_COUNT_FLOORS = 20;
+        public static int CountFloors;
+        public static int CountElevators;
+        public static float[] MaxSpeed;
+        public static float[] MaxAcceleration;
+        public static int[] Capacity;
+        public const int MaxCountElevators = 5;
+        public const int MaxCountFloors = 20;
         public static Strategy _strategy;
     }
 }

@@ -10,7 +10,7 @@ namespace Models.Services
 {
     public class FloorService : IFloorService
     {
-        public static Object Locker = new object();
+        public static object Locker = new object();
         private readonly IFloorRepository _floorRepository;
         public FloorService(IFloorRepository floorRepository)
         {
@@ -19,47 +19,41 @@ namespace Models.Services
 
         public string[] GetFloorInfo()
         {
-            string[] FloorInfo = new string[ConfigurationData._countFloors];
-            for (var i = 0; i < FloorInfo.Length; i++)
+            var floorInfo = new string[ConfigurationData.CountFloors];
+            for (var i = 0; i < floorInfo.Length; i++)
             {
-                FloorInfo[i] = string.Empty;
+                floorInfo[i] = string.Empty;
             }
             lock(Locker)
             {
-                List<Floor> FloorList = (List<Floor>)_floorRepository.GetAll();
+                List<Floor> floorList = (List<Floor>)_floorRepository.GetAll();
 
-                foreach (var floor in FloorList)
+                foreach (var floor in floorList)
                 {
-                    var CountPeopleDirUp = 0;
-                    var CountPeopleDirDown = 0;
-                    //Console.WriteLine("C = " + floor.CountPeople);
+                    var countPeopleDirUp = 0;
+                    var countPeopleDirDown = 0;
 
                     for (var i = 0; i < floor.CountPeople; i++)
                     {
                         if (floor.GetPeople(i).CurrentFloor > floor.GetPeople(i).DestinationFloor)
-                            CountPeopleDirDown++;
+                            countPeopleDirDown++;
                         else if (floor.GetPeople(i).CurrentFloor < floor.GetPeople(i).DestinationFloor)
-                            CountPeopleDirUp++;
+                            countPeopleDirUp++;
                     }
 
-                    
                     if (floor.PeopleDirection == PeopleDirection.Up || floor.PeopleDirection == PeopleDirection.Booth)
-                    {
-                        FloorInfo[floor.Id - 1] += "Up - " + CountPeopleDirUp.ToString();
-                    }
+                        floorInfo[floor.Id - 1] += "Up - " + countPeopleDirUp.ToString();
                     if (floor.PeopleDirection == PeopleDirection.Down || floor.PeopleDirection == PeopleDirection.Booth)
-                    {
-                        FloorInfo[floor.Id - 1] += "Down - " + CountPeopleDirDown.ToString();
-                    }
-                    //Console.WriteLine(FloorInfo[floor.Id - 1]);
+                        floorInfo[floor.Id - 1] += "Down - " + countPeopleDirDown.ToString(); ;
                 }
             }
-            return FloorInfo;
+            return floorInfo;
         }
 
         public void InitializeFloorRepository()
         {
-            for (var i = 0; i < ConfigurationData._countFloors; i++) _floorRepository.AddNewFloor();
+            for (var i = 0; i < ConfigurationData.CountFloors; i++) 
+                _floorRepository.AddNewFloor();
         }
     }
 }

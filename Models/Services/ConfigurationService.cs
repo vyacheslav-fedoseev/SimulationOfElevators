@@ -9,32 +9,31 @@ namespace Models.Services
 {
     public class ConfigurationService : IConfigurationService
     {
-        private ConfigurationData _configurationData = new ConfigurationData();
-        private int _currentElevator = 0;
+        private int _currentElevator;
 
         public bool IsConfigurationSet()
         {
-            return ConfigurationData._capacity != null &&
-                   ConfigurationData._maxAcceleration != null &&
-                   ConfigurationData._maxSpeed != null &&
-                   ConfigurationData._countElevators != 0 &&
-                   ConfigurationData._countFloors != 0 &&
-                   ConfigurationData._capacity[ConfigurationData._countElevators - 1] != 0 &&
-                   ConfigurationData._maxAcceleration[ConfigurationData._countElevators - 1] != 0 &&
-                   ConfigurationData._maxSpeed[ConfigurationData._countElevators - 1] != 0 &&
+            return ConfigurationData.Capacity != null &&
+                   ConfigurationData.MaxAcceleration != null &&
+                   ConfigurationData.MaxSpeed != null &&
+                   ConfigurationData.CountElevators != 0 &&
+                   ConfigurationData.CountFloors != 0 &&
+                   ConfigurationData.Capacity[ConfigurationData.CountElevators - 1] != 0 &&
+                   ConfigurationData.MaxAcceleration[ConfigurationData.CountElevators - 1] != 0 &&
+                   ConfigurationData.MaxSpeed[ConfigurationData.CountElevators - 1] != 0 &&
                    ConfigurationData._strategy != Strategy.None;
         }
 
         public bool SetConfiguration(int countFloors, int countElevators)
         {
-            if (ConfigurationData.MAX_COUNT_FLOORS >= countFloors &&
-                ConfigurationData.MAX_COUNT_ELEVATORS >= countElevators)
+            if (ConfigurationData.MaxCountFloors >= countFloors &&
+                ConfigurationData.MaxCountElevators >= countElevators)
             {
-                ConfigurationData._countFloors = countFloors;
-                ConfigurationData._countElevators = countElevators;
-                ConfigurationData._capacity = new int[countElevators];
-                ConfigurationData._maxAcceleration = new float[countElevators];
-                ConfigurationData._maxSpeed = new float[countElevators];
+                ConfigurationData.CountFloors = countFloors;
+                ConfigurationData.CountElevators = countElevators;
+                ConfigurationData.Capacity = new int[countElevators];
+                ConfigurationData.MaxAcceleration = new float[countElevators];
+                ConfigurationData.MaxSpeed = new float[countElevators];
                 return true;
             }
             return false;
@@ -42,31 +41,32 @@ namespace Models.Services
 
         public void SetStrategy(string strategy)
         {
-            if (strategy.Equals("Минимальное время ожидания")) ConfigurationData._strategy = Strategy.MinWaitingTime;
-            else ConfigurationData._strategy = Strategy.MinIdleRides;
+            ConfigurationData._strategy = strategy.Equals("Минимальное время ожидания") 
+                ? Strategy.MinWaitingTime 
+                : Strategy.MinIdleRides;
         }
 
         public bool SetElevatorsConfiguration(float maxSpeed, float maxAcceleration, int capacity, bool isTemplate)
         {
-            if (_currentElevator >= ConfigurationData._countElevators)
+            if (_currentElevator >= ConfigurationData.CountElevators)
                 return false;
             if (isTemplate)
             {
                 for (;
-                    _currentElevator < ConfigurationData.MAX_COUNT_ELEVATORS &&
-                    _currentElevator < ConfigurationData._countElevators;
+                    _currentElevator < ConfigurationData.MaxCountElevators &&
+                    _currentElevator < ConfigurationData.CountElevators;
                     _currentElevator++)
                 {
-                    ConfigurationData._capacity[_currentElevator] = capacity;
-                    ConfigurationData._maxAcceleration[_currentElevator] = maxAcceleration;
-                    ConfigurationData._maxSpeed[_currentElevator] = maxSpeed;
+                    ConfigurationData.Capacity[_currentElevator] = capacity;
+                    ConfigurationData.MaxAcceleration[_currentElevator] = maxAcceleration;
+                    ConfigurationData.MaxSpeed[_currentElevator] = maxSpeed;
                 }
             }
             else
             {
-                ConfigurationData._capacity[_currentElevator] = capacity;
-                ConfigurationData._maxAcceleration[_currentElevator] = maxAcceleration;
-                ConfigurationData._maxSpeed[_currentElevator] = maxSpeed;
+                ConfigurationData.Capacity[_currentElevator] = capacity;
+                ConfigurationData.MaxAcceleration[_currentElevator] = maxAcceleration;
+                ConfigurationData.MaxSpeed[_currentElevator] = maxSpeed;
                 _currentElevator++;
             }
             return true;

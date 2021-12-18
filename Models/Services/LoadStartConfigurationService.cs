@@ -17,14 +17,14 @@ namespace Models.Services
             foreach (var element in File.ReadAllLines(importAddress))
                 queueLines.Enqueue(element);
 
-            ConfigurationData._countFloors = int.Parse(new string(queueLines.Dequeue().Where(char.IsDigit).ToArray()));
-            ConfigurationData._countElevators = int.Parse(new string(queueLines.Dequeue().Where(char.IsDigit).ToArray()));
-            _service.SetConfiguration(ConfigurationData._countFloors, ConfigurationData._countElevators);
+            ConfigurationData.CountFloors = int.Parse(new string(queueLines.Dequeue().Where(char.IsDigit).ToArray()));
+            ConfigurationData.CountElevators = int.Parse(new string(queueLines.Dequeue().Where(char.IsDigit).ToArray()));
+            _service.SetConfiguration(ConfigurationData.CountFloors, ConfigurationData.CountElevators);
             queueLines.Dequeue();
             queueLines.Dequeue();
 
             var queueLiftInfo = new Queue<float>();
-            for (var i = 0; i < ConfigurationData._countElevators; i++)
+            for (var i = 0; i < ConfigurationData.CountElevators; i++)
             {
                 var words = queueLines.Dequeue().Split('\t');
                 foreach (var word in words)
@@ -32,21 +32,21 @@ namespace Models.Services
                         queueLiftInfo.Enqueue(float.Parse(word));
 
                 queueLiftInfo.Dequeue();
-                ConfigurationData._maxSpeed[i] = queueLiftInfo.Dequeue();
-                ConfigurationData._maxAcceleration[i] = queueLiftInfo.Dequeue();
-                ConfigurationData._capacity[i] = (int)queueLiftInfo.Dequeue();
+                ConfigurationData.MaxSpeed[i] = queueLiftInfo.Dequeue();
+                ConfigurationData.MaxAcceleration[i] = queueLiftInfo.Dequeue();
+                ConfigurationData.Capacity[i] = (int)queueLiftInfo.Dequeue();
             }
         }
 
         public void Export(string exportAddress)
         {
             string strInfo = null;
-            for (var i = 1; i <= ConfigurationData._countElevators; i++)
-                strInfo += $"\t{i}\t\t{ConfigurationData._maxSpeed[i - 1]}\t\t\t{ConfigurationData._maxAcceleration[i - 1]}\t\t{ConfigurationData._capacity[i - 1]}\n";
+            for (var i = 1; i <= ConfigurationData.CountElevators; i++)
+                strInfo += $"\t{i}\t\t{ConfigurationData.MaxSpeed[i - 1]}\t\t\t{ConfigurationData.MaxAcceleration[i - 1]}\t\t{ConfigurationData.Capacity[i - 1]}\n";
             string[] info =
             {
-                $"Количество этажей: {ConfigurationData._countFloors};",
-                $"Количество лифтов: {ConfigurationData._countElevators};\n",
+                $"Количество этажей: {ConfigurationData.CountFloors};",
+                $"Количество лифтов: {ConfigurationData.CountElevators};\n",
                 "Номер лифта; Максимальная скорость; Максимальное ускорение; Вместимость;",
                 strInfo
             };

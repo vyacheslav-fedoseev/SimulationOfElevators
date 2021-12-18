@@ -18,28 +18,22 @@ namespace Models.Services
             {
                 if (el[0] == "0")
                 {
-                    EventsListService._listOfEvents.Add(new 
+                    EventsListService.ListOfEvents.Add(new 
                         EventItem(KindOfEvent.CreatePeople, int.Parse(el[1]), int.Parse(el[2]),
                             int.Parse(el[3]), float.Parse(el[0])));
                 }
                 if (el[0] == "1")
                 {
-                    EventsListService._listOfEvents.Add(new 
+                    EventsListService.ListOfEvents.Add(new 
                         EventItem(KindOfEvent.FireAlarm, float.Parse(el[0]), float.Parse(el[1])));
                 }
             }
-
-            
-            EventsListService._listOfEvents.Add(new EventItem(KindOfEvent.CreatePeople, 13, 3,
-                10,
-                7f));
-            //EventsListService._listOfEvents.Add(new EventItem(KindOfEvent.FireAlarm, turnOnFireAlarmTime, turnOnFireAlarmTime));
         }
 
         public void Export(string exportAddress)
         {
             string strInfo = null;
-            foreach (var element in EventsListService._listOfEvents)
+            foreach (var element in EventsListService.ListOfEvents)
             {
                 if (element.KindOfEvent == KindOfEvent.CreatePeople)
                 {

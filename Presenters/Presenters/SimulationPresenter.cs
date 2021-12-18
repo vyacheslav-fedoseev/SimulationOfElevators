@@ -32,7 +32,7 @@ namespace Presenters.Presenters
             View.SimulationClosed += SimulationClosed;
             View.CreatePeople += () => Create(View.PeopleCount, View.CurrentFloor, View.DestinationFloor);
             _manager.DataUpdated += () => UpdateView(manager.GetElevatorsGrid(), _peopleService.GetPeopleStatus(), _floorService.GetFloorInfo(), _manager.GetTime());
-            View.UpdateElevatorsGrid(new bool[ConfigurationData._countFloors, ConfigurationData._countElevators], _floorService.GetFloorInfo());
+            View.UpdateElevatorsGrid(new bool[ConfigurationData.CountFloors, ConfigurationData.CountElevators], _floorService.GetFloorInfo());
             manager.StartSimulation();
             peopleService.StartThread();
         }

@@ -18,6 +18,7 @@ namespace Models.Services
 
         public void IncrementCountOfRides(int id, bool IsIdle)
         {
+            if (_statisticsData.CountOfRides.Count < id) return;
             _statisticsData.CountOfRides[id - 1]++;
             _statisticsData.TotalCountOfRides++;
             if (IsIdle)
@@ -50,28 +51,28 @@ namespace Models.Services
 
 Номер лифта                                  ";
 
-            for(var i=0; i < ConfigurationData._countElevators; i++)
+            for(var i=0; i < ConfigurationData.CountElevators; i++)
             {
                 statistics += $"         {i + 1}";     
             }
             statistics += "\nОбщее количество поездок          ";
-            for (var i = 0; i < ConfigurationData._countElevators; i++)
+            for (var i = 0; i < ConfigurationData.CountElevators; i++)
             {
                 statistics += $"         {_statisticsData.CountOfRides[i]}";
             }
             statistics += "\nПроцент холостых поездок           ";
-            for (var i = 0; i < ConfigurationData._countElevators; i++)
+            for (var i = 0; i < ConfigurationData.CountElevators; i++)
             {
                 if(_statisticsData.CountOfRides[i] !=0) _statisticsData.PercentOfIdleRides[i] = ((float)_statisticsData.IdleRides[i] / (float)_statisticsData.CountOfRides[i]) * 100f;
                 statistics += $"         {_statisticsData.PercentOfIdleRides[i]}";
             }
             statistics += "\nКоличество холостых поездок        ";
-            for (var i = 0; i < ConfigurationData._countElevators; i++)
+            for (var i = 0; i < ConfigurationData.CountElevators; i++)
             {
                 statistics += $"         {_statisticsData.IdleRides[i]}";
             }
             statistics += "\nКоличество перевезенных людей ";
-            for (var i = 0; i < ConfigurationData._countElevators; i++)
+            for (var i = 0; i < ConfigurationData.CountElevators; i++)
             {
                 statistics += $"         {_statisticsData.CountOfPeople[i]}";
             }
@@ -82,13 +83,13 @@ namespace Models.Services
 
         private void InitializeStatistics()
         {
-            if (ConfigurationData._countElevators == 0 || _statisticsData.CountOfRides != null && _statisticsData.CountOfRides.Count != 0) return;
+            if (ConfigurationData.CountElevators == 0 || _statisticsData.CountOfRides != null && _statisticsData.CountOfRides.Count != 0) return;
             _statisticsData.CountOfRides = new List<int>();
             _statisticsData.IdleRides = new List<int>();
             _statisticsData.CountOfPeople = new List<int>();
             _statisticsData.PercentOfIdleRides = new List<float>();
 
-            for (var i = 0; i < ConfigurationData._countElevators; i++)
+            for (var i = 0; i < ConfigurationData.CountElevators; i++)
             {
                 _statisticsData.CountOfRides.Add(0);
                 _statisticsData.IdleRides.Add(0);

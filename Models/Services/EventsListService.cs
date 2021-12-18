@@ -7,60 +7,48 @@ using Models.Entities;
 
 namespace Models.Services
 {
-    public class EventsListService: IEventsListService
+    public class EventsListService : IEventsListService
     {
-        public static List<EventItem> _listOfEvents = new List<EventItem>();
-        private float startFireAlarmTime;
+        public static List<EventItem> ListOfEvents = new List<EventItem>();
+        private float _startFireAlarmTime;
         private readonly IPeopleService _peopleService;
         private IElevatorsManager _elevatorsManager;
-        public EventsListService(IPeopleService peopleService)
-        {
-            _peopleService = peopleService;
-        }
-        public void AddFireAlarmEvent( float turnOnFireAlarmTime, float durationTimeFireAlarm)
-        {
-            _listOfEvents.Add(new EventItem(KindOfEvent.FireAlarm, turnOnFireAlarmTime, turnOnFireAlarmTime));
-        }
+        public EventsListService(IPeopleService peopleService) => _peopleService = peopleService;
+
+        public void AddFireAlarmEvent(float turnOnFireAlarmTime, float durationTimeFireAlarm) =>
+            ListOfEvents.Add(new EventItem(KindOfEvent.FireAlarm, turnOnFireAlarmTime, turnOnFireAlarmTime));
+
         public void AddCreatePeopleEvent(int peopleCount, int currentFloor, int destinationFloor,
-            float createPeopleTime)
-        {
-            _listOfEvents.Add(new EventItem( KindOfEvent.CreatePeople,  peopleCount,  currentFloor,  destinationFloor,
-             createPeopleTime));
-        }
+            float createPeopleTime) =>
+            ListOfEvents.Add(new EventItem(KindOfEvent.CreatePeople, peopleCount, currentFloor, destinationFloor,
+                createPeopleTime));
 
-        public void SortListOfEvents()
-        {
-            _listOfEvents = _listOfEvents.OrderBy(s => s.TimeMarkers[0]).ToList();
-        }
+        public void SortListOfEvents() =>
+            ListOfEvents = ListOfEvents.OrderBy(s => s.TimeMarkers[0]).ToList();
 
-        public void TurnOnEvent( float time, IElevatorsManager elevatorsManager )
+        public void TurnOnEvent(float time, IElevatorsManager elevatorsManager)
         {
-            if( _listOfEvents.Count != 0 )
+            if (ListOfEvents.Count == 0) return;
+            if (_elevatorsManager == null) _elevatorsManager = elevatorsManager;
+            var eventItem = ListOfEvents.First();
+            if (!(eventItem.TimeMarkers[0] < time)) return;
+            if (eventItem.KindOfEvent == KindOfEvent.CreatePeople)
             {
-                if (_elevatorsManager == null) _elevatorsManager = elevatorsManager;
-                EventItem eventItem = _listOfEvents.First();
-                if (eventItem.TimeMarkers[0] < time)
+                _peopleService.CreatePeople(eventItem.Parameters[0], eventItem.Parameters[1], eventItem.Parameters[2]);
+                ListOfEvents.Remove(eventItem);
+            }
+            else
+            {
+                if (_startFireAlarmTime == 0)
                 {
-                    if ( eventItem.KindOfEvent == KindOfEvent.CreatePeople )
-                    {
-                        _peopleService.CreatePeople(eventItem.Parameters[0], eventItem.Parameters[1], eventItem.Parameters[2]);
-                        _listOfEvents.Remove(eventItem);
-                    }
-                    else
-                    {
-                        if( startFireAlarmTime == 0 )
-                        {
-                            _elevatorsManager.Fire();
-                            startFireAlarmTime = time;
-                        }
-                        else if( time - startFireAlarmTime > eventItem.TimeMarkers[1] && _elevatorsManager.Fire() )
-                        {
-                            _listOfEvents.Remove(eventItem);
-                            startFireAlarmTime = 0;
-                        }
-                    }
+                    _elevatorsManager.Fire();
+                    _startFireAlarmTime = time;
                 }
-
+                else if (time - _startFireAlarmTime > eventItem.TimeMarkers[1] && _elevatorsManager.Fire())
+                {
+                    ListOfEvents.Remove(eventItem);
+                    _startFireAlarmTime = 0;
+                }
             }
 
         }

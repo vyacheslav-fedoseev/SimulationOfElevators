@@ -52,6 +52,14 @@ namespace Presenters.Presenters
 
         private void Exit() => View.Close();
 
-        private void CreateEventsList() => Controller.Run<CreateEventsListPresenter>();
+        private void CreateEventsList()
+        {
+            if (!_configurationService.IsConfigurationSet())
+                View.ShowError("Конфигурация не задана либо задана некорректно");
+            else {
+                View.HideError();
+                Controller.Run<CreateEventsListPresenter>();
+            }
+        }
     }
 }

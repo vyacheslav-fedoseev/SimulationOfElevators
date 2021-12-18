@@ -17,14 +17,14 @@ namespace Models.Services
         private static List<string> _peopleStatus;
         private Thread _thread;
         private bool _isPaused = false;
-        private object locker = new object();
-        private object locker2 = new object();
+        private readonly object _locker = new object();
+        private readonly object _locker2 = new object();
         private void PeopleManager()
         {
-            List<People> peopleList = (List<People>)_peopleRepository.GetAll();
+            var peopleList = (List<People>)_peopleRepository.GetAll();
             while(true)
             {
-                lock (locker2)
+                lock (_locker2)
                 {
                     for (var i = 0; i < peopleList.Count; i++)
                     { 
@@ -39,7 +39,7 @@ namespace Models.Services
                             case PeopleStatus.Choosing:
                                 if (ElevatorsManager._time - people.EnteringTime > 3F)
                                 {
-                                    lock (locker) people.Status = PeopleStatus.Waiting;
+                                    lock (_locker) people.Status = PeopleStatus.Waiting;
                                     _floorRepository.UpdatePeopleDirection(people.CurrentFloor,
                                                     people.CurrentFloor < people.DestinationFloor
                                                         ? PeopleDirection.Up
@@ -53,12 +53,12 @@ namespace Models.Services
                                 break;
                             case PeopleStatus.Waiting:
 
-                                lock (locker) _peopleStatus[i] =
+                                lock (_locker) _peopleStatus[i] =
                                         "Человек № " + (people.Id + 1).ToString() + " : " + " ожидает лифт " + (ElevatorsManager._time - people.EnteringTime - 3).ToString() + " секунд";
 
                                 break;
                             case PeopleStatus.Moving:
-                                lock (locker)
+                                lock (_locker)
                                 {
                                     if( !ElevatorsManager.IsFire )_peopleStatus[i] =
                                        "Человек № " + (people.Id + 1).ToString() + " : " + " едет на " + (people.DestinationFloor).ToString() + " этаж";
@@ -71,7 +71,7 @@ namespace Models.Services
                                 if (ElevatorsManager._time - people.ArrivingTime > 3F)
                                 {
                                     _peopleRepository.Delete(people);
-                                    lock(locker)_peopleStatus.Remove(_peopleStatus[i]);
+                                    lock(_locker)_peopleStatus.Remove(_peopleStatus[i]);
                                     if (ElevatorsManager.IsFire && !people.IsArrived)
                                     {
                                         lock (FloorService.Locker)
@@ -90,7 +90,7 @@ namespace Models.Services
                                 }
                                 else
                                 {
-                                    lock (locker)
+                                    lock (_locker)
                                     {
                                         if (!ElevatorsManager.IsFire)
                                             _peopleStatus[i] =
@@ -119,13 +119,11 @@ namespace Models.Services
         }
         public void StopThread()
         {
-            if (_thread.IsAlive)
-            {
-                if (_isPaused) _thread.Resume();
-                _thread.Abort();
-                _peopleRepository.Clear();
-                _peopleStatus = new List<string>();
-            }
+            if (!_thread.IsAlive) return;
+            if (_isPaused) _thread.Resume();
+            _thread.Abort();
+            _peopleRepository.Clear();
+            _peopleStatus = new List<string>();
         }
         public void PlayPauseThread()
         {
@@ -151,27 +149,25 @@ namespace Models.Services
         public string GetPeopleStatus()
         {
             var peopleStatus = string.Empty;
-            lock (locker)
+            lock (_locker)
             {
                 foreach (var element in _peopleStatus)
-                {
                     peopleStatus += element + "\n";
-                }
             }
             return peopleStatus;
         }
 
         public bool CreatePeople(int countPeople, int currentFloor, int destinationFloor)
         {
-            if (currentFloor <= ConfigurationData._countFloors &&
+            if (currentFloor <= ConfigurationData.CountFloors &&
                 currentFloor > 0 &&
-                destinationFloor <= ConfigurationData._countFloors &&
+                destinationFloor <= ConfigurationData.CountFloors &&
                 destinationFloor > 0)
             {
                 for (var i = 0; i < countPeople; i++)
                 {
                     var id = _peopleRepository.Add(destinationFloor, currentFloor);
-                    lock (locker) 
+                    lock (_locker) 
                     {
                         _floorRepository.Find(currentFloor).AddNextPeople(_peopleRepository.Find(id));
 
@@ -180,7 +176,10 @@ namespace Models.Services
                     
                 }
 
-                _floorRepository.Find(currentFloor).CountPeople += countPeople;
+                lock (FloorService.Locker)
+                {
+                    _floorRepository.Find(currentFloor).CountPeople += countPeople;
+                }
                 return true;
             }
             return false;
